@@ -8,17 +8,22 @@
             cPage : null,
 
             ready : function() {
-                var pages = this.querySelectorAll('[page]');
-                for( var i = 0; i < pages.length; i++ ) {
-                    for( var j = 0; j < pages[i].hash.length; j++ ) {
-                        this.pages[pages[i].hash[j]] = pages[i];
-                    }
-                }
+                window.addEventListener('polymer-ready', function(e) {
 
-                $(window).on('hashchange', function(){
+                    for( var i = 0; i < this.children.length; i++ ) {
+                        for( var j = 0; j < this.children[i].hash.length; j++ ) {
+                            this.pages[this.children[i].hash[j]] = this.children[i];
+                        }
+                    }
+
+                    $(window).on('hashchange', function(){
+                        this.update();
+                    }.bind(this));
+
                     this.update();
                 }.bind(this));
-                this.update();
+
+                
             },
 
             update : function() {
