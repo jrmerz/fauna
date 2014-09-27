@@ -1,0 +1,11 @@
+{
+  "name": "fauna",
+  "version": "0.0.0",
+  "description": "fauna polymer site",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jrmerz@gmail.com",
+  "license": "ISC"
+}

@@ -1,0 +1,6 @@
+comics
+node_modules
+app/comics
+dist/comics
+app/bower_components
+*.DS_Store

@@ -1,0 +1,35 @@
+<polymer-element name="fa-left-nav">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            .root {
+                width: 310px;
+            }
+            .img {
+                background: url('../images/left_nav.png') no-repeat bottom left;
+                min-height: 634px;
+                margin: 45px 0;
+            }
+
+            @media(max-width: 768px) {
+                .img {
+                    min-height: 528px;
+                    margin: 20px 0;
+
+                    background-size: 250px 528px;
+                    -webkit-background-size: 250px 528px;
+                }
+            }
+        </style>
+        <div class="root">
+            <div class="img"></div>
+        </div>
+    </template>
+    <script>
+        Polymer('fa-left-nav', {
+
+        });
+    </script>
+</polymer-element>

@@ -1,0 +1,21 @@
+{
+  "name": "fauna",
+  "version": "0.0.0",
+  "authors": [
+    "Justin Merz <jrmerz@gmail.com>"
+  ],
+  "description": "fauna cartoons",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.4.1",
+    "core-elements": "Polymer/core-elements#~0.4.1"
+  }
+}
