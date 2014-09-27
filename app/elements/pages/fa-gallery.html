@@ -1,0 +1,138 @@
+<polymer-element name="fa-gallery">
+    <template>
+        <link rel="stylesheet" href="../../bower_components/animate-css/animate.css" noshim />
+        <style>
+
+            img {
+                box-shadow: 0px 5px 15px #3999fc;
+                border-radius: 6px
+            }
+            .full {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                margin-top: ;
+            }
+        </style>
+
+        <core-media-query query="max-width: 768px" queryMatches="{{isPhone}}"></core-media-query>
+
+        <div layout vertical style="height:100%">
+            <div flex style="position:relative">
+                <div style="position:absolute;height:100%;width:100%;left:0;top:0">
+                    <div style="bottom:0;text-align:center;position:absolute;width:100%">
+                        <template bind if="{{index > 0}}">
+                            <img id="img"
+                                style="visibility:hidden" 
+                                class="fadeInUp"
+                                src="/comics/regular/Fauna_{{index}}.jpg" 
+                                on-load="{{setHeight}}" />
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div style="height:{{footerSize}}px" >
+                <fa-img-nav on-previous="{{previous}}" on-next="{{next}}"></fa-img-nav>
+            </div>
+        </div>
+
+    </template>
+    <script>
+        Polymer('fa-gallery', {
+            index : 0,
+            hash : ['home', ''],
+
+            imgHeight : 0,
+
+            isPhone : false,
+            footerSize : 325,
+
+            observe : {
+                isPhone : 'updateFooterSize'
+            },
+
+            ready : function() {
+                if( window.MAX_IMG ) this.index = MAX_IMG;
+                $(window)
+                    .on('hashchange', this.update.bind(this))
+                    .on('resize', this.updateHeight.bind(this));
+                this.update();
+            },
+
+            update : function() {
+                var parts = window.location.hash.split('/');
+                parts[0] = parts[0].replace(/#/g, '');
+
+                if( parts[0] != 'home' && parts[0] != '' ) return;
+                
+                if( parts.length > 1 ) this.index = parts[1];
+                else this.index = MAX_IMG;
+            },
+
+            previous : function() {
+                this.index--;
+                if( this.index < 1 ) {
+                    this.index = 1;
+                    return;
+                }
+                window.location.hash = 'home/'+this.index;
+            },
+
+            next : function() {
+                this.index++;
+                if( this.index > MAX_IMG ) {
+                    this.index = MAX_IMG;
+                    return;
+                }
+                window.location.hash = 'home/'+this.index;
+            },
+
+            setHeight : function(e){
+                this.imgHeight = e.currentTarget.offsetHeight;
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.style.visibility = 'visible';
+                this.updateHeight(true);
+            },
+
+            updateFooterSize : function() {
+                if( this.isPhone ) this.footerSize = 150;
+                else this.footerSize = 325;
+            },
+
+            updateHeight : function(animate) {
+                if( typeof animate == 'object' ) {
+                    animate = false;
+                }
+
+                var h = $(window).height() - this.footerSize;
+
+                var diff = 0;
+                if( h < 400 ) {
+                    diff = (400 - h) * -1;
+                    h = 400;
+                }
+
+                var img = $(this.shadowRoot.querySelector('img'));
+
+                if( animate ) img.css('display', 'none');
+                img.removeClass('animated');
+
+                if( h > this.imgHeight ) img.css('height','');
+                else img.css('height', h+'px');
+
+                img.css('margin-bottom', diff+'px');
+                
+
+                if( animate ) {
+                    img.addClass('animated');
+                    setTimeout(function(){
+                        img.css('display', 'inline-block');
+                    }, 50);
+                }
+            }
+        });
+    </script>
+</polymer-element>

@@ -1,0 +1,35 @@
+<polymer-element name="fa-pages">
+    <template>
+        <div id="root"></div>
+    </template>
+    <script>
+        Polymer('fa-pages', {
+            pages : {},
+            cPage : null,
+
+            ready : function() {
+                var pages = this.querySelectorAll('[page]');
+                for( var i = 0; i < pages.length; i++ ) {
+                    for( var j = 0; j < pages[i].hash.length; j++ ) {
+                        this.pages[pages[i].hash[j]] = pages[i];
+                    }
+                }
+
+                $(window).on('hashchange', function(){
+                    this.update();
+                }.bind(this));
+                this.update();
+            },
+
+            update : function() {
+                var hash = window.location.hash.replace(/#/g, '').split('/')[0];
+
+                if( this.pages[hash] && this.pages[hash] != this.cPage ) {
+                    $(this.cPage).remove();
+                    this.cPage = this.pages[hash];
+                    this.$.root.appendChild(this.cPage);
+                }
+            }
+        });
+    </script>
+</polymer-element>

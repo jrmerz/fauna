@@ -10,20 +10,50 @@
             }
 
             img {
+                position: absolute;
                 bottom: 0;
             }
 
-
-
-            img[left] {
+            button {
                 position: absolute;
+                width: 150px;
+                height: 65px;
+                cursor: pointer;
+                background: transparent;
+                border: none;
+            }
+            button:focus{
+                outline: 0;
+            }
+
+            img[left] { 
                 left: 0;
                 z-index: 100;
             }
 
             img[right] {
-                position: absolute;
                 right: 0;
+            }
+
+            button[left] {
+                bottom: 150px;
+                left: 20px;
+                z-index: 100;
+
+                transform: rotate(-15deg);
+                -webkit-transform: rotate(-15deg);
+                -moz-transform: rotate(-15deg);
+                -ms-transform: rotate(-15deg);
+            }
+
+            button[right] {
+                bottom: 175px;
+                right: 20px;
+
+                transform: rotate(15deg);
+                -webkit-transform: rotate(15deg);
+                -moz-transform: rotate(15deg);
+                -ms-transform: rotate(15deg);
             }
 
             .layout {
@@ -36,11 +66,26 @@
                 .layout {
                     max-width: 500px;
                 }
+
+                button {
+                    width: 75px;
+                    height: 60px;
+                }
+
                 img[left] {
                     width: 100px;
                 }
                 img[right] {
                     width: 200px;
+                }
+
+                button[left] {
+                    bottom: 45px;
+                    left: 12px;
+                }
+                button[right] {
+                    bottom: 50px;
+                    right: 10px;
                 }
             }
 
@@ -54,13 +99,21 @@
         <div style="text-align:center">
             <div class="layout">
                 <img src="../images/prev.png" left />
+                <button on-tap="{{firePrev}}" left></button>
+
                 <img src="../images/next.png" right />
+                <button on-tap="{{fireNext}}" right></button>
             </div>
         </div>
     </template>
     <script>
         Polymer('fa-img-nav', {
-            sm : false
+            fireNext : function() {
+                this.fire('next');
+            },
+            firePrev : function() {
+                this.fire('previous');
+            }
         });
     </script>
 </polymer-element>

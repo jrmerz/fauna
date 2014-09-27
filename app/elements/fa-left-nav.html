@@ -6,11 +6,42 @@
             }
             .root {
                 width: 310px;
+                position: relative;
             }
             .img {
                 background: url('../images/left_nav.png') no-repeat bottom left;
                 min-height: 634px;
                 margin: 45px 0;
+            }
+
+            button {
+                position: absolute;
+                width: 130px;
+                height: 80px;
+                left: 160px;
+                border: none;
+                background: transparent;
+                cursor: pointer;
+            }
+
+            button:focus{
+                outline: 0;
+            }
+
+            button[hash="home"] {
+                top: 10px;
+            }
+
+            button[hash="about"] {
+                top: 162px;
+            }
+
+            button[hash="buy"] {
+                top: 325px;
+            }
+
+            button[hash="links"] {
+                top: 470px;
             }
 
             @media(max-width: 768px) {
@@ -21,15 +52,41 @@
                     background-size: 250px 528px;
                     -webkit-background-size: 250px 528px;
                 }
+
+                button {
+                    left: 130px;
+                    height: 65px;
+                    width: 110px;
+                }
+
+                button[hash="about"] {
+                    top: 135px;
+                }
+
+                button[hash="buy"] {
+                    top: 275px;
+                }
+
+                button[hash="links"] {
+                    top: 390px;
+                }
+
             }
         </style>
         <div class="root">
             <div class="img"></div>
+
+            <button on-tap="{{go}}" hash="home"></button>
+            <button on-tap="{{go}}" hash="about"></button>
+            <button on-tap="{{go}}" hash="buy"></button>
+            <button on-tap="{{go}}" hash="links"></button>
         </div>
     </template>
     <script>
         Polymer('fa-left-nav', {
-
+            go : function(e) {
+                window.location.hash = e.currentTarget.getAttribute('hash');
+            }
         });
     </script>
 </polymer-element>
