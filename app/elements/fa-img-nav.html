@@ -1,12 +1,15 @@
 <polymer-element name="fa-img-nav">
     <template>
         <style>
-            :host {
+            .fixed {
                 display: block;
-                position: absolute;
+                position: fixed;
                 width: 100%;
                 bottom: 0;
-                left: 0;
+                left: 0px;
+            }
+            .margin {
+                margin-left: 300px;
             }
 
             img {
@@ -58,8 +61,14 @@
 
             .layout {
                 position: relative;
-                max-width: 900px;
+                max-width: 1000px;
                 margin: auto;
+            }
+
+            @media(max-width: 1200px) {
+                .margin {
+                    margin-left: 0px;
+                }
             }
 
             @media(max-width: 768px) {
@@ -96,14 +105,20 @@
             }
         </style>
 
-        <div style="text-align:center">
-            <div class="layout">
-                <img src="../images/prev.png" left />
-                <button on-tap="{{firePrev}}" left></button>
+        <div style="position:relative">
 
-                <img src="../images/next.png" right />
-                <button on-tap="{{fireNext}}" right></button>
+            <div class="fixed">
+                <div class="margin">
+                    <div class="layout">
+                        <img src="../images/prev.png" left />
+                        <button on-tap="{{firePrev}}" left></button>
+
+                        <img src="../images/next.png" right />
+                        <button on-tap="{{fireNext}}" right></button>
+                    </div>
+                </div>
             </div>
+
         </div>
     </template>
     <script>

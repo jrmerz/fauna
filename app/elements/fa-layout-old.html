@@ -2,13 +2,13 @@
     <template>
         <style>
             .drawer {
-                /*position: absolute;
+                position: absolute;
                 top : 0;
                 left : 0;
                 width : 310px;
                 z-index: 100;
                 height: 100%;
-                overflow: hidden;*/
+                overflow: hidden;
 
                 transition: transform 200ms linear;
                 -moz-transition: -moz-transform 200ms linear;
@@ -29,12 +29,7 @@
             }
 
             .nav-overflow {
-                overflow-x: hidden;
-                overflow-y: auto;
-                position: fixed;
-                height: 100%;
-                bottom: 0;
-                left: 0;
+                overflow: auto;
             }
 
 
@@ -75,9 +70,12 @@
             }
 
             .content {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
                 opacity: 1;
-                margin-left: 300px;
-                margin-bottom: 150px;
 
                 transition: opacity 200ms linear;
                 -moz-transition: opacity 200ms linear;
@@ -93,7 +91,7 @@
                 background: url('../images/grass.png') repeat-x top left;
                 height: 135px;
                 width: 100%;
-                position: fixed;
+                position: absolute;
                 bottom: 0;
                 left: 0;
                 z-index: 1000;
@@ -113,15 +111,13 @@
 
             :host {
                 display: block;
+                height: 100%;
             }
 
             @media(max-width: 1200px) {
                 .logo {
                     margin-left: 0px;
                     width: 700px;
-                }
-                .content {
-                    margin-left: 0;
                 }
             }
 
@@ -139,9 +135,6 @@
                     margin-left: 0px;
                     width: 350px;
                 }
-                .content {
-                    margin-left: 0;
-                }
             }
         </style>
 
@@ -153,34 +146,62 @@
             <a on-tap="{{open}}"><img src="../images/duck.gif" border="0" style="width: 50px; margin: 10px" /></a>
         </div>
 
+        <div layout vertical style="height: 100%">
+            <!--<div class="header {{(openDrawer && !isDesktop) ? 'opened' : ''}}" on-tap="{{_checkDrawer}}">
+                <div hidden?="{{!isPhone}}">
+                    <a on-tap="{{open}}">Nav</a> I am phone
+                </div>
+                <div hidden?="{{!isTablet}}">
+                    <a on-tap="{{open}}">Nav</a> I am tablet
+                </div>
+                <div hidden?="{{!isDesktop}}">
+                    I am desktop
+                </div>
+            </div>-->
 
-        <div class="content {{(openDrawer && !isDesktop) ? 'opened' : ''}}" on-tap="{{_checkDrawer}}">
-            <content select="[content]"></content>
-        </div>
+            <div flex style="position:relative">
+                <template bind if="{{isDesktop}}">
+                    <div class="fullsize">
+                        <div layout horizontal style="height:100%">
+                            
+                            <div class="nav-overflow">
+                                <div layout vertical style="height:100%">
+                                    <div flex></div>
+                                    <div>
+                                        <content select="[nav]"></content>
+                                    </div>
+                                </div>
+                            </div>
 
-        <div class="footer">
-            <img class="logo" src="../images/faunacartoon.png" />
+                            <div flex style="position:relative">
+                                <div class="content {{(openDrawer && !isDesktop) ? 'opened' : ''}}">
+                                    <content select="[content]"></content>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template bind if="{{!isDesktop}}">
+                    <div class="content {{(openDrawer && !isDesktop) ? 'opened' : ''}}" on-tap="{{_checkDrawer}}">
+                        <content select="[content]"></content>
+                    </div>
+                </template>
+            </div>
+
+            <div class="footer">
+                <img class="logo" src="../images/faunacartoon.png" />
+            </div>
         </div>
 
         <template bind if="{{!isDesktop}}">
-            <div class="nav-overflow">
-                <div class="drawer {{openDrawer ? 'open' : ''}}" on-tap="{{_checkDrawer}}">
+            <div class="drawer {{openDrawer ? 'open' : ''}}" on-tap="{{_checkDrawer}}">
+                <div class="nav-overflow">
                     <div layout vertical style="height:100%">
                         <div flex></div>
                         <div>
                             <content select="[nav]"></content>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </template>
-
-        <template bind if="{{isDesktop}}">
-            <div class="nav-overflow">
-                <div layout vertical style="height:100%">
-                    <div flex></div>
-                    <div>
-                        <content select="[nav]"></content>
                     </div>
                 </div>
             </div>
