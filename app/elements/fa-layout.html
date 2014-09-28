@@ -10,6 +10,13 @@
                 height: 100%;
                 overflow: hidden;*/
 
+                overflow-x: hidden;
+                overflow-y: auto;
+                position: fixed;
+                height: 100%;
+                bottom: 0;
+                left: 0;
+
                 transition: transform 200ms linear;
                 -moz-transition: -moz-transform 200ms linear;
                 -webkit-transition: -webkit-transform 200ms linear;
@@ -35,6 +42,11 @@
                 height: 100%;
                 bottom: 0;
                 left: 0;
+                width: 0;
+            }
+
+            .nav-overflow.open {
+                width: auto;
             }
 
 
@@ -163,7 +175,7 @@
         </div>
 
         <template bind if="{{!isDesktop}}">
-            <div class="nav-overflow">
+            <!--<div class="nav-overflow {{openDrawer ? 'open' : ''}}">-->
                 <div class="drawer {{openDrawer ? 'open' : ''}}" on-tap="{{_checkDrawer}}">
                     <div layout vertical style="height:100%">
                         <div flex></div>
@@ -172,7 +184,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            <!--</div>-->
         </template>
 
         <template bind if="{{isDesktop}}">
