@@ -13,15 +13,25 @@
             }
             h2 {
                 border-bottom: 1px solid #888;
+                margin-left: 220px;
+            }
+
+            @media(max-width: 768px) {
+                img {
+                    width: 150px;
+                    margin: 5px 10px 5px 0;
+                }
+                h2 {
+                    margin-left: 160px;
+                }
             }
         </style>
 
-        <fa-center-content>
-            <div layout horizontal style="max-width: 700px">
-                <div>
-                    <img src="../../images/bio.jpg" />
-                </div>
-                <div flex>
+        <!--<template bind if="{{!isPhone}}"> <div layout horizontal style="max-width: 700px"> -->
+            <fa-center-content>
+                
+                <div style="max-width:700px; padding: 5px">
+                    <img src="../../images/bio.jpg" style="float:left"/>
                     <h2>About</h2>
 
                     <p>When he is not cartooning, training wombats in jui jitsu, or hibernating for winter, Greg Bishop works a veterinarian in San Diego, California. Although raised by wild cassowaries in New Guinea, he has acclimated to human society and is usually quite docile. In fact, he has never attempted an unprovoked attack on a non-sibling.</p>
@@ -31,13 +41,28 @@
                     <p>He studied ecology at UC Davis before going to vet school and is well known (among his former college roommates) for illustrating a cartoon about squirrels for the student newspaper (check out Nuts in the links page). Leading scientists disagree about the exact origin of his cartooning, but they generally conclude that he began at an early age, with critically acclaimed (if not commercially successful) series such as The Turtle Avenger, Sentient Vegetables In the Big City, and The Meaty Adventures of Corn Dog and Bacon Boy. His parents might have some copies in their garage somewhere.</p>
              
                     <p>As stated above, Greg lives in San Diego. He likes surfing and burritos, usually in quick succession. So does his dog, Waffles. Other reported hobbies include bird-watching, painting, 80’s hair metal, trying to learn to weld, podcasts about history, and a little dabbling in theoretical physics. Greg wants YOUR NAME HERE to enjoy Fauna cartoons, so please leave some feedback. Please!</p>
+
+                    <p>
+                        Greg Bishop<br />
+                        <a href="mailto:gtbish@gmail.com">gtbish@gmail.com</a>
+                    </p>
                 </div>
-            </div>
-        </fa-center-content>
+                
+                
+            </fa-center-content>
+        <!--</template>
+
+        <template bind if="{{isPhone}}">
+
+
+        <template>-->
+
+
     </template>
     <script>
         Polymer('fa-about', {
-            hash : ['about'],
+            isPhone : false,
+            hash : ['about']
         });
     </script>
 </polymer-element>
