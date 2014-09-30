@@ -1,5 +1,6 @@
 <polymer-element name="fa-img-nav">
     <template>
+        <link rel="stylesheet" href="../../bower_components/animate-css/animate.css" noshim />
         <style>
             .fixed {
                 display: block;
@@ -110,10 +111,10 @@
             <div class="fixed">
                 <div class="margin">
                     <div class="layout">
-                        <img src="../images/prev.png" left />
+                        <img id="left" class="animated" src="../images/prev.png" left />
                         <button on-tap="{{firePrev}}" left></button>
 
-                        <img src="../images/next.png" right />
+                        <img id="right" class="animated" src="../images/next.png" right />
                         <button on-tap="{{fireNext}}" right></button>
                     </div>
                 </div>
@@ -123,11 +124,26 @@
     </template>
     <script>
         Polymer('fa-img-nav', {
+            animations : ['rubberBand', 'bounceOut', 'rollIn', 'bounceOut', 'flipInX'],
+
             fireNext : function() {
+                this.animateImg(this.$.right);
                 this.fire('next');
             },
+
             firePrev : function() {
+                this.animateImg(this.$.left);
                 this.fire('previous');
+            },
+
+            animateImg : function(ele) {
+                //var animation = this.animations[Math.floor(Math.random() * this.animations.length-1)];
+                var animation = 'tada';
+
+                ele.classList.add(animation);
+                setTimeout(function(){
+                    ele.classList.remove(animation);
+                }.bind(this), 1000);
             }
         });
     </script>

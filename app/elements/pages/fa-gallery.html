@@ -5,37 +5,25 @@
 
             .comic {
                 box-shadow: 0px 5px 15px #3999fc;
-                border-radius: 6px
-            }
-            .full {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                text-align: center;
-
-            }
-            #img {
-                margin-right: 100px;
-                max-width: 100%;
-                height: auto;
-            }
-            @media(max-width: 678px) {
-                #img {
-                    margin-right: 0px;
-                }
+                border-radius: 6px;
+                margin: 10px;
+                cursor: pointer;
             }
 
         </style>
 
-        <core-media-query query="max-width: 768px" queryMatches="{{isPhone}}"></core-media-query>
-
         <fa-center-content>
-            <img id="img"
-                class="comic"
-                src="/comics/regular/Fauna_{{index}}.jpg" 
-                on-load="{{setHeight}}"/>
+            <div style="width: 400px;">
+                <div style="margin: auto">
+                    <template repeat="{{index in gallaryArray}}">
+                       <img 
+                        class="comic animated flipInX" 
+                        src="/comics/thumb/Fauna_{{index}}.jpg"
+                        index="{{index}}"
+                        on-tap="{{_goTo}}" />
+                    </template>
+                </div>
+            </div>
         </fa-center-content>
 
         <fa-img-nav on-previous="{{previous}}" on-next="{{next}}"></fa-img-nav>
@@ -44,22 +32,14 @@
     <script>
         Polymer('fa-gallery', {
             index : 0,
-            hash : ['home', ''],
+            hash : ['cartoons'],
 
-            imgHeight : 0,
-
-            isPhone : false,
-            footerSize : 325,
-
-            observe : {
-                isPhone : 'updateFooterSize'
-            },
+            gallaryArray : [],
+            timers : [],
 
             ready : function() {
-                if( window.MAX_IMG ) this.index = MAX_IMG;
                 $(window)
                     .on('hashchange', this.update.bind(this))
-                    .on('resize', this.updateHeight.bind(this));
                 this.update();
             },
 
@@ -67,66 +47,68 @@
                 var parts = window.location.hash.split('/');
                 parts[0] = parts[0].replace(/#/g, '');
 
-                if( parts[0] != 'home' && parts[0] != '' ) return;
-                
-                if( parts.length > 1 ) this.index = parts[1];
-                else this.index = MAX_IMG;
+                if( parts[0] != this.hash[0] ) return;
+                if( parts.length > 1 ) this.index = parseInt(parts[1]);
+
+
+                this._checkLowBounds();
+                this._checkHiBounds();
+
+                this._clearTimers();
+                this.gallaryArray = [];
+                var c = 0;
+
+                for( var i = (this.index-1) * 9; i < this.index * 9; i++ ) {
+                    if( i >= MAX_IMG ) return;
+                    this._addPic(i, c);
+                    c++;
+                }
+            },
+
+            _addPic : function(i, c) {
+                this.timers.push(setTimeout(function(){
+                    this.gallaryArray.push(i+1);
+                }.bind(this), 100*c));
+            },
+
+            _clearTimers : function() {
+                for( var i = 0; i < this.timers.length; i++ ) {
+                    if( this.timers[i] != -1 ) clearTimeout(this.timers[i]);
+                }
+                this.timer = [];
+            },
+
+            _checkLowBounds : function() {
+                if( this.index < 1 ) {
+                    this.index = 1;
+                    return false;
+                }
+                return true;
+            },
+
+            _checkHiBounds : function() {
+                if( this.index > Math.ceil( MAX_IMG / 9 ) ) {
+                    this.index = Math.ceil( MAX_IMG / 9 );
+                    return false;
+                }
+                return true;
+            },
+
+            _goTo : function(e) {
+                var index = e.currentTarget.getAttribute('index');
+                window.location.hash = 'home/'+index;
             },
 
             previous : function() {
                 this.index--;
-                if( this.index < 1 ) {
-                    this.index = 1;
-                    return;
-                }
-                window.location.hash = 'home/'+this.index;
+                this._checkLowBounds();
+                window.location.hash = this.hash[0]+'/'+this.index;
             },
 
             next : function() {
                 this.index++;
-                if( this.index > MAX_IMG ) {
-                    this.index = MAX_IMG;
-                    return;
-                }
-                window.location.hash = 'home/'+this.index;
-            },
-
-            setHeight : function(e){
-                this.imgHeight = e.currentTarget.offsetHeight;
-                this.updateHeight(true);
-            },
-
-            updateFooterSize : function() {
-                if( this.isPhone ) {
-                    this.footerSize = 150;
-                    //this.$.img.style.height = '';
-                } else {
-                    this.footerSize = 325;
-                    //this.$.img.style.height = 'auto';
-                }
-            },
-
-            updateHeight : function() {
-                /*var h = $(window).height() - this.footerSize;
-
-                var diff = 0;
-                if( h < 400 ) {
-                    diff = (400 - h) * -1;
-                    h = 400;
-                }
-
-                var img = $(this.$.img);
-
-                if( h > this.imgHeight ) {
-                    img.css('height','');
-                } else {
-                    img.css('height', h+'px');
-                }*/
-
-                //img.css('margin-bottom', diff+'px');
-                
-
-                
+                this._checkHiBounds();
+                window.location.hash = this.hash[0]+'/'+this.index;
             }
         });
     </script>

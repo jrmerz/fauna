@@ -1,6 +1,6 @@
 <polymer-element name="fa-pages">
     <template>
-        <div id="root"></div>
+        <content></content>
     </template>
     <script>
         Polymer('fa-pages', {
@@ -13,6 +13,7 @@
                     for( var i = 0; i < this.children.length; i++ ) {
                         for( var j = 0; j < this.children[i].hash.length; j++ ) {
                             this.pages[this.children[i].hash[j]] = this.children[i];
+                            this.children[i].style.display = 'none';
                         }
                     }
 
@@ -30,9 +31,11 @@
                 var hash = window.location.hash.replace(/#/g, '').split('/')[0];
 
                 if( this.pages[hash] && this.pages[hash] != this.cPage ) {
-                    $(this.cPage).remove();
+                    //$(this.cPage).remove();
+                    if( this.cPage ) this.cPage.style.display = 'none';
                     this.cPage = this.pages[hash];
-                    this.$.root.appendChild(this.cPage);
+                    //this.$.root.appendChild(this.cPage);
+                    this.cPage.style.display = 'block';
                 }
             }
         });

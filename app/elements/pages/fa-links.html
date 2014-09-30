@@ -1,0 +1,31 @@
+<polymer-element name="fa-links">
+    <template>
+        <style>
+            img {
+                border-radius: 6px; 
+                width: 200px;
+                margin: 10px 20px 10px 0;
+                box-shadow: 0px 5px 15px #3999fc;
+            }
+            p, h2 {
+                color: #333;
+                text-shadow: 1px 1px 0 #b8ceff;
+            }
+            h2 {
+                border-bottom: 1px solid #888;
+            }
+        </style>
+
+        <fa-center-content>
+            <div style="max-width: 700px; min-width: 300px">
+                <h2>Links</h2>
+
+            </div>
+        </fa-center-content>
+    </template>
+    <script>
+        Polymer('fa-links', {
+            hash : ['links']
+        });
+    </script>
+</polymer-element>
