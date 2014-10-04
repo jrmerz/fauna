@@ -5,7 +5,7 @@
 
             .comic {
                 box-shadow: 0px 5px 15px #3999fc;
-                border-radius: 6px
+                border-radius: 6px;
             }
             .full {
                 position: absolute;
@@ -17,7 +17,7 @@
 
             }
 
-            span {
+            .text {
                 font-size: 20px;
                 color: #333;
                 text-shadow: 1px 1px 0 #b8ceff;
@@ -31,22 +31,27 @@
             }
             @media(max-width: 678px) {
                 #img {
-                    margin-right: 0px;
+                    margin: 10px;
                 }
             }
 
         </style>
 
         <fa-center-content>
-            <img id="img"
-                class="comic animated fadeInUp"
-                src="/comics/regular/Fauna_{{index}}.jpg"
-                hidden?="{{loading}}"
-                on-load="{{onLoad}}" />
+            <div layout vertical>
+                <img id="img"
+                    class="comic animated fadeInUp"
+                    src="/comics/regular/Fauna_{{index}}.jpg"
+                    hidden?="{{loading}}"
+                    on-load="{{onLoad}}" />
 
-            <div hidden?="{{!loading}}">
-                <span class="animated rubberBand infinite">Loading...</span>
-            </div>
+                <div hidden?="{{!loading}}">
+                    <span class="text animated rubberBand infinite">Loading...</span>
+                </div>
+
+                <div class="text animated fadeInLeftBig" hidden?="{{loading}}" >
+                   #{{index}}
+                </div>
         </fa-center-content>
 
         <fa-img-nav on-previous="{{previous}}" on-next="{{next}}"></fa-img-nav>

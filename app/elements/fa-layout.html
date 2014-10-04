@@ -2,14 +2,6 @@
     <template>
         <style>
             .drawer {
-                /*position: absolute;
-                top : 0;
-                left : 0;
-                width : 310px;
-                z-index: 100;
-                height: 100%;
-                overflow: hidden;*/
-
                 overflow-x: hidden;
                 overflow-y: auto;
                 position: fixed;
@@ -44,8 +36,6 @@
                 left: 0;
             }
 
-
-
             .nav-overflow::-webkit-scrollbar {  
                 width: 12px;  
             }  
@@ -70,7 +60,7 @@
                 -ms-transition: opacity 200ms linear;
             }
 
-            .header.opened {
+            .header.opened, .menuIcon.opened {
                 opacity: .2;
             }
 
@@ -157,7 +147,7 @@
         <core-media-query query="min-width: 769px" queryMatches="{{size.md}}" ></core-media-query>
         <core-media-query query="min-width: 1200px" queryMatches="{{size.lg}}" ></core-media-query>
 
-        <div hidden?="{{isDesktop}}" style="position: absolute; top: 0; left: 0; z-index: 500">
+        <div hidden?="{{isDesktop}}" class="menuIcon {{(openDrawer && !isDesktop) ? 'opened' : ''}}">
             <a on-tap="{{open}}"><img src="../images/duck.gif" border="0" style="width: 50px; margin: 10px" /></a>
         </div>
 
@@ -171,16 +161,14 @@
         </div>
 
         <template bind if="{{!isDesktop}}">
-            <!--<div class="nav-overflow {{openDrawer ? 'open' : ''}}">-->
-                <div class="drawer {{openDrawer ? 'open' : ''}}" on-tap="{{_checkDrawer}}">
-                    <div layout vertical style="height:100%">
-                        <div flex></div>
-                        <div>
-                            <content select="[nav]"></content>
-                        </div>
+            <div class="drawer {{openDrawer ? 'open' : ''}}" on-tap="{{_checkDrawer}}">
+                <div layout vertical style="height:100%">
+                    <div flex></div>
+                    <div>
+                        <content select="[nav]"></content>
                     </div>
                 </div>
-            <!--</div>-->
+            </div>
         </template>
 
         <template bind if="{{isDesktop}}">

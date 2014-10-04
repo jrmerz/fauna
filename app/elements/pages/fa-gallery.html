@@ -1,3 +1,27 @@
+<!--<polymer-element name="fa-gallery-img">
+    <template>
+
+        <div hidden?="{{!loading}}">
+
+        </div>
+        <div hidden="{{loading}}">
+            <img 
+                class="comic animated flipInX" 
+                src="/comics/thumb/Fauna_{{index}}.jpg"
+                index="{{index}}"
+                on-tap="{{_goTo}}" />
+        </div>
+
+    </template>
+    <script>
+        Polymer('fa-gallery-img', {
+            loading : true
+        })
+    </script>
+</polymer-element>-->
+
+<!-- TODO: just set the image size so we don't have to wait for it on load.
+    the thumbnails *should* be static -->
 <polymer-element name="fa-gallery">
     <template>
         <link rel="stylesheet" href="../../bower_components/animate-css/animate.css" noshim />
@@ -8,6 +32,13 @@
                 border-radius: 6px;
                 margin: 10px;
                 cursor: pointer;
+                width: 100px;
+                height: 128px;
+            }
+            @media(max-width: 768px) {
+                .comic {
+                    margin: 5px;
+                }
             }
 
         </style>
