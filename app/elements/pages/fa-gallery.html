@@ -10,8 +10,13 @@
                 cursor: pointer;
             }
 
+            .container {
+                width: 400px;
+            }
+
             .comic.Fauna {
                 width: 100px;
+                height: 125px;
             }
 
             .comic.nuts {
@@ -22,21 +27,25 @@
                 .comic {
                     margin: 5px;
                 }
+                .container {
+                    width: 350px;
+                }
+                .container.nuts {
+                    width: 200px;
+                }
             }
 
         </style>
 
         <fa-center-content>
-            <div style="width: 400px;">
-                <div style="margin: auto">
-                    <template repeat="{{index in gallaryArray}}">
-                       <img 
-                        class="comic {{type}} animated flipInX" 
-                        src="/comics/{{loc}}/thumb/{{type}}_{{index}}.jpg"
-                        index="{{index}}"
-                        on-tap="{{_goTo}}" />
-                    </template>
-                </div>
+            <div class="container {{type}}">
+                <template repeat="{{index in gallaryArray}}">
+                   <img 
+                    class="comic {{type}} animated flipInX" 
+                    src="/comics/{{loc}}/thumb/{{type}}_{{index}}.jpg"
+                    index="{{index}}"
+                    on-tap="{{_goTo}}" />
+                </template>
             </div>
         </fa-center-content>
 
