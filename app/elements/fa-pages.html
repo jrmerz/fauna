@@ -23,18 +23,14 @@
 
                     this.update();
                 }.bind(this));
-
-                
             },
 
             update : function() {
                 var hash = window.location.hash.replace(/#/g, '').split('/')[0];
 
                 if( this.pages[hash] && this.pages[hash] != this.cPage ) {
-                    //$(this.cPage).remove();
                     if( this.cPage ) this.cPage.style.display = 'none';
                     this.cPage = this.pages[hash];
-                    //this.$.root.appendChild(this.cPage);
                     this.cPage.style.display = 'block';
                 }
             }

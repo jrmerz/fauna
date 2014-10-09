@@ -1,28 +1,4 @@
-<!--<polymer-element name="fa-gallery-img">
-    <template>
-
-        <div hidden?="{{!loading}}">
-
-        </div>
-        <div hidden="{{loading}}">
-            <img 
-                class="comic animated flipInX" 
-                src="/comics/thumb/Fauna_{{index}}.jpg"
-                index="{{index}}"
-                on-tap="{{_goTo}}" />
-        </div>
-
-    </template>
-    <script>
-        Polymer('fa-gallery-img', {
-            loading : true
-        })
-    </script>
-</polymer-element>-->
-
-<!-- TODO: just set the image size so we don't have to wait for it on load.
-    the thumbnails *should* be static -->
-<polymer-element name="fa-gallery">
+<polymer-element name="fa-gallery" attributes="type">
     <template>
         <link rel="stylesheet" href="../../bower_components/animate-css/animate.css" noshim />
         <style>
@@ -32,9 +8,16 @@
                 border-radius: 6px;
                 margin: 10px;
                 cursor: pointer;
-                width: 100px;
-                height: 128px;
             }
+
+            .comic.Fauna {
+                width: 100px;
+            }
+
+            .comic.nuts {
+                width: 175px;
+            }
+
             @media(max-width: 768px) {
                 .comic {
                     margin: 5px;
@@ -48,8 +31,8 @@
                 <div style="margin: auto">
                     <template repeat="{{index in gallaryArray}}">
                        <img 
-                        class="comic animated flipInX" 
-                        src="/comics/thumb/Fauna_{{index}}.jpg"
+                        class="comic {{type}} animated flipInX" 
+                        src="/comics/{{loc}}/thumb/{{type}}_{{index}}.jpg"
                         index="{{index}}"
                         on-tap="{{_goTo}}" />
                     </template>
@@ -63,15 +46,29 @@
     <script>
         Polymer('fa-gallery', {
             index : 0,
-            hash : ['cartoons'],
+            hash : [],
             loading : '',
+            loc : '',
 
             gallaryArray : [],
             timers : [],
 
+            max : 0,
+            numPerPage : 0,
+
             ready : function() {
-                $(window)
-                    .on('hashchange', this.update.bind(this))
+                this.loc = this.type.toLowerCase();
+                if( this.type == 'Fauna' ) {
+                    this.hash = ['cartoons'];
+                    this.max = MAX_FAUNA_IMG;
+                    this.numPerPage = 9;
+                } else if ( this.type == 'nuts' ) {
+                    this.hash = ['nuts_cartoons'];
+                    this.max = MAX_NUTS_IMG;
+                    this.numPerPage = 8;
+                }
+
+                $(window).on('hashchange', this.update.bind(this))
                 this.update();
             },
 
@@ -90,8 +87,8 @@
                 this.gallaryArray = [];
                 var c = 0;
 
-                for( var i = (this.index-1) * 9; i < this.index * 9; i++ ) {
-                    if( i >= MAX_IMG ) return;
+                for( var i = (this.index-1) * this.numPerPage; i < this.index * this.numPerPage; i++ ) {
+                    if( i >= this.max ) return;
                     this._addPic(i, c);
                     c++;
                 }
@@ -119,8 +116,8 @@
             },
 
             _checkHiBounds : function() {
-                if( this.index > Math.ceil( MAX_IMG / 9 ) ) {
-                    this.index = Math.ceil( MAX_IMG / 9 );
+                if( this.index > Math.ceil( this.max / this.numPerPage ) ) {
+                    this.index = Math.ceil( this.max / this.numPerPage );
                     return false;
                 }
                 return true;
@@ -128,7 +125,11 @@
 
             _goTo : function(e) {
                 var index = e.currentTarget.getAttribute('index');
-                window.location.hash = 'home/'+index;
+
+                var loc = 'home';
+                if( this.type == 'nuts' ) loc = 'nuts';
+
+                window.location.hash = loc+'/'+index;
             },
 
             previous : function() {

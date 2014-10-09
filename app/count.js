@@ -1,1 +1,2 @@
-var MAX_IMG=28;
+var MAX_FAUNA_IMG=28;
+var MAX_NUTS_IMG=40;
