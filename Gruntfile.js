@@ -86,6 +86,7 @@ module.exports = function (grunt) {
                         'elements/**',
                         'images/**',
                         'comics/**',
+                        'icons/**',
                         'styles/**'
                     ]
                 },
