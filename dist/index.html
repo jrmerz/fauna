@@ -4149,12 +4149,15 @@ Copyright (c) 2013 Daniel Eden
 
             :host {
                 display: block;
+                position: relative;
             }
 
             facebook-button {
-                position: absolute;
+                position: fixed;
                 left: 10px;
                 bottom: 10px;
+                z-index: 1001;
+                height: 20px;
             }
 
             @media(max-width: 1200px) {
@@ -4188,7 +4191,6 @@ Copyright (c) 2013 Daniel Eden
                 }
 
                 facebook-button {
-                    position: absolute;
                     left: 5px;
                     bottom: 5px;
                 }
@@ -4208,10 +4210,13 @@ Copyright (c) 2013 Daniel Eden
             <content select="[content]"></content>
         </div>
 
+
+
         <div class="footer">
-            <facebook-button></facebook-button>
             <img class="logo" src="images/faunacartoon.png">
         </div>
+
+        <facebook-button></facebook-button>
 
         <template bind="" if="{{!isDesktop}}">
             <div class="drawer {{openDrawer ? &apos;open&apos; : &apos;&apos;}}" on-tap="{{_checkDrawer}}">
@@ -4279,7 +4284,6 @@ Copyright (c) 2013 Daniel Eden
     <fa-links></fa-links>
   </fa-pages>
 </fa-layout>
-
 
   
 
