@@ -355,18 +355,9 @@ Polymer('fa-center-content');;
             },
 
             ready : function() {
-                //this._setFacebook(this.shadowRoot, 'script', 'facebook-jssdk');
+                this.shadowRoot.querySelector('facebook-button').href = 'http://faunacartoon.com';
             },
 
-            _setFacebook : function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = document.createElement(s); 
-                js.id = id;
-                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-                this.shadowRoot.appendChild(js);
-                //fjs.parentNode.insertBefore(js, fjs);
-            },
 
             _updateSize : function() {
                 this.isPhone = false;
