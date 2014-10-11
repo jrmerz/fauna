@@ -1,6 +1,6 @@
 <polymer-element name="fa-comic" attributes="type">
     <template>
-        <link rel="stylesheet" href="../../bower_components/animate-css/animate.css" noshim />
+        <link rel="stylesheet" href="../../styles/animate.css" noshim />
         <style>
 
             .comic {
@@ -41,16 +41,16 @@
         <fa-center-content>
             <div layout vertical>
                 <img id="img"
-                    class="comic animated fadeInUp"
+                    class="comic {{!loading ? 'animated fadeInUp' : ''}}"
                     src="/comics/{{loc}}/regular/{{type}}_{{index}}.jpg"
                     hidden?="{{loading}}"
                     on-load="{{onLoad}}" />
 
                 <div hidden?="{{!loading}}">
-                    <span class="text animated rubberBand infinite">Loading...</span>
+                    <span class="text {{loading ? 'animated rubberBand infinite' : ''}}">Loading...</span>
                 </div>
 
-                <div class="text animated fadeInLeftBig" hidden?="{{loading}}" >
+                <div class="text {{!loading ? 'animated fadeInLeftBig' : ''}}" hidden?="{{loading}}" >
                    #{{index}}
                 </div>
         </fa-center-content>

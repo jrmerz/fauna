@@ -1,3 +1,5 @@
+<link rel="import" href="../bower_components/facebook-button/dist/facebook-button.html" />
+
 <polymer-element name="fa-layout">
     <template>
         <style>
@@ -114,6 +116,12 @@
                 display: block;
             }
 
+            facebook-button {
+                position: absolute;
+                left: 10px;
+                bottom: 10px;
+            }
+
             @media(max-width: 1200px) {
                 .logo {
                     margin-left: 0px;
@@ -134,12 +142,20 @@
                     -ms-background-size: 171px 55px;
                 }
                 .logo {
+                    float: right;
+                    margin-right: 5px;
                     margin-top: 30px;
                     margin-left: 0px;
-                    width: 350px;
+                    width: 300px;
                 }
                 .content {
                     margin-left: 0;
+                }
+
+                facebook-button {
+                    position: absolute;
+                    left: 5px;
+                    bottom: 5px;
                 }
             }
         </style>
@@ -149,7 +165,7 @@
         <core-media-query query="min-width: 1200px" queryMatches="{{size.lg}}" ></core-media-query>
 
         <div hidden?="{{isDesktop}}" class="menuIcon {{(openDrawer && !isDesktop) ? 'opened' : ''}}">
-            <a on-tap="{{open}}"><img src="../images/duck.gif" border="0" style="width: 50px; margin: 10px" /></a>
+            <a on-tap="{{open}}"><img src="../images/menu_icon.png" border="0" style="width: 50px; margin: 10px" /></a>
         </div>
 
 
@@ -158,6 +174,7 @@
         </div>
 
         <div class="footer">
+            <facebook-button></facebook-button>
             <img class="logo" src="../images/faunacartoon.png" />
         </div>
 
@@ -203,6 +220,20 @@
                 'size.xs' : '_updateSize',
                 'size.md' : '_updateSize',
                 'size.lg' : '_updateSize'
+            },
+
+            ready : function() {
+                //this._setFacebook(this.shadowRoot, 'script', 'facebook-jssdk');
+            },
+
+            _setFacebook : function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = document.createElement(s); 
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+                this.shadowRoot.appendChild(js);
+                //fjs.parentNode.insertBefore(js, fjs);
             },
 
             _updateSize : function() {
