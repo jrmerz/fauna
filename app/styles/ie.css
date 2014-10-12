@@ -1,7 +1,7 @@
 .ie-layout {
     display: none;
 }
-:not(div.ie-error) {
+*:not(div.ie-error) {
     display: none;
 }
 
