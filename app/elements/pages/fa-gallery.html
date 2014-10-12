@@ -39,11 +39,12 @@
 
         <fa-center-content>
             <div class="container {{type}}">
-                <template repeat="{{index in gallaryArray}}">
+                <template repeat="{{item in gallaryArray}}">
                    <img 
-                    class="comic {{type}} animated flipInX" 
-                    src="/comics/{{loc}}/thumb/{{type}}_{{index}}.jpg"
-                    index="{{index}}"
+                    style="visibility:{{item.show ? 'visible' : 'hidden'}}"
+                    class="comic {{type}} {{item.show ? 'animated zoomIn' : ''}}" 
+                    src="/comics/{{loc}}/thumb/{{type}}_{{item.index}}.jpg"
+                    index="{{item.index}}"
                     on-tap="{{_goTo}}" />
                 </template>
             </div>
@@ -98,15 +99,20 @@
 
                 for( var i = (this.index-1) * this.numPerPage; i < this.index * this.numPerPage; i++ ) {
                     if( i >= this.max ) return;
-                    this._addPic(i, c);
+                    this.gallaryArray.push({
+                        index : i+1,
+                        show : false
+                    });
+                    this._showPic(c);
                     c++;
                 }
             },
 
-            _addPic : function(i, c) {
+            _showPic : function(c) {
+                var t = (100*c)+100;
                 this.timers.push(setTimeout(function(){
-                    this.gallaryArray.push(i+1);
-                }.bind(this), 100*c));
+                    this.gallaryArray[c].show = true;
+                }.bind(this), t));
             },
 
             _clearTimers : function() {

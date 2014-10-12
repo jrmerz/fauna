@@ -144,15 +144,20 @@ Polymer('fa-center-content');;
 
                 for( var i = (this.index-1) * this.numPerPage; i < this.index * this.numPerPage; i++ ) {
                     if( i >= this.max ) return;
-                    this._addPic(i, c);
+                    this.gallaryArray.push({
+                        index : i+1,
+                        show : false
+                    });
+                    this._showPic(c);
                     c++;
                 }
             },
 
-            _addPic : function(i, c) {
+            _showPic : function(c) {
+                var t = (100*c)+100;
                 this.timers.push(setTimeout(function(){
-                    this.gallaryArray.push(i+1);
-                }.bind(this), 100*c));
+                    this.gallaryArray[c].show = true;
+                }.bind(this), t));
             },
 
             _clearTimers : function() {
@@ -380,10 +385,14 @@ Polymer('fa-center-content');;
                 }
 
                 this.openDrawer = true;
+                // this doesn't work in safari :(
+                //document.body.style.overflow = 'hidden';
+
             },
 
             close : function() {
                 this.openDrawer = false;
+                //document.body.style.overflow = 'auto';
             },
 
             toggle : function() {
