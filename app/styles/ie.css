@@ -1,0 +1,7 @@
+fa-layout {
+    display: none;
+}
+
+.ie-error {
+    display: block !important;
+}
