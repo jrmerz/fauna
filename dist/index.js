@@ -387,13 +387,13 @@ Polymer('fa-center-content');;
 
                 this.openDrawer = true;
                 // this doesn't work in safari :(
-                //document.body.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
 
             },
 
             close : function() {
                 this.openDrawer = false;
-                //document.body.style.overflow = 'auto';
+                document.body.style.overflow = 'auto';
             },
 
             toggle : function() {
