@@ -284,7 +284,8 @@ Polymer('fa-center-content');;
     ;
 
         Polymer('fa-buy', {
-            hash : ['buy']
+            hash : ['buy'],
+            blank : ''
         });
     ;
 
