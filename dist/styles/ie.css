@@ -1,6 +1,9 @@
 .ie-layout {
     display: none;
 }
+:not(div.ie-error) {
+    display: none;
+}
 
 .ie-error {
     display: block !important;
