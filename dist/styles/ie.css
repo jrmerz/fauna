@@ -2,8 +2,13 @@ fa-layout {
     display: none !important;
 }
 
+div[hidden] {
+    display: none !important;
+}
+
 .ie-error {
     padding: 20px;
+    font-size: 26px;
 }
 
 .ie-error {
