@@ -1,0 +1,11 @@
+fa-layout {
+    display: none !important;
+}
+
+.ie-error {
+    padding: 20px;
+}
+
+.ie-error {
+    display: block !important;
+}

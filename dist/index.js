@@ -88,7 +88,7 @@ Polymer('fa-center-content');;
             },
 
             animateImg : function(ele) {
-                //var animation = this.animations[Math.floor(Math.random() * this.animations.length-1)];
+                //ele.classList.remove('bounceInUp');
                 var animation = 'tada';
 
                 ele.classList.add(animation);
@@ -406,7 +406,7 @@ Polymer('fa-center-content');;
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-27881514-1']);
       _gaq.push(['_trackPageview', location.pathname+location.search+location.hash]);
-    _gaq.push(['_setAllowAnchor', true]);
+      _gaq.push(['_setAllowAnchor', true]);
 
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
