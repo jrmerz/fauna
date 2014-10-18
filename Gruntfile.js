@@ -93,7 +93,7 @@ module.exports = function (grunt) {
                 {
                     expand: true,
                     dot: true,
-                    src: ['count.js','index.html','ie.js'], 
+                    src: ['count.js','index.html','ie.js', 'favicon.ico'], 
                     dest: '<%= yeoman.dist %>',
                     cwd: '<%= yeoman.app %>'
                 }]
