@@ -362,6 +362,7 @@ Polymer('fa-center-content');;
 
             ready : function() {
                 this.shadowRoot.querySelector('facebook-button').href = 'http://faunacartoon.com';
+                this.attribution();
             },
 
 
@@ -398,6 +399,14 @@ Polymer('fa-center-content');;
 
             toggle : function() {
                 this.openDrawer = !this.openDrawer;
+            },
+
+            attribution : function() {
+                console.log('************************************');
+                console.log('* Built using WebComponents and Polymer: https://www.polymer-project.org/');
+                console.log('* Also thanks to animate.css (http://daneden.github.io/animate.css/) and of course jQuery.');
+                console.log('* Built by Justin Merz (jrmerz@gmail.com)');
+                console.log('************************************');
             }
 
         });
