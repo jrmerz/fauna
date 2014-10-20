@@ -278,6 +278,7 @@ Polymer('fa-center-content');;
     ;
 
         Polymer('fa-about', {
+            hack : '',
             isPhone : false,
             hash : ['about']
         });
