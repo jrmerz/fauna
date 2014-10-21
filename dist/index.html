@@ -3521,7 +3521,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 position: relative;
             }
             .img {
-                background: url("images/left_nav.png") no-repeat bottom left;
+                background: url(images/left_nav.png) no-repeat bottom left;
                 min-height: 634px;
                 margin: 55px 0;
             }
@@ -3799,7 +3799,7 @@ Copyright (c) 2013 Daniel Eden
         <fa-center-content>
             <div class="container {{type}}">
                 <template repeat="{{item in gallaryArray}}">
-                   <img style="visibility:{{item.show ? 'visible' : 'hidden'}}" class="comic {{type}} {{item.show ? 'animated zoomIn' : ''}}" src="/comics/{{loc}}/thumb/{{type}}_{{item.index}}.jpg" index="{{item.index}}" on-tap="{{_goTo}}">
+                   <img style="visibility:{{item.show ? &apos;visible&apos; : &apos;hidden&apos;}}" class="comic {{type}} {{item.show ? &apos;animated zoomIn&apos; : &apos;&apos;}}" src="/comics/{{loc}}/thumb/{{type}}_{{item.index}}.jpg" index="{{item.index}}" on-tap="{{_goTo}}">
                 </template>
             </div>
         </fa-center-content>
@@ -3856,13 +3856,13 @@ Copyright (c) 2013 Daniel Eden
 
         <fa-center-content>
             <div layout="" vertical="">
-                <img id="img" class="comic {{!loading ? 'animated fadeInUp' : ''}}" src="/comics/{{loc}}/regular/{{type}}_{{index}}.jpg" hidden?="{{loading}}" on-load="{{onLoad}}">
+                <img id="img" class="comic {{!loading ? &apos;animated fadeInUp&apos; : &apos;&apos;}}" src="/comics/{{loc}}/regular/{{type}}_{{index}}.jpg" hidden?="{{loading}}" on-load="{{onLoad}}">
 
                 <div hidden?="{{!loading}}">
-                    <span class="text {{loading ? 'animated rubberBand infinite' : ''}}">Loading...</span>
+                    <span class="text {{loading ? &apos;animated rubberBand infinite&apos; : &apos;&apos;}}">Loading...</span>
                 </div>
 
-                <div class="text {{!loading ? 'animated fadeInLeftBig' : ''}}" hidden?="{{loading}}">
+                <div class="text {{!loading ? &apos;animated fadeInLeftBig&apos; : &apos;&apos;}}" hidden?="{{loading}}">
                    #{{index}}
                 </div>
             </div>
@@ -3913,11 +3913,11 @@ Copyright (c) 2013 Daniel Eden
          
                 <p>He studied ecology at UC Davis before going to vet school and is well known (among his former college roommates) for illustrating a cartoon about squirrels for the student newspaper (check out <a href="{{hack}}#nuts_cartoons">Nuts</a> in the <a href="{{hack}}#links">links</a> page). Leading scientists disagree about the exact origin of his cartooning, but they generally conclude that he began at an early age, with critically acclaimed (if not commercially successful) series such as The Turtle Avenger, Sentient Vegetables In the Big City, and The Meaty Adventures of Corn Dog and Bacon Boy. His parents might have some copies in their garage somewhere.</p>
          
-                <p>As stated above, Greg lives in San Diego. He likes surfing and burritos, usually in quick succession. So does his dog, Waffles. Other reported hobbies include bird-watching, painting, 80’s hair metal, trying to learn to weld, podcasts about history, and a little dabbling in theoretical physics. Greg wants YOUR NAME HERE to enjoy Fauna cartoons, so please leave some feedback. Please!</p>
+                <p>As stated above, Greg lives in San Diego. He likes surfing and burritos, usually in quick succession. So does his dog, Waffles. Other reported hobbies include bird-watching, painting, 80&#x2019;s hair metal, trying to learn to weld, podcasts about history, and a little dabbling in theoretical physics. Greg wants YOUR NAME HERE to enjoy Fauna cartoons, so please leave some feedback. Please!</p>
 
                 <p>
                     Greg Bishop<br>
-                    <a href="mailto:gtbish@gmail.com">gtbish@gmail.com</a>
+                    <a href="elements/pages/mailto:gtbish@gmail.com">gtbish@gmail.com</a>
                 </p>
             </div>
         </fa-center-content>
@@ -4009,8 +4009,8 @@ Copyright (c) 2013 Daniel Eden
             <div style="max-width: 700px; padding: 5px">
                 <h2 style="margin-top:0">Links</h2>
 
-                <h4><a href="https://www.facebook.com/pages/Fauna-Cartoon/267394136648868">Fauna Cartoon’s Facebook Page</a></h4>
-                <p>Check out Fauna’s facebook page for news and updates!</p>
+                <h4><a href="https://www.facebook.com/pages/Fauna-Cartoon/267394136648868">Fauna Cartoon&#x2019;s Facebook Page</a></h4>
+                <p>Check out Fauna&#x2019;s facebook page for news and updates!</p>
 
                 <h4><a href="{{blank}}#nuts_cartoons">Nuts Collection</a></h4>
                 <p>Here is a cartoon strip I did for the UC Davis student newspaper when I was a senior in college. The main themes are squirrels and churros, which is I guess what I thought about most in college. </p>
@@ -4018,14 +4018,14 @@ Copyright (c) 2013 Daniel Eden
                 <h4><a href="http://www.sdzsafaripark.org/">San Diego Zoo Safari Park</a></h4>
                 <p>Great park that takes exceptional care of their animals. Incredible open-space exhibits where you can see herds of rhinos and giraffes. They also are involved in tons of important field research both locally and globally. What a spot!</p>
                  
-                <h4><a href="https://plus.google.com/101609841353936434386/posts">Justin Merz’s Google+ page</a></h4>
+                <h4><a href="https://plus.google.com/101609841353936434386/posts">Justin Merz&#x2019;s Google+ page</a></h4>
                 <p><a href="{{blank}}mailto:jrmerz@gmail.com">Justin</a> is the MAN. He built this whole website using superhuman intelligence and raw, un-pasteurized gumption. You should buy him a drink if you every run across the man.</p>
                  
                 <h4><a href="http://www.sdnhm.org">San Diego Natural History Museum</a></h4>
                 <p>I love this place. I worked here as a volunteer with the herpetology department and went on a field trip with them to collect specimens. Stunning exhibits, and brilliant people doing great work in Southern California.</p>
                  
                 <h4><a href="http://www.seadocsociety.org">SeaDoc Society</a></h4>
-                <p>I worked for this organization while in vet school. They manage a ton of cool projects in the Salish Sea (inland waters around Seattle and Vancouver). They’re a great group of people dedicated to a healthy ecosystem. Check out all the research they’ve done!</p>
+                <p>I worked for this organization while in vet school. They manage a ton of cool projects in the Salish Sea (inland waters around Seattle and Vancouver). They&#x2019;re a great group of people dedicated to a healthy ecosystem. Check out all the research they&#x2019;ve done!</p>
 
             </div>
         </fa-center-content>
@@ -4155,7 +4155,7 @@ Copyright (c) 2013 Daniel Eden
             }
 
             .footer {
-                background: url("images/grass.png") repeat-x top left;
+                background: url(images/grass.png) repeat-x top left;
                 height: 135px;
                 width: 100%;
                 position: fixed;
@@ -4240,12 +4240,12 @@ Copyright (c) 2013 Daniel Eden
         <core-media-query query="min-width: 769px" querymatches="{{size.md}}"></core-media-query>
         <core-media-query query="min-width: 1200px" querymatches="{{size.lg}}"></core-media-query>
 
-        <div hidden?="{{isDesktop}}" class="menuIcon {{(openDrawer && !isDesktop) ? 'opened' : ''}}">
+        <div hidden?="{{isDesktop}}" class="menuIcon {{(openDrawer &amp;&amp; !isDesktop) ? &apos;opened&apos; : &apos;&apos;}}">
             <a on-tap="{{open}}"><img src="images/menu_icon.png" border="0" style="width: 50px; margin: 10px"></a>
         </div>
 
 
-        <div class="content {{(openDrawer && !isDesktop) ? 'opened' : ''}}" on-tap="{{_checkDrawer}}">
+        <div class="content {{(openDrawer &amp;&amp; !isDesktop) ? &apos;opened&apos; : &apos;&apos;}}" on-tap="{{_checkDrawer}}">
             <content select="[content]"></content>
         </div>
 
@@ -4258,7 +4258,7 @@ Copyright (c) 2013 Daniel Eden
         <facebook-button></facebook-button>
 
         <template bind="" if="{{!isDesktop}}">
-            <div class="drawer {{openDrawer ? 'open' : ''}}" on-tap="{{_checkDrawer}}">
+            <div class="drawer {{openDrawer ? &apos;open&apos; : &apos;&apos;}}" on-tap="{{_checkDrawer}}">
                 <div layout="" vertical="" style="height:100%">
                     <div flex=""></div>
                     <div>
