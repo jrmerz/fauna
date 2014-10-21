@@ -53,3 +53,5 @@ done
 echo "Done. Processed $fcount fauna comics and $ncount nuts commics"
 echo "var MAX_FAUNA_IMG=$fcount;" > app/count.js
 echo "var MAX_NUTS_IMG=$ncount;" >> app/count.js
+echo "var MAX_FAUNA_IMG=$fcount;" > dist/count.js
+echo "var MAX_NUTS_IMG=$ncount;" >> dist/count.js
