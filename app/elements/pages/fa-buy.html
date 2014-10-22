@@ -4,9 +4,9 @@
         <style>
             img {    
                 width: 150px;
-                float: right;
+                
             }
-            p, h2 {
+            p, h2, table td, div {
                 color: #333;
                 text-shadow: 1px 1px 0 #b8ceff;
             }
@@ -24,18 +24,77 @@
             <div style="max-width: 700px; min-width: 300px; padding: 5px">
                 <h2>Buy</h2>
 
-                <img src="../../images/hippo_shirt.png" class="animated bounceInDown" />
+                
 
-                <p style="margin-top: 30px">
-                    Help support Fauna Cartoon!  Order apparel from my shop on <a href="http://www.galloree.com/Shops/Fauna-Cartoon--1194/index.php" target="_blank" style="font-size: 28px">Galloree!</a>
-                </p>
+                <div layout horizontal>
+                    <div flex>
+                        <p style="margin-top: 30px">
+                            Help support Fauna Cartoon!  Order apparel from my shop on <a href="http://www.galloree.com/Shops/Fauna-Cartoon--1194/index.php" target="_blank" style="font-size: 28px">Galloree!</a>
+                        </p>
+                    </div>
+                    <div>
+                        <img src="../../images/hippo_shirt.png" class="animated bounceInDown" />
+                    </div>
+                </div>
+
+                
+                <div>
+                    Fauna Signed Prints:<br />
+                    Prints are on environmentally friendly and archival quality paper. They are signed by the artist in permanent ink.
+                </div>
+
+                <div layout horizontal>
+                    <div flex>
 
                 <p>
-                    Or for prints email me, Greg Bishop at:<br />
-                    <a href="{{blank}}mailto:gtbish@gmail.com">gtbish@gmail.com</a>
+                    <form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" >
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <table>
+                        <tr><td><input type="hidden" name="on0" value="Single Prints">Single Prints</td></tr><tr><td><select name="os0">
+                            <option value="5 x 7" (Mainland US)">5 x 7" (Mainland US) $30.00 USD</option>
+                            <option value="8 x 12" (Mainland US)">8 x 12" (Mainland US) $30.00 USD</option>
+                            <option value="5 x 7" (HI, AK, Canada)">5 x 7" (HI, AK, Canada) $35.00 USD</option>
+                            <option value="8 x 12" (HI, AK, Canada)">8 x 12" (HI, AK, Canada) $35.00 USD</option>
+                            <option value="5 x 7" (Non-US or Canada)">5 x 7" (Non-US or Canada) $45.00 USD</option>
+                            <option value="8 x 12" (Non-US or Canada)">8 x 12" (Non-US or Canada) $45.00 USD</option>
+                        </select> </td></tr>
+                        <tr><td><input type="hidden" name="on1" value="Enter the # of the cartoon">Enter the # of the cartoon</td></tr><tr><td><input type="text" name="os1" maxlength="200"></td></tr>
+                        </table>
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                    </form>
                 </p>
 
-                <p style="margin-top:100px; font-size: 15px">
+                </div>
+                <div flex>
+
+                <p>
+                    <form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" >
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <table>
+                        <tr><td><input type="hidden" name="on0" value="Additional Prints">Additional Prints</td></tr><tr><td><select name="os0">
+                            <option value="5 x 7"">5 x 7" $20.00 USD</option>
+                            <option value="8 x 12"">8 x 12" $20.00 USD</option>
+                        </select> </td></tr>
+                        <tr><td><input type="hidden" name="on1" value="Enter the # of the cartoon">Enter the # of the cartoon</td></tr><tr><td><input type="text" name="os1" maxlength="200"></td></tr>
+                        </table>
+                        <input type="hidden" name="currency_code" value="USD">
+                        <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                    </form>
+                </p>
+
+                </div></div>
+
+                <div>
+                    Orders will arrive 2-4 weeks from receipt.
+                </div>
+
+                <p style="margin-top:50px; font-size: 15px">
+
                     10% of proceeds go to carefully selected wildlife conservation groups.
                 <p>
             </div>
