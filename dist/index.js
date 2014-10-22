@@ -77,6 +77,9 @@ Polymer('fa-center-content');;
         Polymer('fa-img-nav', {
             animations : ['rubberBand', 'bounceOut', 'rollIn', 'bounceOut', 'flipInX'],
 
+            index : 0,
+            max : 10000,
+
             fireNext : function() {
                 this.animateImg(this.$.right);
                 this.fire('next');
@@ -109,9 +112,13 @@ Polymer('fa-center-content');;
             timers : [],
 
             max : 0,
+            numPages : 0,
             numPerPage : 0,
 
             ready : function() {
+                this.gallaryArray = [];
+                this.times = [];
+
                 this.loc = this.type.toLowerCase();
                 if( this.type == 'Fauna' ) {
                     this.hash = ['cartoons'];
@@ -122,6 +129,7 @@ Polymer('fa-center-content');;
                     this.max = MAX_NUTS_IMG;
                     this.numPerPage = 8;
                 }
+                this.numPages = Math.ceil(this.max / this.numPerPage);
 
                 $(window).on('hashchange', this.update.bind(this))
                 this.update();
@@ -132,7 +140,9 @@ Polymer('fa-center-content');;
                 parts[0] = parts[0].replace(/#/g, '');
 
                 if( parts[0] != this.hash[0] ) return;
+
                 if( parts.length > 1 ) this.index = parseInt(parts[1]);
+                else this.index = 1;
 
 
                 this._checkLowBounds();
@@ -211,17 +221,19 @@ Polymer('fa-center-content');;
             loading : true,
             hash : [],
             loc : '',
+            max : 0,
 
             ready : function() {
                 this.loc = this.type.toLowerCase();
 
                 if( this.type == 'Fauna' ) {
-                    if( window.MAX_FAUNA_IMG ) this.index = MAX_FAUNA_IMG;
+                    if( window.MAX_FAUNA_IMG ) this.max = MAX_FAUNA_IMG;
                     this.hash = ['home', ''];
                 } else if ( this.type == 'nuts' ) {
-                    if( window.MAX_NUTS_IMG ) this.index = MAX_NUTS_IMG;
+                    if( window.MAX_NUTS_IMG ) this.max = MAX_NUTS_IMG;
                     this.hash = ['nuts'];
                 }
+                this.index = this.max;
                 
                 $(window).on('hashchange', this.update.bind(this))
                 this.update();
@@ -236,11 +248,7 @@ Polymer('fa-center-content');;
                 if( parts.length > 1 && this.index != parts[1] ) {
                     this.index = parts[1];
                 } else if( parts.length == 1 ) {
-                    if( this.type == 'Fauna' ) {
-                        this.index = MAX_FAUNA_IMG;
-                    } else if ( this.type == 'nuts' ) {
-                        this.index = MAX_NUTS_IMG;
-                    }
+                    this.index = this.max;
 
                     this.loading = true;
                 }
@@ -259,11 +267,8 @@ Polymer('fa-center-content');;
             next : function() {
                 this.index++;
                 
-                if( this.type == 'Fauna' && this.index > MAX_FAUNA_IMG ) {
-                    this.index = MAX_FAUNA_IMG;
-                    return;
-                } else if ( this.type == 'nuts' && this.index > MAX_NUTS_IMG ) {
-                    this.index = MAX_NUTS_IMG;
+                if( this.index > this.max ) {
+                    this.index = this.max;
                     return;
                 }
 
@@ -294,6 +299,14 @@ Polymer('fa-center-content');;
 
             ready : function() {
                 for( var i = 0; i < MAX_FAUNA_IMG; i++ ) this.comics.push((i+1)+'');
+            },
+
+            addPrint : function() {
+                ga('send', 'event', 'buy', 'print', this.comicMain, 1);
+            },
+
+            addAdditional : function() {
+                ga('send', 'event', 'buy', 'additional', this.comicExtra, 1);
             }
 
         });
@@ -422,17 +435,17 @@ Polymer('fa-center-content');;
         });
     ;
 
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-27881514-1']);
-      _gaq.push(['_setAllowAnchor', true]);
-      _gaq.push(['_trackPageview', location.pathname+location.search+location.hash]);
-      $(window).on('hashchange', function(){
-        _gaq.push(['_trackPageview', location.pathname+location.search+location.hash]);
-      });
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+    ga('create', 'UA-27881514-1', 'auto');
+    ga('send', 'pageview');
+
+    $(window).on('hashchange', function(){
+      ga('send', 'pageview', {
+        'page': location.pathname+location.search+location.hash
+      });
+    });
   

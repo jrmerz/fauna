@@ -50,7 +50,7 @@
             </div>
         </fa-center-content>
 
-        <fa-img-nav on-previous="{{previous}}" on-next="{{next}}"></fa-img-nav>
+        <fa-img-nav on-previous="{{previous}}" on-next="{{next}}" index="{{index}}" max="{{numPages}}"></fa-img-nav>
 
     </template>
     <script>
@@ -64,9 +64,13 @@
             timers : [],
 
             max : 0,
+            numPages : 0,
             numPerPage : 0,
 
             ready : function() {
+                this.gallaryArray = [];
+                this.times = [];
+
                 this.loc = this.type.toLowerCase();
                 if( this.type == 'Fauna' ) {
                     this.hash = ['cartoons'];
@@ -77,6 +81,7 @@
                     this.max = MAX_NUTS_IMG;
                     this.numPerPage = 8;
                 }
+                this.numPages = Math.ceil(this.max / this.numPerPage);
 
                 $(window).on('hashchange', this.update.bind(this))
                 this.update();
@@ -87,7 +92,9 @@
                 parts[0] = parts[0].replace(/#/g, '');
 
                 if( parts[0] != this.hash[0] ) return;
+
                 if( parts.length > 1 ) this.index = parseInt(parts[1]);
+                else this.index = 1;
 
 
                 this._checkLowBounds();

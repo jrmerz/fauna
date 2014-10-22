@@ -1,4 +1,4 @@
-<polymer-element name="fa-img-nav">
+<polymer-element name="fa-img-nav" attributes="index max">
     <template>
         <link rel="stylesheet" href="../styles/animate.css" noshim />
         <style>
@@ -115,11 +115,11 @@
             <div class="fixed">
                 <div class="margin">
                     <div class="layout">
-                        <img id="left" class="animated" src="../images/prev.png" left />
-                        <button on-tap="{{firePrev}}" left></button>
+                        <img id="left" class="animated" src="../images/prev.png" left hidden?="{{index == 1}}"/>
+                        <button on-tap="{{firePrev}}" left hidden?="{{index == 1}}"></button>
 
-                        <img id="right" class="animated" src="../images/next.png" right />
-                        <button on-tap="{{fireNext}}" right></button>
+                        <img id="right" class="animated" src="../images/next.png" right hidden?="{{index == max}}" />
+                        <button on-tap="{{fireNext}}" right hidden?="{{index == max}}"></button>
                     </div>
                 </div>
             </div>
@@ -129,6 +129,9 @@
     <script>
         Polymer('fa-img-nav', {
             animations : ['rubberBand', 'bounceOut', 'rollIn', 'bounceOut', 'flipInX'],
+
+            index : 0,
+            max : 10000,
 
             fireNext : function() {
                 this.animateImg(this.$.right);
