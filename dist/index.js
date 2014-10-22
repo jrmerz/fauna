@@ -286,7 +286,16 @@ Polymer('fa-center-content');;
 
         Polymer('fa-buy', {
             hash : ['buy'],
-            blank : ''
+            blank : '',
+            comicExtra : '',
+            comicMain : '',
+
+            comics : [],
+
+            ready : function() {
+                for( var i = 0; i < MAX_FAUNA_IMG; i++ ) this.comics.push((i+1)+'');
+            }
+
         });
     ;
 
