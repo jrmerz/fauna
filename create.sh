@@ -12,6 +12,7 @@ do
 	if [ ! -f app/comics/fauna/regular/$loc ];
 	then
 		echo "Generating regular $loc"
+		echo "convert comics/fauna/$loc -resize 600x600 app/comics/fauna/regular/$loc"
 		convert comics/fauna/$loc -resize 600x600 app/comics/fauna/regular/$loc
 		convert comics/fauna/$loc -resize 800x800 app/comics/fauna/regular/hi_$loc
 	fi
