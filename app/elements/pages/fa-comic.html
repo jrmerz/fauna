@@ -47,7 +47,7 @@
                     on-load="{{onLoad}}" />
 
                 <div hidden?="{{!loading}}">
-                    <span class="text {{loading ? 'animated rubberBand infinite' : ''}}">Loading...</span>
+                    <div class="text {{loading ? 'animated rubberBand infinite' : ''}}">Loading...</div>
                 </div>
 
                 <div class="text {{!loading ? 'animated fadeInLeftBig' : ''}}" hidden?="{{loading}}" >
