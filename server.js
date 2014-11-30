@@ -7,6 +7,6 @@ process.argv.forEach(function(val){
 });
 
 app.use(express.static(dir));
-app.listen(3000);
+app.listen(3030);
 
-console.log('Serving '+dir+' @ http://localhost:3000');
+console.log('Serving '+dir+' @ http://localhost:3030');

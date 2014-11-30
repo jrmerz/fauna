@@ -15,10 +15,10 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#~0.4.1",
-    "core-elements": "Polymer/core-elements#~0.4.1",
-    "jquery": "~2.1.1",
-    "animate-css": "~3.2.0",
-    "facebook-button": "~0.1.5"
+    "polymer": "Polymer/polymer#*",
+    "core-elements": "Polymer/core-elements#*",
+    "jquery": "*",
+    "animate-css": "*",
+    "facebook-button": "*"
   }
 }

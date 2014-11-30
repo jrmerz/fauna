@@ -83,6 +83,7 @@ module.exports = function (grunt) {
                     src: [
                         '*.html',
                         'favicon.ico',
+                        'count.js',
                         '*.xml',
                         'images/**',
                         'comics/**',
@@ -132,13 +133,20 @@ module.exports = function (grunt) {
             },
         },
 
+        rename: {
+            moveThis: {
+                src: '<%= yeoman.app %>/elements-build.html',
+                dest: '<%= yeoman.dist %>/elements.html'
+            },
+        },
+
         vulcanize: {
             default : {
                 options: {
                     inline : true
                 },
                 files : {
-                    '<%= yeoman.dist %>/elements.html': ['<%= yeoman.app %>/elements.html']
+                    '<%= yeoman.app %>/elements-build.html': ['<%= yeoman.app %>/elements.html']
                 }
             }
         },
@@ -155,6 +163,7 @@ module.exports = function (grunt) {
         //'rev',
         'usemin',
         'vulcanize',
+        'rename'
         //'shell:clear-bower-components'
     ]);
 
