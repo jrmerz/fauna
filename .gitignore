@@ -1,7 +1,9 @@
 .tmp
 comics
 node_modules
+app/count.js
 app/comics
 dist/comics
+dist/count.js
 app/bower_components
 *.DS_Store

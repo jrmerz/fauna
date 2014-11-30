@@ -81,21 +81,14 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        '*.{html}',
-                        'bower_components/**',
-                        'elements/**',
+                        '*.html',
+                        'favicon.ico',
+                        '*.xml',
                         'images/**',
                         'comics/**',
                         'icons/**',
                         'styles/**'
                     ]
-                },
-                {
-                    expand: true,
-                    dot: true,
-                    src: ['count.js','index.html','ie.js', 'favicon.ico'], 
-                    dest: '<%= yeoman.dist %>',
-                    cwd: '<%= yeoman.app %>'
                 }]
             }
         },
@@ -104,14 +97,14 @@ module.exports = function (grunt) {
         shell: {
             // usemin compresses the css and js, makeing the components lib
             // unnecessary except the polymer script
-            'clear-bower-components' : {
+            /*'clear-bower-components' : {
                 options: {
                     stdout: true,
                     stderr: true
                 },
                 command: 'rm -rf <%= yeoman.dist %>/bower_components && '+
                          'rm -rf <%= yeoman.dist %>/elements'
-            },
+            },*/
             server : {
                 options: {
                     stdout: true,
@@ -142,11 +135,10 @@ module.exports = function (grunt) {
         vulcanize: {
             default : {
                 options: {
-                    csp : true,
                     inline : true
                 },
                 files : {
-                    '<%= yeoman.dist %>/index.html': ['<%= yeoman.dist %>/index.html']
+                    '<%= yeoman.dist %>/elements.html': ['<%= yeoman.app %>/elements.html']
                 }
             }
         },
@@ -163,7 +155,7 @@ module.exports = function (grunt) {
         //'rev',
         'usemin',
         'vulcanize',
-        'shell:clear-bower-components'
+        //'shell:clear-bower-components'
     ]);
 
     grunt.registerTask('server', [
