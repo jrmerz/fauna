@@ -12213,6 +12213,82 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </script>
 </polymer-element>
 </div>
+<div hidden><!-- Import Polymer -->
+
+
+<!-- Define your custom element -->
+<polymer-element name="facebook-button" attributes="action colorscheme font href layout showfaces height width" assetpath="bower_components/facebook-button/dist/">
+
+    <template>
+        <iframe src="//www.facebook.com/plugins/like.php?href={{href}}&amp;send=false&amp;layout={{layout}}&amp;width={{width}}&amp;height={{height}}&amp;show_faces={{showfaces}}&amp;font={{font}}&amp;colorscheme={{colorscheme}}&amp;action={{action}}" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+
+        <style>
+            iframe {
+                border: none;
+                overflow: hidden;
+                height: {{height}}px;
+                width: {{width}}px;
+            }
+        </style>
+    </template>
+
+    <script>
+        Polymer('facebook-button', {
+            action     : 'like',
+            colorscheme: 'light',
+            font       : 'arial',
+            href       : 'http://customelements.io',
+            layout     : 'button_count',
+            showfaces  : 'false',
+            height     : '20',
+            width      : '120'
+        });
+    </script>
+
+</polymer-element>
+</div>
+<div hidden><!-- Import Polymer -->
+
+
+<!-- Define your custom element -->
+<polymer-element name="gplus-one" attributes="annotation height href lang rel size width" assetpath="bower_components/gplus-elements/dist/">
+
+    <script>
+        Polymer("gplus-one", {
+            annotation : "bubble",
+            height     : 20,
+            href       : "http://webcomponents.org",
+            lang       : "en-US",
+            size       : "standard",
+            width      : 300,
+
+            ready: function () {
+                var script = document.createElement("script"),
+                    div = document.createElement("div"),
+                    body = document.body;
+
+                script.setAttribute("type", "text/javascript");
+                script.setAttribute("src", "https://apis.google.com/js/plusone.js");
+                script.setAttribute("async", true);
+                script.innerHTML = "{lang: '" + this.lang + "'}";
+
+                div.setAttribute("class", "g-plusone");
+
+                div.setAttribute("data-annotation", this.annotation);
+                div.setAttribute("data-href", this.href);
+                div.setAttribute("data-size", this.size);
+                div.setAttribute("data-width", this.width);
+
+                this.appendChild(div);
+                body.appendChild(script);
+            }
+        });
+    </script>
+
+</polymer-element>
+</div>
+
+
 <div hidden><polymer-element name="fa-left-nav" assetpath="elements/">
     <template>
         <style>
@@ -12485,6 +12561,119 @@ Copyright (c) 2013 Daniel Eden
                     ele.classList.remove(animation);
                 }.bind(this), 1000);
             }
+        });
+    </script>
+</polymer-element></div>
+<div hidden><polymer-element name="fa-share" assetpath="elements/">
+    <template>
+        <style>
+            :host {
+                display: inline-block;
+            }
+            #openButton {
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 25px;
+                text-shadow: 1px 1px #3999fc;
+                color: #333;
+            }
+            #buttons {
+                overflow: hidden;
+                height: 0px;
+                width: 0px;
+                background-color: rgba(57, 153, 252, 0.82);
+                box-shadow: 0 0 10px #3999fc;
+                border-radius: 6px;
+
+                transition: all 300ms ease-out;
+                -moz-transition: all 300ms ease-out;
+                -webkit-transition: all 300ms ease-out;
+                -ms-transition: all 300ms ease-out;
+            }
+            #buttons div{
+                padding: 5px 0;
+            }
+
+            @media(max-width: 768px) {
+                #openButton {
+                    font-size: 18px;
+                }
+            }
+        </style>
+        <div id="buttons">
+            <div id="innerButtons" horizontal="" center-justified="" layout="" style="height:100%">
+                <div flex="" self-center="">
+                    <div><facebook-button></facebook-button></div>
+
+                    <div id="plusRoot"></div>
+
+                    <div>
+                        <a href="http://topwebcomics.com/vote/18836/default.aspx" target="_blank" title="Vote for Fauna Cartoon on TopWebComics!">
+                            <img style="border: 1px solid #333" src="http://topwebcomics.com/rankimages/rankimage.aspx?ImageTemplate=dynamiclink2&amp;SiteID=18836">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="openButton" on-click="{{open}}" style="display:inline-block">
+            Share!
+        </div>
+    </template>
+    <script>
+        Polymer('fa-share', {
+            opened : false,
+
+            ready : function() {
+                this.shadowRoot.querySelector('facebook-button').href = 'http://faunacartoon.com';
+                $(window).on('click', this.close.bind(this));
+
+               
+
+                setTimeout(function(){
+                    var children = $('body').children();
+                    for( var i = 0; i < children.length; i++ ) {
+                        var id = $(children[i]).attr('id') || '';
+                        if( id.match(/plusone/i) ) {
+                            var ele = $(children[i]).remove();
+                            this.$.plusRoot.appendChild(ele[0]);
+                            return;
+                        }
+                    }
+                }.bind(this), 1000);
+            },
+
+            open : function(e) {
+                this.opened = true;
+
+                var ele = $(this.$.innerButtons)
+                $(this.$.buttons)
+                    .height('130px')
+                    .width('155px')
+                    .css('padding', '10px')
+
+                this.$.buttons.style.display = "inline-block";
+                this.$.openButton.style.display = "none";
+                this.cancel(e);
+            },
+
+            close : function() {
+                if( !this.opened ) return;
+
+                this.opened = false;
+                $(this.$.buttons)
+                    .height(0)
+                    .width(0)
+                    .css('padding', '0px')
+
+                this.$.openButton.style.display = "inline-block";
+            },
+
+            cancel : function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+
         });
     </script>
 </polymer-element></div>
@@ -13119,44 +13308,8 @@ Copyright (c) 2013 Daniel Eden
         });
     </script>
 </polymer-element></div>
-<div hidden><!-- Import Polymer -->
-
-
-<!-- Define your custom element -->
-<polymer-element name="facebook-button" attributes="action colorscheme font href layout showfaces height width" assetpath="bower_components/facebook-button/dist/">
-
+<div hidden><polymer-element name="fa-layout" assetpath="elements/">
     <template>
-        <iframe src="//www.facebook.com/plugins/like.php?href={{href}}&amp;send=false&amp;layout={{layout}}&amp;width={{width}}&amp;height={{height}}&amp;show_faces={{showfaces}}&amp;font={{font}}&amp;colorscheme={{colorscheme}}&amp;action={{action}}" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
-
-        <style>
-            iframe {
-                border: none;
-                overflow: hidden;
-                height: {{height}}px;
-                width: {{width}}px;
-            }
-        </style>
-    </template>
-
-    <script>
-        Polymer('facebook-button', {
-            action     : 'like',
-            colorscheme: 'light',
-            font       : 'arial',
-            href       : 'http://customelements.io',
-            layout     : 'button_count',
-            showfaces  : 'false',
-            height     : '20',
-            width      : '120'
-        });
-    </script>
-
-</polymer-element>
-
-
-<polymer-element name="fa-layout" assetpath="elements/">
-    <template>
-
         <style>
             .drawer {
                 overflow-x: hidden;
@@ -13273,12 +13426,11 @@ Copyright (c) 2013 Daniel Eden
                 position: relative;
             }
 
-            facebook-button {
+            fa-share {
                 position: fixed;
                 left: 10px;
                 bottom: 10px;
                 z-index: 1001;
-                height: 20px;
             }
 
             @media(max-width: 1200px) {
@@ -13312,9 +13464,9 @@ Copyright (c) 2013 Daniel Eden
                     padding-bottom: 125px;
                 }
 
-                facebook-button {
+                fa-share {
                     left: 5px;
-                    bottom: 5px;
+                    bottom: 0px;
                 }
             }
             @media(max-width: 425px) {
@@ -13347,7 +13499,7 @@ Copyright (c) 2013 Daniel Eden
             <img class="logo" src="images/faunacartoon.png">
         </div>
 
-        <facebook-button></facebook-button>
+        <fa-share></fa-share>
 
         <template bind="" if="{{!isDesktop}}">
             <div class="drawer {{openDrawer ? &apos;open&apos; : &apos;&apos;}}" on-tap="{{_checkDrawer}}">
@@ -13394,10 +13546,8 @@ Copyright (c) 2013 Daniel Eden
             },
 
             ready : function() {
-                this.shadowRoot.querySelector('facebook-button').href = 'http://faunacartoon.com';
                 this.attribution();
             },
-
 
             _updateSize : function() {
                 this.isPhone = false;
