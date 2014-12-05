@@ -1,8 +1,5 @@
-<link rel="import" href="../bower_components/facebook-button/dist/facebook-button.html" />
-
 <polymer-element name="fa-layout">
     <template>
-
         <style>
             .drawer {
                 overflow-x: hidden;
@@ -119,12 +116,11 @@
                 position: relative;
             }
 
-            facebook-button {
+            fa-share {
                 position: fixed;
                 left: 10px;
                 bottom: 10px;
                 z-index: 1001;
-                height: 20px;
             }
 
             @media(max-width: 1200px) {
@@ -158,9 +154,9 @@
                     padding-bottom: 125px;
                 }
 
-                facebook-button {
+                fa-share {
                     left: 5px;
-                    bottom: 5px;
+                    bottom: 0px;
                 }
             }
             @media(max-width: 425px) {
@@ -193,7 +189,7 @@
             <img class="logo" src="../images/faunacartoon.png" />
         </div>
 
-        <facebook-button></facebook-button>
+        <fa-share></fa-share>
 
         <template bind if="{{!isDesktop}}">
             <div class="drawer {{openDrawer ? 'open' : ''}}" on-tap="{{_checkDrawer}}">
@@ -240,10 +236,8 @@
             },
 
             ready : function() {
-                this.shadowRoot.querySelector('facebook-button').href = 'http://faunacartoon.com';
                 this.attribution();
             },
-
 
             _updateSize : function() {
                 this.isPhone = false;

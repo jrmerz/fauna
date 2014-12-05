@@ -19,6 +19,7 @@
     "core-elements": "Polymer/core-elements#*",
     "jquery": "*",
     "animate-css": "*",
-    "facebook-button": "*"
+    "facebook-button": "*",
+    "gplus-elements": "~0.2.1"
   }
 }
