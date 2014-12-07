@@ -31,6 +31,9 @@
                 if( this.pages[hash] && this.pages[hash] != this.cPage ) {
                     if( this.cPage ) this.cPage.style.display = 'none';
                     this.cPage = this.pages[hash];
+                    if( hash != 'nuts' && hash != 'home') {
+                        window.document.title = 'Fauna - '+hash;
+                    }
                     this.cPage.style.display = 'block';
                 }
             }
