@@ -26,7 +26,13 @@
             },
 
             update : function() {
-                var hash = window.location.hash.replace(/#/g, '').split('/')[0];
+                var hash = window.location.hash.replace(/#/g, '');
+                if( hash.match(/^!/) ) {
+                    window.location = '#'+hash.replace(/^!/, '');
+                    return;
+                }
+
+                var hash = hash.split('/')[0];
 
                 if( this.pages[hash] && this.pages[hash] != this.cPage ) {
                     if( this.cPage ) this.cPage.style.display = 'none';
