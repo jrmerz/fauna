@@ -1,0 +1,9 @@
+Apache/PHP Setup Notes
+
+
+-- Setup search crawler
+RewriteEngine on
+
+RewriteRule ^/sitemap\.xml$ /sitemap.php
+RewriteCond %{QUERY_STRING} ^_escaped_fragment_=(.*)$
+RewriteRule (.*) /root/fauna/app/crawler.php?hash=%1 [QSA,L]
