@@ -95,12 +95,6 @@
   </div>
 
   <script type="text/javascript">
-    function isHashBang() {
-      var hash = window.location.hash.replace(/#/g, '');
-      if( hash.match(/^!/) ) return true;
-      return false;
-    }
-
     if (document.location.hostname == "faunacartoon.com" ) {
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -109,10 +103,9 @@
 
       ga('create', 'UA-27881514-1', 'auto');
 
-      if( !isHashBang() ) ga('send', 'pageview');
+      ga('send', 'pageview');
       
       $(window).on('hashchange', function(){
-        if( isHashBang() ) return;
 
         ga('send', 'pageview', {
           'page': location.pathname+location.search+location.hash.replace(/^!/, '')
