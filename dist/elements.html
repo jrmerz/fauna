@@ -12945,7 +12945,7 @@ Copyright (c) 2013 Daniel Eden
 
         <fa-center-content>
             <div layout="" vertical="">
-                <img id="img" class="comic {{!loading ? &apos;animated fadeInUp&apos; : &apos;&apos;}}" src="/comics/{{loc}}/regular/{{type}}_{{index}}.jpg" hidden?="{{loading}}" on-load="{{onLoad}}">
+                <img id="img" class="comic {{!loading ? &apos;animated fadeInUp&apos; : &apos;&apos;}}" src="/comics/{{loc}}/regular/{{type}}_{{index}}.jpg" hidden?="{{loading}}" on-load="{{onLoad}}" alt="{{altText}}">
 
                 <div hidden?="{{!loading}}">
                     <div class="text {{loading ? &apos;animated rubberBand infinite&apos; : &apos;&apos;}}">Loading...</div>
@@ -12972,6 +12972,8 @@ Copyright (c) 2013 Daniel Eden
             hash : [],
             loc : '',
             max : 0,
+            descriptions : {},
+            altText : '',
 
             ready : function() {
                 this.loc = this.type.toLowerCase();
@@ -12991,6 +12993,11 @@ Copyright (c) 2013 Daniel Eden
                 setTimeout(function(){
                     this.shadowRoot.querySelector('fa-sharethis').style.visibility = 'visible';
                 }.bind(this), 1000);
+
+                $.get('/description.json', function(resp){
+                    this.descriptions = resp;
+                    this.setTitle();
+                }.bind(this));
             },
 
             update : function() {
@@ -13007,7 +13014,21 @@ Copyright (c) 2013 Daniel Eden
                     window.location = '#home/'+this.max;
                 }
 
-                window.document.title = 'Fauna - #'+this.index;
+                this.setTitle();
+            },
+
+            setTitle : function() {
+                if( this.hash.indexOf('home') != -1 && window.location.hash.indexOf('home') != -1) {
+                    var title = 'Fauna #'+this.index;
+                    if( this.descriptions[this.index+''] ) {
+                        title += ' - '+this.descriptions[this.index+''].title;
+                        this.altText = this.descriptions[this.index+''].title;
+                    }
+
+                    window.document.title = title;
+                } else if( this.hash.indexOf('nuts') != -1 && window.location.hash.indexOf('nuts') != -1) {
+                    window.document.title = 'Nuts';
+                }
             },
 
             previous : function() {
@@ -13360,7 +13381,8 @@ Copyright (c) 2013 Daniel Eden
             },
 
             update : function() {
-                var hash = window.location.hash.replace(/#/g, '').split('/')[0];
+                var hash = window.location.hash.replace(/#/g, '');
+                hash = hash.split('/')[0];
 
                 if( this.pages[hash] && this.pages[hash] != this.cPage ) {
                     if( this.cPage ) this.cPage.style.display = 'none';

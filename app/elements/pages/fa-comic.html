@@ -47,7 +47,8 @@
                     class="comic {{!loading ? 'animated fadeInUp' : ''}}"
                     src="/comics/{{loc}}/regular/{{type}}_{{index}}.jpg"
                     hidden?="{{loading}}"
-                    on-load="{{onLoad}}" />
+                    on-load="{{onLoad}}" 
+                    alt="{{altText}}" />
 
                 <div hidden?="{{!loading}}">
                     <div class="text {{loading ? 'animated rubberBand infinite' : ''}}">Loading...</div>
@@ -74,6 +75,8 @@
             hash : [],
             loc : '',
             max : 0,
+            descriptions : {},
+            altText : '',
 
             ready : function() {
                 this.loc = this.type.toLowerCase();
@@ -93,6 +96,11 @@
                 setTimeout(function(){
                     this.shadowRoot.querySelector('fa-sharethis').style.visibility = 'visible';
                 }.bind(this), 1000);
+
+                $.get('/description.json', function(resp){
+                    this.descriptions = resp;
+                    this.setTitle();
+                }.bind(this));
             },
 
             update : function() {
@@ -109,7 +117,21 @@
                     window.location = '#home/'+this.max;
                 }
 
-                window.document.title = 'Fauna - #'+this.index;
+                this.setTitle();
+            },
+
+            setTitle : function() {
+                if( this.hash.indexOf('home') != -1 && window.location.hash.indexOf('home') != -1) {
+                    var title = 'Fauna #'+this.index;
+                    if( this.descriptions[this.index+''] ) {
+                        title += ' - '+this.descriptions[this.index+''].title;
+                        this.altText = this.descriptions[this.index+''].title;
+                    }
+
+                    window.document.title = title;
+                } else if( this.hash.indexOf('nuts') != -1 && window.location.hash.indexOf('nuts') != -1) {
+                    window.document.title = 'Nuts';
+                }
             },
 
             previous : function() {
