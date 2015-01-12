@@ -26,7 +26,7 @@
             },
 
             update : function() {
-                var hash = window.location.hash.replace(/#/g, '');
+                var hash = window.location.hash.replace(/#/g, '').replace(/^!/,'');
                 hash = hash.split('/')[0];
 
                 if( this.pages[hash] && this.pages[hash] != this.cPage ) {
