@@ -21,14 +21,15 @@
 </head>
 <body>
     <div itemscope itemtype="http://schema.org/CreativeWork">
-        <h1 itemprop="publisher" itemtype="http://schema.org/Organization" itemscope="">Fauna Cartoons</h1>
+        <h1 itemprop="publisher" itemtype="http://schema.org/Organization" itemscope>
+            <span itemprop="name">Fauna Cartoons</span>
+        </h1>
         <h2 itemprop="name"><?php echo $title ?></h2>
         <img itemprop="image" alt="<?php echo $title ?>" src="/comics/fauna/regular/Fauna_<?php echo $parts[1] ?>.jpg" />
         <div>
             By, <span itemprop="author">Greg Bishop</span>
         </div>
         <span style="display:none" itemprop="keywords"><?php echo $keywords ?></span>
-        <meta itemprop="isFamilyFriendly" content="true"/>
     </div>
 </body>
 </html>
