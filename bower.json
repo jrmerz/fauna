@@ -1,6 +1,6 @@
 {
   "name": "fauna",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "authors": [
     "Justin Merz <jrmerz@gmail.com>"
   ],
@@ -15,11 +15,9 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#*",
-    "core-elements": "Polymer/core-elements#*",
-    "jquery": "*",
-    "animate-css": "*",
-    "facebook-button": "*",
-    "gplus-elements": "~0.2.1"
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "animate.css": "~3.4.0",
+    "polymer": "~1.1.0"
   }
 }

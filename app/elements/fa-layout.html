@@ -1,287 +1,282 @@
-<polymer-element name="fa-layout">
-    <template>
-        <style>
-            .drawer {
-                overflow-x: hidden;
-                overflow-y: auto;
-                position: fixed;
-                height: 100%;
-                bottom: 0;
-                left: 0;
+<dom-module id="fa-layout">
+  <style>
+      .drawer {
+          overflow-x: hidden;
+          overflow-y: auto;
+          position: fixed;
+          height: 100%;
+          bottom: 0;
+          left: 0;
 
-                transition: transform 200ms linear;
-                -moz-transition: -moz-transform 200ms linear;
-                -webkit-transition: -webkit-transform 200ms linear;
-                -ms-transition: -ms-transform 200ms linear;
+          transition: transform 200ms linear;
+          -moz-transition: -moz-transform 200ms linear;
+          -webkit-transition: -webkit-transform 200ms linear;
+          -ms-transition: -ms-transform 200ms linear;
 
-                transform: translate3d(-310px, 0, 0);
-                -moz-transform: translate3d(-310px, 0, 0);
-                -webkit-transform: translate3d(-310px, 0, 0);
-                -ms-transform: translate3d(-310px, 0, 0);
-            }
+          transform: translate3d(-310px, 0, 0);
+          -moz-transform: translate3d(-310px, 0, 0);
+          -webkit-transform: translate3d(-310px, 0, 0);
+          -ms-transform: translate3d(-310px, 0, 0);
+      }
 
-            .drawer.open {
-                transform: translate3d(0, 0, 0);
-                -moz-transform: translate3d(0, 0, 0);
-                -webkit-transform: translate3d(0, 0, 0);
-                -ms-transform: translate3d(0, 0, 0);
-            }
+      .drawer.open {
+          transform: translate3d(0, 0, 0);
+          -moz-transform: translate3d(0, 0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          -ms-transform: translate3d(0, 0, 0);
+      }
 
-            .nav-overflow {
-                overflow-x: hidden;
-                overflow-y: auto;
-                position: fixed;
-                height: 100%;
-                bottom: 0;
-                left: 0;
+      .nav-overflow {
+          overflow-x: hidden;
+          overflow-y: auto;
+          position: fixed;
+          height: 100%;
+          bottom: 0;
+          left: 0;
 
-                -ms-overflow-style: -ms-autohiding-scrollbar;
-            }
+          -ms-overflow-style: -ms-autohiding-scrollbar;
+      }
 
-            .nav-overflow::-webkit-scrollbar {  
-                width: 12px;  
-            }  
-            .nav-overflow::-webkit-scrollbar-track {  
-                background-color: transparent;  
-            }  
-            .nav-overflow::-webkit-scrollbar-thumb {  
-                background-color: transparent;  
-            }  
-            .nav-overflow::-webkit-scrollbar-thumb:hover {  
-                background-color: transparent;  
-            }
+      .nav-overflow::-webkit-scrollbar {
+          width: 12px;
+      }
+      .nav-overflow::-webkit-scrollbar-track {
+          background-color: transparent;
+      }
+      .nav-overflow::-webkit-scrollbar-thumb {
+          background-color: transparent;
+      }
+      .nav-overflow::-webkit-scrollbar-thumb:hover {
+          background-color: transparent;
+      }
 
-            .header {
-                padding: 20px;
-                border-bottom: 1px solid #ccc;
-                opacity: 1;
+      .header {
+          padding: 20px;
+          border-bottom: 1px solid #ccc;
+          opacity: 1;
 
-                transition: opacity 200ms linear;
-                -moz-transition: opacity 200ms linear;
-                -webkit-transition: opacity 200ms linear;
-                -ms-transition: opacity 200ms linear;
-            }
+          transition: opacity 200ms linear;
+          -moz-transition: opacity 200ms linear;
+          -webkit-transition: opacity 200ms linear;
+          -ms-transition: opacity 200ms linear;
+      }
 
-            .header.opened, .menuIcon.opened {
-                opacity: .2;
-            }
+      .header.opened, .menuIcon.opened {
+          opacity: .2;
+      }
 
-            .fullsize {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
+      .fullsize {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+      }
 
-            .content {
-                opacity: 1;
-                margin-left: 300px;
-                padding-bottom: 225px;
+      .content {
+          opacity: 1;
+          margin-left: 300px;
+          padding-bottom: 225px;
 
-                transition: opacity 200ms linear;
-                -moz-transition: opacity 200ms linear;
-                -webkit-transition: opacity 200ms linear;
-                -ms-transition: opacity 200ms linear;
-            }
+          transition: opacity 200ms linear;
+          -moz-transition: opacity 200ms linear;
+          -webkit-transition: opacity 200ms linear;
+          -ms-transition: opacity 200ms linear;
+      }
 
-            .content.opened {
-                opacity: .2;
-            }
+      .content.opened {
+          opacity: .2;
+      }
 
-            .footer {
-                background: url('../images/grass.png') repeat-x top left;
-                height: 135px;
-                width: 100%;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                z-index: 1000;
-                text-align: center;
-            }
+      .footer {
+          background: url('../images/grass.png') repeat-x top left;
+          height: 135px;
+          width: 100%;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          z-index: 1000;
+          text-align: center;
+      }
 
-            .logo {
-                margin-top: 75px;
-                margin-left: 300px;
-            }
+      .logo {
+          margin-top: 75px;
+          margin-left: 300px;
+      }
 
-            a {
-                font-size: 14px;
-                color: blue;
-                cursor: pointer;
-            }
+      a {
+          font-size: 14px;
+          color: blue;
+          cursor: pointer;
+      }
 
-            :host {
-                display: block;
-                position: relative;
-            }
+      :host {
+          display: block;
+          position: relative;
+      }
 
-            fa-share {
-                position: fixed;
-                left: 10px;
-                bottom: 10px;
-                z-index: 1001;
-            }
+      fa-share {
+          position: fixed;
+          left: 10px;
+          bottom: 10px;
+          z-index: 1001;
+      }
 
-            @media(max-width: 1200px) {
-                .logo {
-                    margin-left: 0px;
-                    width: 700px;
-                }
-                .content {
-                    margin-left: 0;
-                }
-            }
+      @media(max-width: 1200px) {
+          .logo {
+              margin-left: 0px;
+              width: 700px;
+          }
+          .content {
+              margin-left: 0;
+          }
+      }
 
-            @media(max-width: 768px) {
-                .footer {
-                    overflow: hidden;
-                    height: 55px;
-                    background-size: 171px 55px;
-                    -moz-background-size: 171px 55px;
-                    -webkit-background-size: 171px 55px;
-                    -ms-background-size: 171px 55px;
-                }
-                .logo {
-                    float: right;
-                    margin-right: 5px;
-                    margin-top: 30px;
-                    margin-left: 0px;
-                    width: 300px;
-                }
-                .content {
-                    margin-left: 0;
-                    padding-bottom: 125px;
-                }
+      @media(max-width: 768px) {
+          .footer {
+              overflow: hidden;
+              height: 55px;
+              background-size: 171px 55px;
+              -moz-background-size: 171px 55px;
+              -webkit-background-size: 171px 55px;
+              -ms-background-size: 171px 55px;
+          }
+          .logo {
+              float: right;
+              margin-right: 5px;
+              margin-top: 30px;
+              margin-left: 0px;
+              width: 300px;
+          }
+          .content {
+              margin-left: 0;
+              padding-bottom: 125px;
+          }
 
-                fa-share {
-                    left: 5px;
-                    bottom: 0px;
-                }
-            }
-            @media(max-width: 425px) {
-                .logo {
-                    float: right;
-                    margin-right: 2px;
-                    margin-top: 30px;
-                    margin-left: 0px;
-                    width: 225px;
-                }
-            }
-        </style>
+          fa-share {
+              left: 5px;
+              bottom: 0px;
+          }
+      }
+      @media(max-width: 425px) {
+          .logo {
+              float: right;
+              margin-right: 2px;
+              margin-top: 30px;
+              margin-left: 0px;
+              width: 225px;
+          }
+      }
+  </style>
 
-        <core-media-query query="max-width: 768px" queryMatches="{{size.xs}}" ></core-media-query>
-        <core-media-query query="min-width: 769px" queryMatches="{{size.md}}" ></core-media-query>
-        <core-media-query query="min-width: 1200px" queryMatches="{{size.lg}}" ></core-media-query>
-
-        <div hidden?="{{isDesktop}}" class="menuIcon {{(openDrawer && !isDesktop) ? 'opened' : ''}}">
-            <a on-tap="{{open}}"><img src="../images/menu_icon.png" border="0" style="width: 50px; margin: 10px" /></a>
-        </div>
+  <template>
 
 
-        <div class="content {{(openDrawer && !isDesktop) ? 'opened' : ''}}" on-tap="{{_checkDrawer}}">
-            <content select="[content]"></content>
-        </div>
+      <div id="toggleIcon">
+          <a on-click="open"><img src="../images/menu_icon.png" border="0" style="width: 50px; margin: 10px" /></a>
+      </div>
 
 
+      <div id="content" on-click="_checkDrawer">
+          <content select="[content]"></content>
+      </div>
 
-        <div class="footer">
-            <img class="logo" src="../images/faunacartoon.png" />
-        </div>
+      <div class="footer">
+          <img class="logo" src="../images/faunacartoon.png" />
+      </div>
 
-        <fa-share></fa-share>
+      <fa-share></fa-share>
 
-        <template bind if="{{!isDesktop}}">
-            <div class="drawer {{openDrawer ? 'open' : ''}}" on-tap="{{_checkDrawer}}">
-                <div layout vertical style="height:100%">
-                    <div flex></div>
-                    <div>
-                        <content select="[nav]"></content>
-                    </div>
-                </div>
-            </div>
-        </template>
+      <div id="nav" on-click="_checkDrawer">
+          <div layout vertical style="height:100%">
+              <div flex></div>
+              <div>
+                  <content select="[nav]"></content>
+              </div>
+          </div>
+      </div>
 
-        <template bind if="{{isDesktop}}">
-            <div class="nav-overflow">
-                <div layout vertical style="height:100%">
-                    <div flex></div>
-                    <div>
-                        <content select="[nav]"></content>
-                    </div>
-                </div>
-            </div>
-        </template>
+  </template>
+</dom-module>
 
+<script>
+    Polymer({
+      is : 'fa-layout',
 
-    </template>
-    <script>
-        Polymer('fa-layout', {
-            size : {
-                xs : false,
-                md : false,
-                lg : false
-            },
+      ready : function() {
+          this.attribution();
+          $(window).on('resize', this.render.bind(this));
+      },
 
-            isPhone : false,
-            isTablet : false,
-            isDesktop : false,
+      _checkDrawer : function() {
+        if( this.size == 'desktop' ) return;
+        if( this.openDrawer ) this.close();
+      },
 
-            openDrawer : false,
+      open : function(e) {
+          if( e ) {
+              e.preventDefault();
+              e.stopPropagation();
+          }
 
-            observe : {
-                'size.xs' : '_updateSize',
-                'size.md' : '_updateSize',
-                'size.lg' : '_updateSize'
-            },
+          this.openDrawer = true;
+          // this doesn't work in safari :(
+          document.body.style.overflow = 'hidden';
 
-            ready : function() {
-                this.attribution();
-            },
+          this.render();
+      },
 
-            _updateSize : function() {
-                this.isPhone = false;
-                this.isTablet = false;
-                this.isDesktop = false;
+      close : function() {
+          this.openDrawer = false;
+          document.body.style.overflow = 'auto';
+          this.render();
+      },
 
-                if( this.size.xs ) this.isPhone = true;
-                else if( this.size.md && !this.size.lg ) this.isTablet = true;
-                else if( this.size.lg ) this.isDesktop = true;
-            },
+      render : function() {
+        var width = $(window).width();
 
-            _checkDrawer : function() {
-                if( this.openDrawer ) this.close();
-            },
+        var type = 'phone';
+        if( width > 768 && width < 1200 ) type = 'tablet';
+        else if ( width >= 1200 ) type = 'desktop';
 
-            open : function(e) {
-                if( e ) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
+        // handle toggle icon
+        var toggleClassname = 'menuIcon';
+        var contentClassname = 'content';
+        var navClassname = 'drawer';
 
-                this.openDrawer = true;
-                // this doesn't work in safari :(
-                document.body.style.overflow = 'hidden';
+        if( type == 'desktop' ) {
+          navClassname = 'nav-overflow';
+          this.$.toggleIcon.style.display = 'none';
+          this.$.mobileNav.style.display = 'none';
+        } else {
+          navClassname = 'drawer';
+          this.$.toggleIcon.style.display = 'block'
+          this.$.mobileNav.style.display = 'block';
 
-            },
+          if( this.openDrawer ) {
+            toggleClassname += ' opened';
+            contentClassname += ' opened';
+            mobileNavClassname += 'open';
+          }
+        }
 
-            close : function() {
-                this.openDrawer = false;
-                document.body.style.overflow = 'auto';
-            },
+        this.$.toggleIcon.className = toggleClassname;
+        this.$.content.className = contentClassname;
+        this.$.mobileNav.className = mobileNavClassname;
+      },
 
-            toggle : function() {
-                this.openDrawer = !this.openDrawer;
-            },
+      toggle : function() {
+          this.openDrawer = !this.openDrawer;
+          this.render();
+      },
 
-            attribution : function() {
-                console.log('************************************');
-                console.log('* Built using WebComponents and Polymer: https://www.polymer-project.org/');
-                console.log('* Also thanks to animate.css (http://daneden.github.io/animate.css/) and of course jQuery.');
-                console.log('* Built by Justin Merz (jrmerz@gmail.com)');
-                console.log('************************************');
-            }
+      attribution : function() {
+          console.log('************************************');
+          console.log('* Built using WebComponents and Polymer: https://www.polymer-project.org/');
+          console.log('* Also thanks to animate.css (http://daneden.github.io/animate.css/) and of course jQuery.');
+          console.log('* Built by Justin Merz (jrmerz@gmail.com)');
+          console.log('************************************');
+      }
 
-        });
-    </script>
-</polymer-element>
+  });
+</script>

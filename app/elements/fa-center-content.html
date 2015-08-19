@@ -1,21 +1,26 @@
-<polymer-element name="fa-center-content" noscript>
-    <template>
-        <style>
-            :host{
-                display: block;
-            }
-            .center-content {
-                padding-top: 50px;
-            }
-            @media(max-width: 1200px) {
-                .center-content {
-                    padding-top: 10px;
-                }
-            }
-        </style>
+<dom-module id="fa-center-content">
+  <style>
+      :host{
+          display: block;
+      }
+      .center-content {
+          padding-top: 50px;
+      }
+      @media(max-width: 1200px) {
+          .center-content {
+              padding-top: 10px;
+          }
+      }
+  </style>
+  <template>
+    <div layout horizontal center center-justified class="center-content">
+        <content></content>
+    </div>
+  </template>
+</dom-module>
 
-        <div layout horizontal center center-justified class="center-content">
-            <content></content>
-        </div>
-    </template>
-</polymer-element>
+<script>
+  Polymer({
+    is : 'fa-center-content'
+  })
+</script>

@@ -1,48 +1,64 @@
-<polymer-element name="fa-sharethis" attributes="iwidth iheight">
-    <template>
-        <style>
-            :host {
-                display: inline-block;
-                padding: 10px;
-            }
-            :host(:hover) div.text {
-                display : block;
-            }
-            :host div.text {
-                display : none;
-            }
-        </style>
+<dom-module id="fa-sharethis">
+  <style>
+      :host {
+          display: inline-block;
+          padding: 10px;
+      }
+      :host(:hover) div.text {
+          display : block;
+      }
+      :host div.text {
+          display : none;
+      }
+  </style>
+  <template>
 
-        <div>
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{encoded}}&t" target="_blank">
-                <img src="/images/facebook_32.png" border="0" />
-            </a>
-            <a href="https://plus.google.com/share?url={{encoded}}&hl=en-US" target="_blank">
-                <img src="/images/googleplus_32.png" border="0" />
-            </a>
-            <a href="https://twitter.com/intent/tweet?text=&source=faunacartoon&related=faunacartoon&via=faunacartoon&url={{encoded}}" target="_blank">
-                <img src="/images/twitter_32.png" border="0" />
-            </a>
-            <a href="http://www.reddit.com/submit?url={{encoded}}&title={{wTitle}}" target="_blank">
-                <img src="/images/reddit_32.png" border="0" />
-            </a>
-        </div>
-        <div class="text">Share This Comic!</div>
-    </template>
-    <script>
-        Polymer('fa-sharethis',{
-            hash : '',
-            encoded : '',
-            ready : function() {
-                this.updateHash();
-                $(window).on('hashchange', this.updateHash.bind(this));
-            },
-            updateHash : function() {
-                this.async(function(){
-                    this.encoded = encodeURIComponent(window.location.href);
-                    this.wTitle = window.document.title;
-                });
-            }
-        });
-    </script>
-</polymer-element>
+      <div>
+          <a id="facebook" target="_blank">
+              <img src="/images/facebook_32.png" border="0" />
+          </a>
+          <a id="google" target="_blank">
+              <img src="/images/googleplus_32.png" border="0" />
+          </a>
+          <a id="twitter" target="_blank">
+              <img src="/images/twitter_32.png" border="0" />
+          </a>
+          <a id="reddit" target="_blank">
+              <img src="/images/reddit_32.png" border="0" />
+          </a>
+      </div>
+      <div class="text">Share This Comic!</div>
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is : 'fa-sharethis'
+
+      ready : function() {
+        this.hash = '';
+        this.encoded = '';
+
+        this.roots = {
+          facebook : 'https://www.facebook.com/sharer/sharer.php?u=';
+          google : 'https://plus.google.com/share?hl=en-US&url=',
+          twitter : 'https://twitter.com/intent/tweet?text=&source=faunacartoon&related=faunacartoon&via=faunacartoon&url=',
+          reddit : 'http://www.reddit.com/submit?url='
+        }
+
+        this.updateHash();
+        $(window).on('hashchange', this.updateHash.bind(this));
+      },
+
+      updateHash : function() {
+          this.async(function(){
+              this.encoded = encodeURIComponent(window.location.href);
+
+              this.$.facebook.setAttribute('href', this.roots.facebook+this.encoded);
+              this.$.google.setAttribute('href', this.roots.google+this.encoded);
+              this.$.twitter.setAttribute('href', this.roots.twitter+this.encoded);
+              this.$.reddit.setAttribute('href', this.roots.redit+this.encoded+'&title='+window.document.title);
+          });
+      }
+  });
+</script>

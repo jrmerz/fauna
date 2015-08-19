@@ -1,92 +1,91 @@
-<polymer-element name="fa-left-nav">
-    <template>
-        <style>
-            :host {
-                display: block;
-            }
-            .root {
-                width: 310px;
-                position: relative;
-            }
-            .img {
-                background: url('../images/left_nav.png') no-repeat bottom left;
-                min-height: 634px;
-                margin: 55px 0;
-            }
+<dom-module id="fa-left-nav">
+  <style>
+      :host {
+          display: block;
+      }
+      .root {
+          width: 310px;
+          position: relative;
+      }
+      .img {
+          background: url('../images/left_nav.png') no-repeat bottom left;
+          min-height: 634px;
+          margin: 55px 0;
+      }
 
-            button {
-                position: absolute;
-                width: 130px;
-                height: 80px;
-                left: 160px;
-                border: none;
-                background: transparent;
-                cursor: pointer;
-            }
+      a {
+          position: absolute;
+          width: 130px;
+          height: 80px;
+          left: 160px;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+      }
 
-            button:focus{
-                outline: 0;
-            }
+      a:focus{
+          outline: 0;
+      }
 
-            button[hash="cartoons"] {
-                top: 10px;
-            }
+      a[href="#cartoons"] {
+          top: 10px;
+      }
 
-            button[hash="about"] {
-                top: 162px;
-            }
+      a[href="#about"] {
+          top: 162px;
+      }
 
-            button[hash="buy"] {
-                top: 325px;
-            }
+      a[href="#buy"] {
+          top: 325px;
+      }
 
-            button[hash="links"] {
-                top: 470px;
-            }
+      a[href="#links"] {
+          top: 470px;
+      }
 
-            @media(max-width: 768px) {
-                .img {
-                    min-height: 528px;
-                    margin: 20px 0;
+      @media(max-width: 768px) {
+          .img {
+              min-height: 528px;
+              margin: 20px 0;
 
-                    background-size: 250px 528px;
-                    -webkit-background-size: 250px 528px;
-                }
+              background-size: 250px 528px;
+              -webkit-background-size: 250px 528px;
+          }
 
-                button {
-                    left: 130px;
-                    height: 65px;
-                    width: 110px;
-                }
+          a {
+              left: 130px;
+              height: 65px;
+              width: 110px;
+          }
 
-                button[hash="about"] {
-                    top: 135px;
-                }
+          a[hash="about"] {
+              top: 135px;
+          }
 
-                button[hash="buy"] {
-                    top: 275px;
-                }
+          a[hash="buy"] {
+              top: 275px;
+          }
 
-                button[hash="links"] {
-                    top: 390px;
-                }
+          a[hash="links"] {
+              top: 390px;
+          }
 
-            }
-        </style>
-        <div class="root">
-            <div class="img"></div>
+      }
+  </style>
+  <template>
+      <div class="root">
+          <div class="img"></div>
 
-            <button on-tap="{{go}}" hash="cartoons"></button>
-            <button on-tap="{{go}}" hash="about"></button>
-            <button on-tap="{{go}}" hash="buy"></button>
-            <button on-tap="{{go}}" hash="links"></button>
-        </div>
-    </template>
-    <script>
-        Polymer('fa-left-nav', {
-            go : function(e) {
-                window.location.hash = e.currentTarget.getAttribute('hash');
-            }
-        });
-    </script>
-</polymer-element>
+          <a href="#cartoons"></a>
+          <a href="#about"></a>
+          <a href="#buy"></a>
+          <a href="#links"></a>
+      </div>
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is : 'fa-left-nav'
+    });
+</script>

@@ -1,43 +1,42 @@
-<polymer-element name="fa-pages">
+<dom-module id="fa-pages">
     <template>
         <content></content>
     </template>
-    <script>
-        Polymer('fa-pages', {
-            pages : {},
-            cPage : null,
+</dom-module>
 
-            ready : function() {
-                window.addEventListener('polymer-ready', function(e) {
+<script>
+  Polymer({
+    is : 'fa-pages',
+    attached : function() {
+      this.pages = {};
+      this.cPage = null;
 
-                    for( var i = 0; i < this.children.length; i++ ) {
-                        for( var j = 0; j < this.children[i].hash.length; j++ ) {
-                            this.pages[this.children[i].hash[j]] = this.children[i];
-                            this.children[i].style.display = 'none';
-                        }
-                    }
+      for( var i = 0; i < this.children.length; i++ ) {
+          for( var j = 0; j < this.children[i].hash.length; j++ ) {
+              this.pages[this.children[i].hash[j]] = this.children[i];
+              this.children[i].style.display = 'none';
+          }
+      }
 
-                    $(window).on('hashchange', function(){
-                        this.update();
-                    }.bind(this));
+      $(window).on('hashchange', function(){
+          this.update();
+      }.bind(this));
 
-                    this.update();
-                }.bind(this));
-            },
+      this.update();
+    },
 
-            update : function() {
-                var hash = window.location.hash.replace(/#/g, '').replace(/^!/,'');
-                hash = hash.split('/')[0];
+    update : function() {
+        var hash = window.location.hash.replace(/#/g, '').replace(/^!/,'');
+        hash = hash.split('/')[0];
 
-                if( this.pages[hash] && this.pages[hash] != this.cPage ) {
-                    if( this.cPage ) this.cPage.style.display = 'none';
-                    this.cPage = this.pages[hash];
-                    if( hash != 'nuts' && hash != 'home') {
-                        window.document.title = 'Fauna - '+hash;
-                    }
-                    this.cPage.style.display = 'block';
-                }
+        if( this.pages[hash] && this.pages[hash] != this.cPage ) {
+            if( this.cPage ) this.cPage.style.display = 'none';
+            this.cPage = this.pages[hash];
+            if( hash != 'nuts' && hash != 'home') {
+                window.document.title = 'Fauna - '+hash;
             }
-        });
-    </script>
-</polymer-element>
+            this.cPage.style.display = 'block';
+        }
+    }
+  });
+</script>
