@@ -1,170 +1,177 @@
-<polymer-element name="fa-gallery" attributes="type">
-    <template>
-        <link rel="stylesheet" href="../../styles/animate.css" noshim />
-        <style>
+<dom-module id="fa-gallery">
+  <style>
 
-            .comic {
-                box-shadow: 0px 5px 15px #3999fc;
-                border-radius: 6px;
-                margin: 10px;
-                cursor: pointer;
+      .comic {
+          box-shadow: 0px 5px 15px #3999fc;
+          border-radius: 6px;
+          margin: 10px;
+          cursor: pointer;
+      }
+
+      .container {
+          width: 400px;
+      }
+
+      .comic.Fauna {
+          width: 100px;
+          height: 125px;
+      }
+
+      .comic.nuts {
+          width: 175px;
+      }
+
+      @media(max-width: 768px) {
+          .comic {
+              margin: 5px;
+          }
+          .container {
+              width: 350px;
+          }
+          .container.nuts {
+              width: 200px;
+          }
+      }
+
+  </style>
+
+  <template>
+
+    <fa-center-content>
+        <div class="container" id="content"></div>
+    </fa-center-content>
+
+    <fa-img-nav on-previous="previous" on-next="next" index="{{index}}" max="{{numPages}}"></fa-img-nav>
+
+<!--
+<img
+ style="visibility:{{item.show ? 'visible' : 'hidden'}}"
+ class="comic {{type}} {{item.show ? 'animated zoomIn' : ''}}"
+ src="/comics/{{loc}}/thumb/{{type}}_{{item.index}}.jpg"
+ index="{{item.index}}"
+ on-tap="_goTo" />
+ -->
+
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is : 'fa-gallery',
+
+      properties : {
+        type : {
+          type : String,
+          value : 'Fauna'
+        }
+      },
+
+      ready : function() {
+          this.gallaryArray = [];
+          this.times = [];
+
+          this.index = 0;
+          this.hash = [];
+          this.loading = '';
+          this.loc = '';
+
+          this.gallaryArray = [];
+          this.timers = [];
+
+          this.loc = this.type.toLowerCase();
+          if( this.type == 'Fauna' ) {
+              this.hash = ['cartoons'];
+              this.max = MAX_FAUNA_IMG;
+              this.numPerPage = 9;
+          } else if ( this.type == 'nuts' ) {
+              this.hash = ['nuts_cartoons'];
+              this.max = MAX_NUTS_IMG;
+              this.numPerPage = 8;
+          }
+          this.numPages = Math.ceil(this.max / this.numPerPage);
+
+          $(window).on('hashchange', this.update.bind(this))
+          this.update();
+      },
+
+        update : function() {
+            var parts = window.location.hash.split('/');
+            parts[0] = parts[0].replace(/#/g, '');
+
+            if( parts[0] != this.hash[0] ) return;
+
+            if( parts.length > 1 ) this.index = parseInt(parts[1]);
+            else this.index = 1;
+
+
+            this._checkLowBounds();
+            this._checkHiBounds();
+
+            this._clearTimers();
+            this.gallaryArray = [];
+            var c = 0;
+
+
+            var content = $(this.$.content);
+            for( var i = (this.index-1) * this.numPerPage; i < this.index * this.numPerPage; i++ ) {
+                if( i >= this.max ) return;
+
+                var img = $('<a href="'+this.loc+'/'+(i+1)+'" style="visibility:hidden" ><img border="0" class="comic" src="/comics/'+this.loc+'/thumb/'+this.type+'_'+(i+1)+'.jpg" /></a>');
+                this.gallaryArray.push({
+                    index : i+1,
+                    show : false,
+                    img : img
+                });
+                content.append(img);
+
+                this._showPic(c);
+                c++;
             }
+        },
 
-            .container {
-                width: 400px;
+        _showPic : function(c) {
+            var t = (100*c)+100;
+
+            this.timers.push(setTimeout(function(){
+                var img = this.gallaryArray[c].img;
+                img.css('visibility', 'visible');
+                img.addClass('animated').addClass('zoomIn');
+            }.bind(this), t));
+        },
+
+        _clearTimers : function() {
+            for( var i = 0; i < this.timers.length; i++ ) {
+                if( this.timers[i] != -1 ) clearTimeout(this.timers[i]);
             }
+            this.timer = [];
+        },
 
-            .comic.Fauna {
-                width: 100px;
-                height: 125px;
+        _checkLowBounds : function() {
+            if( this.index < 1 ) {
+                this.index = 1;
+                return false;
             }
+            return true;
+        },
 
-            .comic.nuts {
-                width: 175px;
+        _checkHiBounds : function() {
+            if( this.index > Math.ceil( this.max / this.numPerPage ) ) {
+                this.index = Math.ceil( this.max / this.numPerPage );
+                return false;
             }
+            return true;
+        },
 
-            @media(max-width: 768px) {
-                .comic {
-                    margin: 5px;
-                }
-                .container {
-                    width: 350px;
-                }
-                .container.nuts {
-                    width: 200px;
-                }
-            }
+        previous : function() {
+            this.index--;
+            this._checkLowBounds();
+            window.location.hash = this.hash[0]+'/'+this.index;
+        },
 
-        </style>
-
-        <fa-center-content>
-            <div class="container {{type}}">
-                <template repeat="{{item in gallaryArray}}">
-                   <img 
-                    style="visibility:{{item.show ? 'visible' : 'hidden'}}"
-                    class="comic {{type}} {{item.show ? 'animated zoomIn' : ''}}" 
-                    src="/comics/{{loc}}/thumb/{{type}}_{{item.index}}.jpg"
-                    index="{{item.index}}"
-                    on-tap="{{_goTo}}" />
-                </template>
-            </div>
-        </fa-center-content>
-
-        <fa-img-nav on-previous="{{previous}}" on-next="{{next}}" index="{{index}}" max="{{numPages}}"></fa-img-nav>
-
-    </template>
-    <script>
-        Polymer('fa-gallery', {
-            index : 0,
-            hash : [],
-            loading : '',
-            loc : '',
-
-            gallaryArray : [],
-            timers : [],
-
-            max : 0,
-            numPages : 0,
-            numPerPage : 0,
-
-            ready : function() {
-                this.gallaryArray = [];
-                this.times = [];
-
-                this.loc = this.type.toLowerCase();
-                if( this.type == 'Fauna' ) {
-                    this.hash = ['cartoons'];
-                    this.max = MAX_FAUNA_IMG;
-                    this.numPerPage = 9;
-                } else if ( this.type == 'nuts' ) {
-                    this.hash = ['nuts_cartoons'];
-                    this.max = MAX_NUTS_IMG;
-                    this.numPerPage = 8;
-                }
-                this.numPages = Math.ceil(this.max / this.numPerPage);
-
-                $(window).on('hashchange', this.update.bind(this))
-                this.update();
-            },
-
-            update : function() {
-                var parts = window.location.hash.split('/');
-                parts[0] = parts[0].replace(/#/g, '');
-
-                if( parts[0] != this.hash[0] ) return;
-
-                if( parts.length > 1 ) this.index = parseInt(parts[1]);
-                else this.index = 1;
-
-
-                this._checkLowBounds();
-                this._checkHiBounds();
-
-                this._clearTimers();
-                this.gallaryArray = [];
-                var c = 0;
-
-                for( var i = (this.index-1) * this.numPerPage; i < this.index * this.numPerPage; i++ ) {
-                    if( i >= this.max ) return;
-                    this.gallaryArray.push({
-                        index : i+1,
-                        show : false
-                    });
-                    this._showPic(c);
-                    c++;
-                }
-            },
-
-            _showPic : function(c) {
-                var t = (100*c)+100;
-                this.timers.push(setTimeout(function(){
-                    this.gallaryArray[c].show = true;
-                }.bind(this), t));
-            },
-
-            _clearTimers : function() {
-                for( var i = 0; i < this.timers.length; i++ ) {
-                    if( this.timers[i] != -1 ) clearTimeout(this.timers[i]);
-                }
-                this.timer = [];
-            },
-
-            _checkLowBounds : function() {
-                if( this.index < 1 ) {
-                    this.index = 1;
-                    return false;
-                }
-                return true;
-            },
-
-            _checkHiBounds : function() {
-                if( this.index > Math.ceil( this.max / this.numPerPage ) ) {
-                    this.index = Math.ceil( this.max / this.numPerPage );
-                    return false;
-                }
-                return true;
-            },
-
-            _goTo : function(e) {
-                var index = e.currentTarget.getAttribute('index');
-
-                var loc = 'home';
-                if( this.type == 'nuts' ) loc = 'nuts';
-
-                window.location.hash = loc+'/'+index;
-            },
-
-            previous : function() {
-                this.index--;
-                this._checkLowBounds();
-                window.location.hash = this.hash[0]+'/'+this.index;
-            },
-
-            next : function() {
-                this.index++;
-                this._checkHiBounds();
-                window.location.hash = this.hash[0]+'/'+this.index;
-            }
-        });
-    </script>
-</polymer-element>
+        next : function() {
+            this.index++;
+            this._checkHiBounds();
+            window.location.hash = this.hash[0]+'/'+this.index;
+        }
+    });
+</script>

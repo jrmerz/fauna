@@ -188,8 +188,8 @@
       <fa-share></fa-share>
 
       <div id="nav" on-click="_checkDrawer">
-          <div layout vertical style="height:100%">
-              <div flex></div>
+          <div class="layout vertical" style="height:100%">
+              <div class="flex"></div>
               <div>
                   <content select="[nav]"></content>
               </div>
@@ -205,6 +205,7 @@
 
       ready : function() {
           this.attribution();
+          this.render();
           $(window).on('resize', this.render.bind(this));
       },
 
@@ -232,6 +233,10 @@
           this.render();
       },
 
+      attached : function() {
+
+      },
+
       render : function() {
         var width = $(window).width();
 
@@ -247,22 +252,23 @@
         if( type == 'desktop' ) {
           navClassname = 'nav-overflow';
           this.$.toggleIcon.style.display = 'none';
-          this.$.mobileNav.style.display = 'none';
+          //this.$.mobileNav.style.display = 'none';
         } else {
           navClassname = 'drawer';
           this.$.toggleIcon.style.display = 'block'
-          this.$.mobileNav.style.display = 'block';
+          //this.$.mobileNav.style.display = 'block';
 
           if( this.openDrawer ) {
             toggleClassname += ' opened';
             contentClassname += ' opened';
-            mobileNavClassname += 'open';
+            navClassname += ' open';
           }
         }
 
-        this.$.toggleIcon.className = toggleClassname;
-        this.$.content.className = contentClassname;
-        this.$.mobileNav.className = mobileNavClassname;
+        this.$.toggleIcon.className = 'style-scope fa-layout '+toggleClassname;
+        this.$.content.className = 'style-scope fa-layout '+contentClassname;
+        this.$.nav.className = 'style-scope fa-layout '+navClassname;
+        //this.$.mobileNav.className = mobileNavClassname;
       },
 
       toggle : function() {

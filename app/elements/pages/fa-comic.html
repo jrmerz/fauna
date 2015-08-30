@@ -1,165 +1,178 @@
-<polymer-element name="fa-comic" attributes="type">
-    <template>
-        <link rel="stylesheet" href="../../styles/animate.css" noshim />
+<dom-module id="fa-comic">
+  <style>
+      .comic {
+          box-shadow: 0px 5px 15px #3999fc;
+          border-radius: 6px;
+      }
+      .full {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          text-align: center;
 
-        <style>
-            .comic {
-                box-shadow: 0px 5px 15px #3999fc;
-                border-radius: 6px;
+      }
+
+      .text {
+          vertical-align: top;
+          display: inline-block;
+          margin-left: 40px;
+          font-size: 20px;
+          color: #333;
+          text-shadow: 1px 1px 0 #b8ceff;
+          font-size: 22px;
+      }
+
+      #img {
+          margin-right: 100px;
+          max-width: 100%;
+          height: auto;
+      }
+
+      @media(max-width: 1200px) {
+          #img {
+              margin: 10px;
+          }
+      }
+  </style>
+  <template>
+      <fa-center-content>
+          <div class="layout vertical">
+              <img id="img" class="comic animated fadeInUp" on-load="onLoad" />
+
+              <div id="loading" class="text animated rubberBand infinite">Loading...</div>
+
+              <div>
+                  <div id="indexLabel" class="text animated fadeInLeftBig"></div>
+                  <fa-sharethis iheight="55" iwidth="180" style="margin-left: 40px; visibility:hidden"></fa-sharethis>
+              </div>
+          </div>
+      </fa-center-content>
+
+      <fa-img-nav on-previous="previous" on-next="next" index="{{index}}" max="{{max}}"></fa-img-nav>
+
+  </template>
+</dom-module>
+
+<script>
+    Polymer({
+      is : 'fa-comic',
+
+      properties : {
+        type : {
+          type : String,
+          value : 'Fauna'
+        }
+      },
+
+      ready : function() {
+        this.loading = true;
+        this.hash = [];
+        this.loc = '';
+        this.max = 0;
+        this.descriptions = {};
+        this.altText = '';
+
+        this.loc = this.type.toLowerCase();
+        this.hash = this.loc;
+        if( this.loc == 'fauna' ) {
+          this.hash = 'home';
+        }
+
+        this.index = '';
+
+        setTimeout(function(){
+            this.querySelector('fa-sharethis').style.visibility = 'visible';
+        }.bind(this), 1000);
+
+        $.get('/description.json', function(resp){
+            this.descriptions = resp;
+            this.setTitle();
+        }.bind(this));
+    },
+
+    setLoading : function(loading) {
+      this.loading = loading;
+      if( loading ) {
+        $(this.$.loading).show();
+        $(this.$.img).hide();
+        $(this.$.indexLabel).hide();
+      } else {
+        $(this.$.loading).hide();
+        $(this.$.img).show();
+        $(this.$.indexLabel).show();
+      }
+    },
+
+    onUpdate : function(params) {
+      var index;
+      if( params.length == 0 ) {
+        if( this.type == 'Fauna' ) {
+          index = MAX_FAUNA_IMG+'';
+        } else if ( this.type == 'nuts' ) {
+          index = MAX_NUTS_IMG+'';
+        }
+      } else {
+        index = params[0];
+      }
+
+      this.setIndex(index);
+      this.setTitle();
+    },
+
+    setIndex : function(index) {
+      if( index == this.index ) return;
+
+      this.index = index;
+      this.$.indexLabel.innerHTML = '#'+this.index;
+      this.setLoading(true);
+      this.$.img.setAttribute('src', '/comics/'+this.loc+'/regular/'+this.type+'_'+this.index+'.jpg');
+    },
+
+    setTitle : function() {
+        if( this.type == 'Fauna' ) {
+
+            var title = 'Fauna #'+this.index;
+            if( this.descriptions[this.index+''] ) {
+                title += ' - '+this.descriptions[this.index+''].title;
+                this.$.img.setAttribute('altText', this.descriptions[this.index+''].title);
             }
-            .full {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                text-align: center;
 
-            }
+            window.document.title = title;
 
-            .text {
-                vertical-align: top;
-                display: inline-block;
-                margin-left: 40px;
-                font-size: 20px;
-                color: #333;
-                text-shadow: 1px 1px 0 #b8ceff;
-                font-size: 22px;
-            }
+        } else if( this.type == 'nuts' ) {
+            window.document.title = 'Nuts';
+        }
+    },
 
-            #img {
-                margin-right: 100px;
-                max-width: 100%;
-                height: auto;
-            }
+    previous : function() {
+        this.index = parseInt(this.index) - 1;
+        if( this.index < 1 ) {
+            this.index = '1';
+            return;
+        }
 
-            @media(max-width: 1200px) {
-                #img {
-                    margin: 10px;
-                }
-            }
+        this.index = this.index+'';
+        window.location.hash = this.hash+'/'+this.index;
+    },
 
-        </style>
+    next : function() {
+        this.index = parseInt(this.index) + 1;
 
-        <fa-center-content>
-            <div layout vertical>
-                <img id="img"
-                    class="comic {{!loading ? 'animated fadeInUp' : ''}}"
-                    src="/comics/{{loc}}/regular/{{type}}_{{index}}.jpg"
-                    hidden?="{{loading}}"
-                    on-load="{{onLoad}}" 
-                    alt="{{altText}}" />
+        if( this.index > this.max ) {
+            this.index = this.max+'';
+            return;
+        }
 
-                <div hidden?="{{!loading}}">
-                    <div class="text {{loading ? 'animated rubberBand infinite' : ''}}">Loading...</div>
-                </div>
+        this.index = this.index+'';
+        window.location.hash = this.hash+'/'+this.index;
+    },
 
-                <div>
-                
-                    <div class="text {{!loading ? 'animated fadeInLeftBig' : ''}}" hidden?="{{loading}}" >
-                       #{{index}}
-                    </div>
-
-                    <fa-sharethis iheight="55" iwidth="180" style="margin-left: 40px; visibility:hidden"></fa-sharethis>
-                </div>
-            </div>
-        </fa-center-content>
-
-        <fa-img-nav on-previous="{{previous}}" on-next="{{next}}" index="{{index}}" max="{{max}}"></fa-img-nav>
-
-    </template>
-    <script>
-        Polymer('fa-comic', {
-            index : 0,
-            loading : true,
-            hash : [],
-            loc : '',
-            max : 0,
-            descriptions : {},
-            altText : '',
-
-            ready : function() {
-                this.loc = this.type.toLowerCase();
-
-                if( this.type == 'Fauna' ) {
-                    if( window.MAX_FAUNA_IMG ) this.max = MAX_FAUNA_IMG;
-                    this.hash = ['home', ''];
-                } else if ( this.type == 'nuts' ) {
-                    if( window.MAX_NUTS_IMG ) this.max = MAX_NUTS_IMG;
-                    this.hash = ['nuts'];
-                }
-                this.index = this.max;
-                
-                $(window).on('hashchange', this.update.bind(this))
-                this.update();
-
-                setTimeout(function(){
-                    this.shadowRoot.querySelector('fa-sharethis').style.visibility = 'visible';
-                }.bind(this), 1000);
-
-                $.get('/description.json', function(resp){
-                    this.descriptions = resp;
-                    this.setTitle();
-                }.bind(this));
-            },
-
-            update : function() {
-                var parts = window.location.hash.split('/');
-                parts[0] = parts[0].replace(/#/g, '').replace(/^!/,'');
-
-                if( this.hash.indexOf(parts[0]) == -1 ) {
-                    return;
-                }
-
-                if( parts.length > 1 && this.index != parts[1] ) {
-                    this.index = parts[1];
-                } else if( parts.length == 1 ) {
-                    window.location = '#home/'+this.max;
-                }
-
-                this.setTitle();
-            },
-
-            setTitle : function() {
-                if( this.hash.indexOf('home') != -1 && window.location.hash.indexOf('home') != -1) {
-                    var title = 'Fauna #'+this.index;
-                    if( this.descriptions[this.index+''] ) {
-                        title += ' - '+this.descriptions[this.index+''].title;
-                        this.altText = this.descriptions[this.index+''].title;
-                    }
-
-                    window.document.title = title;
-                } else if( this.hash.indexOf('nuts') != -1 && window.location.hash.indexOf('nuts') != -1) {
-                    window.document.title = 'Nuts';
-                }
-            },
-
-            previous : function() {
-                this.index--;
-                if( this.index < 1 ) {
-                    this.index = 1;
-                    return;
-                }
-
-                this.loading = true;
-                window.location.hash = this.hash[0]+'/'+this.index;
-            },
-
-            next : function() {
-                this.index++;
-
-                if( this.index > this.max ) {
-                    this.index = this.max;
-                    return;
-                }
-
-                this.loading = true;
-                window.location.hash = this.hash[0]+'/'+this.index;
-            },
-
-            onLoad : function() {
-                this.loading = false;
-            }
-        });
-    </script>
-</polymer-element>
+    onLoad : function() {
+      setTimeout(function(){
+        this.setLoading(false);
+      }.bind(this), 0);
+    }
+});
+</script>

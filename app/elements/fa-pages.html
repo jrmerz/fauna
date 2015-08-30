@@ -7,11 +7,18 @@
 <script>
   Polymer({
     is : 'fa-pages',
+    
     attached : function() {
       this.pages = {};
       this.cPage = null;
 
       for( var i = 0; i < this.children.length; i++ ) {
+        if( !this.children[i].hash ) {
+          console.log('fa-pages found this, but no hash')
+          console.log(this.children[i]);
+          continue;
+        }
+
           for( var j = 0; j < this.children[i].hash.length; j++ ) {
               this.pages[this.children[i].hash[j]] = this.children[i];
               this.children[i].style.display = 'none';
