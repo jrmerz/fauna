@@ -70,14 +70,17 @@
         this.loading = true;
         this.hash = [];
         this.loc = '';
-        this.max = 0;
         this.descriptions = {};
         this.altText = '';
 
         this.loc = this.type.toLowerCase();
         this.hash = this.loc;
+
         if( this.loc == 'fauna' ) {
           this.hash = 'home';
+          this.max = MAX_FAUNA_IMG;
+        } else {
+          this.max = MAX_NUTS_IMG;
         }
 
         this.index = '';
@@ -147,26 +150,17 @@
     },
 
     previous : function() {
-        this.index = parseInt(this.index) - 1;
-        if( this.index < 1 ) {
-            this.index = '1';
-            return;
-        }
+        var index = parseInt(this.index) - 1;
+        if( index < 1 ) return;
 
-        this.index = this.index+'';
-        window.location.hash = this.hash+'/'+this.index;
+        window.location.hash = this.hash+'/'+index;
     },
 
     next : function() {
-        this.index = parseInt(this.index) + 1;
+        var index = parseInt(this.index) + 1;
+        if( index > this.max ) return;
 
-        if( this.index > this.max ) {
-            this.index = this.max+'';
-            return;
-        }
-
-        this.index = this.index+'';
-        window.location.hash = this.hash+'/'+this.index;
+        window.location.hash = this.hash+'/'+index;
     },
 
     onLoad : function() {

@@ -27,6 +27,8 @@ FC.router = (function(){
   function update() {
     var parts = window.location.hash.replace(/#/g, '').replace(/^!/,'').split('/');
 
+    console.log(parts.join(','));
+
     if( parts.length === 0 ) {
       parts = ['home'];
     } else if( !registery[parts[0]] ) {
@@ -41,10 +43,13 @@ FC.router = (function(){
       for( var key in registery ) {
         if( key === page ) {
           registery[key].ele.style.display = 'block';
+          console.log('show: '+key);
+          console.log(registery[key].ele);
           if( registery[key].ele.onShow ) {
             registery[key].ele.onShow();
           }
         } else {
+          console.log('hide: '+key);
           registery[key].ele.style.display = 'none';
         }
       }
