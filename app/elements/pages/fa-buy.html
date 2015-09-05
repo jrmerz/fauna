@@ -25,15 +25,12 @@
   <template>
 
 
-
       <fa-center-content>
           <div style="max-width: 700px; min-width: 300px; padding: 5px">
               <h2>Buy</h2>
 
-
-
-              <div layout horizontal>
-                  <div flex>
+              <div class="layout horizontal">
+                  <div class="flex">
                       <p style="margin-top: 30px">
                           Help support Fauna Cartoon!  Order apparel from my shop on <a href="http://www.galloree.com/Shops/Fauna-Cartoon--1194/index.php" target="_blank" style="font-size: 28px">Galloree!</a>
                       </p>
@@ -49,16 +46,10 @@
                   Prints are 5 x 7 inches and on environmentally friendly paper. They are signed by the artist in permanent ink.
               </div>
 
-              <p>
-                  <div layout horizontal>
-                      <div>
-                        <!--
-                          <template bind if="{{comicMain != ''}}">
-                              <img src="/comics/fauna/thumb/Fauna_{{comicMain}}.jpg" style="margin-right: 5px" />
-                          </template>
-                        -->
-                      </div>
-                      <div flex>
+              <div style="margin: 35px 15px">
+                  <div class="layout horizontal">
+                      <div id="comicMain"></div>
+                      <div class="flex">
 
                           <form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" >
                               <input type="hidden" name="cmd" value="_s-xclick">
@@ -79,35 +70,30 @@
                                   </tr><tr>
                                       <td>
                                           <!--<input type="text" name="os1" maxlength="200">-->
-                                          <select name="os1" value="{{comicMain}}">
-                                              <option></option>
-                                              <template repeat="{{index in comics}}">
-                                                  <option value="{{index}}">#{{index}}</option>
-                                              </template>
-                                          </select>
+                                          <select name="os1" id="comicMainSelector" on-change="onMainSelect"></select>
                                       </td>
                                   </tr>
                               </table>
                               <input type="hidden" name="currency_code" value="USD">
-                              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" on-click="{{addPrint}}">
+                              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" on-click="addPrint">
                               <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                           </form>
 
                       </div>
                   </div>
-              </p>
+              </div>
 
 
-              <p>
-                  <div layout horizontal>
-                      <div>
+              <div style="margin: 35px 15px">
+                  <div class="layout horizontal">
+                      <div id="comicExtra">
                         <!--
                           <template bind if="{{comicExtra != ''}}">
                               <img src="/comics/fauna/thumb/Fauna_{{comicExtra}}.jpg" style="margin-right: 5px" />
                           </template>
                         -->
                       </div>
-                      <div flex>
+                      <div class="flex">
 
                           <form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" >
                               <input type="hidden" name="cmd" value="_s-xclick">
@@ -120,31 +106,25 @@
                                   </tr>
                                   <tr>
                                       <td><input type="hidden" name="on0" value="Enter the # of the cartoon">Enter the # of the cartoon</td></tr><tr><td>
-                                          <select name="os0" value="{{comicExtra}}">
-                                              <option></option>
-                                              <template is="dom-repeat" items="{{comics}}">
-                                                  <option value="{{item.index}}">{{item.index}}</option>
-                                              </template>
-                                          </select>
+                                          <select name="os0" id="comicExtraSelector" on-change="onExtraSelect"></select>
                                       </td>
                                   </tr>
                               </table>
 
-                              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" on-click="{{addAdditional}}">
+                              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" on-click="addAdditional">
                               <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                           </form>
                       </div>
                   </div>
-              </p>
+              </div>
 
               <div>
                   Orders will arrive 2-4 weeks from receipt.
               </div>
 
-              <p style="margin-top:50px; font-size: 15px">
-
+              <p style="margin-top:15px; font-size: 15px">
                   10% of proceeds go to carefully selected wildlife conservation groups.
-              <p>
+              </p>
           </div>
       </fa-center-content>
   </template>
@@ -156,13 +136,22 @@
 
       ready : function() {
         this.hash = ['buy'];
-        this.blank = '';
+
         this.comicExtra = '';
         this.comicMain = '';
 
-        this.comics = [];
+        var options = '<option value=""></option>';
+        for( var i = 0; i < MAX_FAUNA_IMG; i++ ) {
+          options += '<option value="'+(i+1)+'">#'+(i+1)+'</option>';
+        }
+        this.$.comicMainSelector.innerHTML = options;
+        this.$.comicExtraSelector.innerHTML = options;
 
-        for( var i = 0; i < MAX_FAUNA_IMG; i++ ) this.comics.push((i+1)+'');
+        this.fire('ready');
+      },
+
+      onUpdate : function() {
+        window.document.title = 'Fauna - Buy';
       },
 
       addPrint : function() {
@@ -171,6 +160,16 @@
 
       addAdditional : function() {
           ga('send', 'event', 'buy', 'additional', this.comicExtra, 1);
+      },
+
+      onMainSelect : function() {
+        this.comicMain = this.$.comicMainSelector.value;
+        this.$.comicMain.innerHTML = '<img src="/comics/fauna/thumb/Fauna_'+this.comicMain+'.jpg" style="margin-right: 5px" />';
+      },
+
+      onExtraSelect : function() {
+        this.comicExtra = this.$.comicExtraSelector.value;
+        this.$.comicExtra.innerHTML = '<img src="/comics/fauna/thumb/Fauna_'+this.comicExtra+'.jpg" style="margin-right: 5px" />';
       }
 
   });

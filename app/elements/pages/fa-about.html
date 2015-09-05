@@ -1,6 +1,6 @@
 <dom-module id="fa-about">
   <style>
-      img {
+      .biopic {
           border-radius: 6px;
           width: 200px;
           margin: 10px 20px 10px 0;
@@ -16,7 +16,7 @@
       }
 
       @media(max-width: 768px) {
-          img {
+          .biopic {
               width: 150px;
               margin: 5px 10px 5px 0;
           }
@@ -29,7 +29,7 @@
   <template>
     <fa-center-content>
         <div style="max-width:700px; padding: 5px">
-            <img src="../../images/bio.jpg" style="float:left"/>
+            <img class="biopic" src="../../images/bio.jpg" style="float:left"/>
             <h2>About</h2>
 
             <p>When he is not cartooning, training wombats in jui jitsu, or hibernating for winter,
@@ -63,8 +63,11 @@
               leave some feedback. Please!</p>
 
             <p>
-                Greg Bishop<br />
-                <a href="mailto:gtbish@gmail.com">gtbish@gmail.com</a>
+                <div>-Greg Bishop</div>
+                <div class="row">
+                  <div class="col-sm-8"><a href="mailto:gtbish@gmail.com" target="_blank">gtbish@gmail.com</a></div>
+                  <div class="col-sm-4" style="text-align:right"><a href="https://twitter.com/faunacartoon" target="_blank"><img src="/images/twitter_32.png" border="0" style="width:24px;height:24px"> faunacartoon</a></div>
+                </div>
             </p>
         </div>
     </fa-center-content>
@@ -79,6 +82,11 @@
         this.hack = '';
         this.isPhone = false;
         this.hash = ['about'];
+        this.fire('ready');
+      },
+
+      onUpdate : function() {
+        window.document.title = 'Fauna - About';
       }
     });
 </script>

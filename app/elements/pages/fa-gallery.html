@@ -90,43 +90,44 @@
           }
           this.numPages = Math.ceil(this.max / this.numPerPage);
 
-          $(window).on('hashchange', this.update.bind(this))
-          this.update();
+          this.fire('ready');
       },
 
-        update : function() {
-            var parts = window.location.hash.split('/');
-            parts[0] = parts[0].replace(/#/g, '');
+        onUpdate : function(params) {
+          if( params.length > 0 ) this.index = parseInt(params[0]);
+          else this.index = 1;
 
-            if( parts[0] != this.hash[0] ) return;
+          if( this.loc == 'fauna' ) {
+            window.document.title = 'Fauna - Gallery';
+          } else {
+            window.document.title = 'Nuts - Gallery';
+          }
 
-            if( parts.length > 1 ) this.index = parseInt(parts[1]);
-            else this.index = 1;
+          this._checkLowBounds();
+          this._checkHiBounds();
+
+          this._clearTimers();
+          this.gallaryArray = [];
+          var c = 0;
 
 
-            this._checkLowBounds();
-            this._checkHiBounds();
+          var content = $(this.$.content).html('');
+          for( var i = (this.index-1) * this.numPerPage; i < this.index * this.numPerPage; i++ ) {
+              if( i >= this.max ) return;
 
-            this._clearTimers();
-            this.gallaryArray = [];
-            var c = 0;
+              var img = $('<a href="#' + (this.loc === 'fauna' ? 'home' : this.loc ) + '/' + (i+1) + '" style="visibility:hidden; display:inline-block" >'+
+                        '<img border="0" class="comic style-scope fa-gallery" src="/comics/' + this.loc +
+                        '/thumb/' + this.type + '_' + (i+1) + '.jpg" /></a>');
+              this.gallaryArray.push({
+                  index : i+1,
+                  show : false,
+                  img : img
+              });
+              content.append(img);
 
-
-            var content = $(this.$.content);
-            for( var i = (this.index-1) * this.numPerPage; i < this.index * this.numPerPage; i++ ) {
-                if( i >= this.max ) return;
-
-                var img = $('<a href="'+this.loc+'/'+(i+1)+'" style="visibility:hidden" ><img border="0" class="comic" src="/comics/'+this.loc+'/thumb/'+this.type+'_'+(i+1)+'.jpg" /></a>');
-                this.gallaryArray.push({
-                    index : i+1,
-                    show : false,
-                    img : img
-                });
-                content.append(img);
-
-                this._showPic(c);
-                c++;
-            }
+              this._showPic(c);
+              c++;
+          }
         },
 
         _showPic : function(c) {

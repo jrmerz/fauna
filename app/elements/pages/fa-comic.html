@@ -90,9 +90,12 @@
         }.bind(this), 1000);
 
         $.get('/description.json', function(resp){
-            this.descriptions = resp;
-            this.setTitle();
+          FC.descriptions = resp;
+          this.descriptions = resp;
+          this.setTitle();
         }.bind(this));
+
+        this.fire('ready');
     },
 
     setLoading : function(loading) {

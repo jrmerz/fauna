@@ -59,7 +59,12 @@
       is : 'fa-links',
 
       ready : function() {
-        this.hash = ['links']
+        this.hash = ['links'];
+        this.fire('ready');
+      },
+
+      onUpdate : function() {
+        window.document.title = 'Fauna - Links';
       }
     });
 </script>

@@ -11,17 +11,14 @@
           color: #333;
       }
       #buttons {
-          overflow: hidden;
-          height: 0px;
-          width: 0px;
-          background-color: rgba(57, 153, 252, 0.82);
-          box-shadow: 0 0 10px #3999fc;
-          border-radius: 6px;
-
-          transition: all 300ms ease-out;
-          -moz-transition: all 300ms ease-out;
-          -webkit-transition: all 300ms ease-out;
-          -ms-transition: all 300ms ease-out;
+        padding: 10px;
+        overflow: hidden;
+        position: absolute;
+        bottom: 40px;
+        left: 0px;
+        background-color: rgba(57, 153, 252, 0.95);
+        box-shadow: 0 0 10px #3999fc;
+        border-radius: 6px;
       }
       #buttons div{
           padding: 5px 0;
@@ -36,23 +33,28 @@
 
   <template>
 
-      <div id="buttons">
-          <div id="innerButtons" horizontal center-justified layout style="height:100%">
-              <div flex self-center>
-                  <div><facebook-button></facebook-button></div>
+      <div id="buttons" style="display:none" class="animated zoomIn">
+        <a class="close" on-click="close" style="font-weight: bold">X</a>
+          <div id="innerButtons" class="horizontal center-justified layout" style="height:100%">
+              <div class="flex self-center">
+                <div>
+                    <div class="fb-like" data-href="http://faunacartoon.com" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                </div>
 
-                  <div id="plusRoot"></div>
+                <div id="plusRoot">
+                  <div class="g-plusone" data-size="medium" data-href="http://faunacartoon.com" id="plusOne"></div>
+                </div>
 
-                  <div>
-                      <a href='http://topwebcomics.com/vote/18836/default.aspx' target="_blank" title='Vote for Fauna Cartoon on TopWebComics!'>
-                          <img style="border: 1px solid #333" src='http://topwebcomics.com/rankimages/rankimage.aspx?ImageTemplate=dynamiclink2&SiteID=18836' />
-                      </a>
-                  </div>
+                <div>
+                    <a href='http://topwebcomics.com/vote/18836/default.aspx' target="_blank" title='Vote for Fauna Cartoon on TopWebComics!'>
+                        <img style="border: 1px solid #333" src='http://topwebcomics.com/rankimages/rankimage.aspx?ImageTemplate=dynamiclink2&SiteID=18836' />
+                    </a>
+                </div>
               </div>
           </div>
       </div>
 
-      <div id="openButton" on-click="{{open}}" style="display:inline-block">
+      <div id="openButton" on-click="toggle" style="display:inline-block">
           Share!
       </div>
   </template>
@@ -65,54 +67,40 @@
 
       ready : function() {
         this.opened = false;
+      },
 
-          this.querySelector('facebook-button').href = 'http://faunacartoon.com';
-          $(window).on('click', this.close.bind(this));
+      attached : function() {
+        gapi.plusone.go(this.$.plusRoot);
 
 
-
-          setTimeout(function(){
-              var children = $('body').children();
-              for( var i = 0; i < children.length; i++ ) {
-                  var id = $(children[i]).attr('id') || '';
-                  if( id.match(/plusone/i) ) {
-                      var ele = $(children[i]).remove();
-                      this.$.plusRoot.appendChild(ele[0]);
-                      return;
-                  }
-              }
-          }.bind(this), 3000);
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=574998429198119";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
       },
 
       open : function(e) {
-          this.opened = true;
+        this.opened = true;
 
-          var ele = $(this.$.innerButtons)
-          $(this.$.buttons)
-              .height('130px')
-              .width('155px')
-              .css('padding', '10px')
-
-          this.$.buttons.style.display = "inline-block";
-          this.$.openButton.style.display = "none";
-          this.cancel(e);
+        this.$.buttons.style.display = "block";
       },
 
       close : function() {
-          if( !this.opened ) return;
+        if( !this.opened ) return;
 
-          this.opened = false;
-          $(this.$.buttons)
-              .height(0)
-              .width(0)
-              .css('padding', '0px')
-
-          this.$.openButton.style.display = "inline-block";
+        this.opened = false;
+        this.$.buttons.style.display = "none";
       },
 
-      cancel : function(e) {
-          e.stopPropagation();
-          e.preventDefault();
+      toggle : function() {
+        if( !this.opened ) {
+          this.open();
+        } else {
+          this.close();
+        }
       }
 
     });

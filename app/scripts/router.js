@@ -27,11 +27,15 @@ FC.router = (function(){
   function update() {
     var parts = window.location.hash.replace(/#/g, '').replace(/^!/,'').split('/');
 
-    console.log(parts.join(','));
-
     if( parts.length === 0 ) {
       parts = ['home'];
-    } else if( !registery[parts[0]] ) {
+    }
+
+    if( parts[0] == 'fauna' ) {
+      parts[0] = 'home';
+    }
+
+    if( !registery[parts[0]] ) {
       window.location = '#home';
       return;
     }
@@ -43,13 +47,10 @@ FC.router = (function(){
       for( var key in registery ) {
         if( key === page ) {
           registery[key].ele.style.display = 'block';
-          console.log('show: '+key);
-          console.log(registery[key].ele);
           if( registery[key].ele.onShow ) {
             registery[key].ele.onShow();
           }
         } else {
-          console.log('hide: '+key);
           registery[key].ele.style.display = 'none';
         }
       }
@@ -65,9 +66,24 @@ FC.router = (function(){
   function init() {
     for( var key in registery ) {
       registery[key].ele = document.querySelector(registery[key].query);
+
+      registery[key].ele.addEventListener('ready', function(e){
+        delayedLoad();
+      });
     }
 
     update();
+  }
+
+  // if elements are slow to be ready
+  var delayTimer = -1;
+  function delayedLoad() {
+    if( delayTimer != -1 ) clearTimeout(delayTimer);
+    delayTimer = setTimeout(function(){
+      delayTimer = -1;
+      console.log('Updating from delay');
+      update();
+    }.bind(this), 50);
   }
 
   $(window).on('hashchange', update);
