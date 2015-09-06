@@ -25,6 +25,7 @@ FC.router = (function(){
   var page = '';
 
   function update() {
+    console.log('Calling update()');
     var parts = window.location.hash.replace(/#/g, '').replace(/^!/,'').split('/');
 
     if( parts.length === 0 ) {
@@ -67,7 +68,8 @@ FC.router = (function(){
     for( var key in registery ) {
       registery[key].ele = document.querySelector(registery[key].query);
 
-      registery[key].ele.addEventListener('ready', function(e){
+      registery[key].ele.addEventListener('page-ready', function(e){
+        console.log('page-ready event')
         delayedLoad();
       });
     }

@@ -6585,15 +6585,15 @@ this.fire('dom-change');
               width: 110px;
           }
 
-          a[hash="about"] {
+          a[href="#about"] {
               top: 135px;
           }
 
-          a[hash="buy"] {
+          a[href="#buy"] {
               top: 275px;
           }
 
-          a[hash="links"] {
+          a[href="#links"] {
               top: 390px;
           }
 
@@ -7014,6 +7014,9 @@ this.fire('dom-change');
       .container {
           width: 400px;
       }
+      .container.nuts {
+          width: 450px;
+      }
 
       .comic.Fauna {
           width: 100px;
@@ -7028,12 +7031,12 @@ this.fire('dom-change');
           .comic {
               margin: 5px;
           }
-          .container {
+          /*.container {
               width: 350px;
           }
           .container.nuts {
               width: 200px;
-          }
+          }*/
       }
 
   </style>
@@ -7070,6 +7073,8 @@ this.fire('dom-change');
       },
 
       ready : function() {
+        console.log('Cartoons ready start');
+
           this.gallaryArray = [];
           this.times = [];
 
@@ -7091,9 +7096,12 @@ this.fire('dom-change');
               this.max = MAX_NUTS_IMG;
               this.numPerPage = 8;
           }
+
+          $(this.$.content).addClass(this.type);
+
           this.numPages = Math.ceil(this.max / this.numPerPage);
 
-          this.fire('ready');
+          this.fire('page-ready');
       },
 
         onUpdate : function(params) {
@@ -7118,9 +7126,11 @@ this.fire('dom-change');
           for( var i = (this.index-1) * this.numPerPage; i < this.index * this.numPerPage; i++ ) {
               if( i >= this.max ) return;
 
-              var img = $('<a href="#' + (this.loc === 'fauna' ? 'home' : this.loc ) + '/' + (i+1) + '" style="visibility:hidden; display:inline-block" >'+
-                        '<img border="0" class="comic style-scope fa-gallery" src="/comics/' + this.loc +
-                        '/thumb/' + this.type + '_' + (i+1) + '.jpg" /></a>');
+              var img = $('<a href="#' + (this.loc === 'fauna' ? 'home' : this.loc ) + '/' + (i+1) +
+                        '" style="visibility:hidden; display:inline-block" >'+
+                          '<img border="0" class="comic '+this.type+' style-scope fa-gallery" src="/comics/' + this.loc +
+                          '/thumb/' + this.type + '_' + (i+1) + '.jpg" /'+
+                        '></a>');
               this.gallaryArray.push({
                   index : i+1,
                   show : false,
@@ -7273,10 +7283,9 @@ this.fire('dom-change');
         $.get('/description.json', function(resp){
           FC.descriptions = resp;
           this.descriptions = resp;
-          this.setTitle();
         }.bind(this));
 
-        this.fire('ready');
+        this.fire('page-ready');
     },
 
     setLoading : function(loading) {
@@ -7438,7 +7447,7 @@ this.fire('dom-change');
         this.hack = '';
         this.isPhone = false;
         this.hash = ['about'];
-        this.fire('ready');
+        this.fire('page-ready');
       },
 
       onUpdate : function() {
@@ -7595,7 +7604,7 @@ this.fire('dom-change');
         this.$.comicMainSelector.innerHTML = options;
         this.$.comicExtraSelector.innerHTML = options;
 
-        this.fire('ready');
+        this.fire('page-ready');
       },
 
       onUpdate : function() {
@@ -7684,7 +7693,7 @@ this.fire('dom-change');
 
       ready : function() {
         this.hash = ['links'];
-        this.fire('ready');
+        this.fire('page-ready');
       },
 
       onUpdate : function() {

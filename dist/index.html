@@ -86,10 +86,14 @@
       console.log('Ignoring analytics');
     }
 
-    UpUp.start({
-      'content-url': 'offline.html',
-      'assets': ['/styles/app.css','fonts/IndieFlower.css','fonts/IndieFlower.ttf','fonts/IndieFlower.woff','fonts/IndieFlower.woff2']
-    });
+    // service worker wrapper
+    try {
+      UpUp.start({
+        'content-url': 'offline.html',
+        'assets': ['/styles/app.css','fonts/IndieFlower.css','fonts/IndieFlower.ttf','fonts/IndieFlower.woff','fonts/IndieFlower.woff2']
+      });
+    } catch(e) {}
+
   </script>
 
 </body>

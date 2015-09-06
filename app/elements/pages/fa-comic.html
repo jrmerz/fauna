@@ -92,10 +92,9 @@
         $.get('/description.json', function(resp){
           FC.descriptions = resp;
           this.descriptions = resp;
-          this.setTitle();
         }.bind(this));
 
-        this.fire('ready');
+        this.fire('page-ready');
     },
 
     setLoading : function(loading) {
