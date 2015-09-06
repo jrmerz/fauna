@@ -10,7 +10,7 @@ module.exports = function copyto(grunt) {
         build: {
             files: [{
                 cwd: 'app',
-                src: ['*.{php,html,json,ico,xml}', 'images/**/*', 'icons/**/*', 'fonts/**/*'],
+                src: ['*.{php,html,json,ico,xml,js}', 'images/**/*', 'icons/**/*', 'fonts/**/*'],
                 dest: 'dist/'
             },
             {
