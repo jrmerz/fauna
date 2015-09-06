@@ -2,7 +2,7 @@
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>http://faunacartoon.com</loc>
+        <loc>https://faunacartoon.com</loc>
         <changefreq>weekly</changefreq>
         <priority>1</priority>
     </url>
@@ -18,7 +18,7 @@
             $file = preg_replace("/\.jpg/", '', $file);
 
 print "  <url>
-    <loc>http://faunacartoon.com/#!home/$file</loc>
+    <loc>https://faunacartoon.com/#!home/$file</loc>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>";
@@ -26,6 +26,6 @@ echo PHP_EOL;
 
         }
     }
-    
+
 ?>
 </urlset>
