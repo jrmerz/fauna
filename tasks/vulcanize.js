@@ -12,9 +12,7 @@ module.exports = function(grunt) {
 				inlineScripts : true
       },
       files: {
-        'dist/require.html': [
-        'public/require.html'
-        ]
+        'dist/elements.html' : 'app/elements.html'
       }
     }
   };

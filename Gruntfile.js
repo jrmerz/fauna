@@ -16,10 +16,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-filerev');
+    grunt.loadNpmTasks('grunt-shell');
 
     grunt.config.merge({
       useminPrepare: {
-          html: ['public/index.html'],
+          html: ['app/index.html'],
           options: {
             dest: 'dist',
             verbose: true
@@ -34,11 +35,24 @@ module.exports = function (grunt) {
     });
     // end usemin
 
+    grunt.config.merge({
+        shell: {
+          options: {
+              stderr: false
+          },
+          target: {
+              command: 'cd dist && ln -s ../app/comics .  && ln -s ../app/count.js .'
+          }
+      }
+    });
+
+
+
     // Register group tasks
     grunt.registerTask('build', [
-        'jshint',
+        //'jshint',
         'clean',
-        'browserify:build',
+        //'browserify:build',
         'copyto',
         // start usemin
           'useminPrepare',
@@ -48,7 +62,8 @@ module.exports = function (grunt) {
           //'filerev',
           'usemin',
         // end usemin
-      'vulcanize']);
+      'vulcanize',
+      'shell']);
 
     grunt.registerTask('test', [ 'jshint', 'mochacli' ]);
 };

@@ -10,13 +10,13 @@ module.exports = function copyto(grunt) {
         build: {
             files: [{
                 cwd: 'app',
-                src: ['index.html'],
+                src: ['*.{php,html,json,ico,xml}', 'images/**/*', 'icons/**/*'],
                 dest: 'dist/'
             },
             {
-                cwd: 'app/bower_components/font-awesome',
-                src: ['fonts/**/*'],
-                dest: 'dist/'
+                cwd: 'app/styles',
+                src: ['ie.css'],
+                dest: 'dist/styles/'
             }],
             options: {
                 ignore: []
