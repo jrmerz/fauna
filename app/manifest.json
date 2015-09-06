@@ -1,0 +1,23 @@
+{
+  "short_name": "Fauna Cartoons",
+  "name": "Fauna Cartoons",
+  "icons": [
+    {
+      "src": "icons/icon_76.png",
+      "sizes": "76x76",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon_152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone"
+}
