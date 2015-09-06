@@ -30,7 +30,8 @@
   <meta name="description" content="Wild Cartoons from the Animal Kingdom.  A collection of animal and biology cartoons and comics inspired by nature, illustrated by Greg Bishop">
   <meta name="keywords" content="animal cartoon, comic, fauna, wildlife drawings, funny, humor, Greg Bishop">
 
-  <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+  <link href='fonts/IndieFlower.css' rel='stylesheet' type='text/css'>
+
   <link rel="stylesheet" href="styles/app.css">
 
   <!--[if lte IE 9]>
@@ -84,6 +85,11 @@
     } else {
       console.log('Ignoring analytics');
     }
+
+    UpUp.start({
+      'content-url': 'offline.html',
+      'assets': ['/styles/app.css','fonts/IndieFlower.css','fonts/IndieFlower.ttf','fonts/IndieFlower.woff','fonts/IndieFlower.woff2']
+    });
   </script>
 
 </body>
