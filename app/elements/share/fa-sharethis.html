@@ -1,19 +1,15 @@
 <dom-module id="fa-sharethis">
   <style>
       :host {
-          display: inline-block;
+          display: block;
           padding: 10px;
-      }
-      :host(:hover) div.text {
-          display : block;
-      }
-      :host div.text {
-          display : none;
+          max-width: 470px;
       }
   </style>
   <template>
 
-      <div>
+      <div class="layout horizontal">
+        <div id="hover">
           <a id="facebook" target="_blank">
               <img src="/images/facebook_32.png" border="0" />
           </a>
@@ -26,8 +22,13 @@
           <a id="reddit" target="_blank">
               <img src="/images/reddit_32.png" border="0" />
           </a>
+        </div>
+        <div class="flex" style="text-align:right">
+          <a id="buy" target="_blank">Buy!</a>
+        </div>
       </div>
-      <div class="text">Share This Comic!</div>
+
+      <div id="text" style="display:none">Share This Comic!</div>
   </template>
 </dom-module>
 
@@ -46,19 +47,36 @@
           reddit : 'http://www.reddit.com/submit?url='
         }
 
-        this.updateHash();
         $(window).on('hashchange', this.updateHash.bind(this));
+
+        FC.addDescriptionLoadHandler(function(){
+          this.updateHash();
+        }.bind(this));
+
+        $(this.$.hover)
+          .on('mouseenter', function(){
+            this.$.text.style.display = 'block';
+          }.bind(this))
+          .on('mouseleave', function(){
+            this.$.text.style.display = 'none';
+          }.bind(this))
       },
 
       updateHash : function() {
-          this.async(function(){
-              this.encoded = encodeURIComponent(window.location.href);
+        this.encoded = encodeURIComponent(window.location.href);
 
-              this.$.facebook.setAttribute('href', this.roots.facebook+this.encoded);
-              this.$.google.setAttribute('href', this.roots.google+this.encoded);
-              this.$.twitter.setAttribute('href', this.roots.twitter+this.encoded);
-              this.$.reddit.setAttribute('href', this.roots.redit+this.encoded+'&title='+window.document.title);
-          });
+        this.$.facebook.setAttribute('href', this.roots.facebook+this.encoded);
+        this.$.google.setAttribute('href', this.roots.google+this.encoded);
+        this.$.twitter.setAttribute('href', this.roots.twitter+this.encoded);
+        this.$.reddit.setAttribute('href', this.roots.redit+this.encoded+'&title='+window.document.title);
+
+        var parts = window.location.hash.split('/');
+        if( FC.descriptions && parts.length > 1 && (parts[0] == '#home' || parts[0] == '#fauna') && FC.descriptions[parts[1]] && FC.descriptions[parts[1]].buy ) {
+          this.$.buy.style.display = 'inline-block';
+          this.$.buy.setAttribute('href', FC.descriptions[parts[1]].buy);
+        } else {
+          this.$.buy.style.display = 'none';
+        }
       }
   });
 </script>

@@ -4,6 +4,7 @@
           box-shadow: 0px 5px 15px #3999fc;
           border-radius: 6px;
       }
+
       .full {
           position: absolute;
           left: 0;
@@ -11,7 +12,6 @@
           width: 100%;
           height: 100%;
           text-align: center;
-
       }
 
       .text {
@@ -38,15 +38,26 @@
   </style>
   <template>
       <fa-center-content>
-          <div class="layout vertical">
-              <img id="img" class="comic animated fadeInUp" on-load="onLoad" />
+          <div class="layout vertical" itemscope itemtype="http://schema.org/CreativeWork">
+            <div style="display:none" itemprop="publisher" itemtype="http://schema.org/Organization" itemscope>
+              <span itemprop="name">Fauna Cartoons</span>
+            </div>
 
-              <div id="loading" class="text animated rubberBand infinite">Loading...</div>
+            <div id="indexLabel" class="text animated fadeInLeftBig"></div>
 
-              <div>
-                  <div id="indexLabel" class="text animated fadeInLeftBig"></div>
-                  <fa-sharethis iheight="55" iwidth="180" style="margin-left: 40px; visibility:hidden"></fa-sharethis>
-              </div>
+            <img id="img" itemprop="image" class="comic animated fadeInUp" on-load="onLoad" />
+
+            <div style="display:none">
+                By, <span itemprop="author">Greg Bishop</span>
+            </div>
+            <span style="display:none" itemprop="keywords" id="itemPropKeywords"></span>
+
+            <div id="loading" class="text animated rubberBand infinite">Loading...</div>
+
+            <div>
+
+                <fa-sharethis iheight="55" iwidth="180" style="visibility:hidden"></fa-sharethis>
+            </div>
           </div>
       </fa-center-content>
 
@@ -89,9 +100,9 @@
             this.querySelector('fa-sharethis').style.visibility = 'visible';
         }.bind(this), 1000);
 
-        $.get('/description.json', function(resp){
-          FC.descriptions = resp;
-          this.descriptions = resp;
+        FC.addDescriptionLoadHandler(function(){
+          this.descriptions = FC.descriptions;
+          this.setTitle();
         }.bind(this));
 
         this.fire('page-ready');
@@ -130,25 +141,37 @@
       if( index == this.index ) return;
 
       this.index = index;
-      this.$.indexLabel.innerHTML = '#'+this.index;
+
       this.setLoading(true);
       this.$.img.setAttribute('src', '/comics/'+this.loc+'/regular/'+this.type+'_'+this.index+'.jpg');
     },
 
     setTitle : function() {
-        if( this.type == 'Fauna' ) {
+      this.$.img.setAttribute('alt', '');
+      this.$.itemPropKeywords.innerHTML = '';
 
-            var title = 'Fauna #'+this.index;
-            if( this.descriptions[this.index+''] ) {
-                title += ' - '+this.descriptions[this.index+''].title;
-                this.$.img.setAttribute('altText', this.descriptions[this.index+''].title);
-            }
+      var index = '#'+this.index;
 
-            window.document.title = title;
+      if( this.type == 'Fauna' ) {
 
-        } else if( this.type == 'nuts' ) {
-            window.document.title = 'Nuts';
+        var title = 'Fauna #'+this.index;
+        if( this.descriptions[this.index+''] ) {
+          var item = this.descriptions[this.index+''];
+
+          this.$.img.setAttribute('alt', item.title);
+          this.$.itemPropKeywords.innerHTML = item.keywords;
+
+          title += ' - '+item.title;
+
+          index += ' - <span itemprop="name" id="itemPropName">'+item.title+'</span>';
         }
+        window.document.title = title;
+
+      } else if( this.type == 'nuts' ) {
+          window.document.title = 'Nuts';
+      }
+
+      this.$.indexLabel.innerHTML = index;
     },
 
     previous : function() {

@@ -6535,7 +6535,7 @@ this.fire('dom-change');
           position: relative;
       }
       .img {
-          background: url("/images/left_nav.png") no-repeat bottom left;
+          background: url("/images/new/left_nav.png") no-repeat bottom left;
           min-height: 634px;
           margin: 55px 0;
       }
@@ -6544,7 +6544,7 @@ this.fire('dom-change');
           position: absolute;
           width: 130px;
           height: 80px;
-          left: 160px;
+          left: 170px;
           border: none;
           background: transparent;
           cursor: pointer;
@@ -6555,19 +6555,19 @@ this.fire('dom-change');
       }
 
       a[href="#cartoons"] {
-          top: 10px;
+          top: 65px;
       }
 
       a[href="#about"] {
-          top: 162px;
+          top: 215px;
       }
 
       a[href="#buy"] {
-          top: 325px;
+          top: 337px;
       }
 
       a[href="#links"] {
-          top: 470px;
+          top: 473px;
       }
 
       @media(max-width: 768px) {
@@ -6580,21 +6580,25 @@ this.fire('dom-change');
           }
 
           a {
-              left: 130px;
+              left: 140px;
               height: 65px;
               width: 110px;
           }
 
+          a[href="#cartoons"] {
+              top: 55px;
+          }
+
           a[href="#about"] {
-              top: 135px;
+              top: 180px;
           }
 
           a[href="#buy"] {
-              top: 275px;
+              top: 280px;
           }
 
           a[href="#links"] {
-              top: 390px;
+              top: 395px;
           }
 
       }
@@ -6758,10 +6762,10 @@ this.fire('dom-change');
       <div class="fixed">
           <div class="margin">
               <div class="layout">
-                  <img class="animated" src="/images/prev.png" left="" id="leftImg">
+                  <img class="animated" src="/images/new/prev.png" left="" id="leftImg">
                   <button on-click="firePrev" left="" id="left"></button>
 
-                  <img class="animated" src="/images/next.png" right="" id="rightImg">
+                  <img class="animated" src="/images/new/next.png" right="" id="rightImg">
                   <button on-click="fireNext" right="" id="right"></button>
               </div>
           </div>
@@ -6940,19 +6944,15 @@ this.fire('dom-change');
 <dom-module id="fa-sharethis" assetpath="/app/elements/share/">
   <style>
       :host {
-          display: inline-block;
+          display: block;
           padding: 10px;
-      }
-      :host(:hover) div.text {
-          display : block;
-      }
-      :host div.text {
-          display : none;
+          max-width: 470px;
       }
   </style>
   <template>
 
-      <div>
+      <div class="layout horizontal">
+        <div id="hover">
           <a id="facebook" target="_blank">
               <img src="/images/facebook_32.png" border="0">
           </a>
@@ -6965,8 +6965,13 @@ this.fire('dom-change');
           <a id="reddit" target="_blank">
               <img src="/images/reddit_32.png" border="0">
           </a>
+        </div>
+        <div class="flex" style="text-align:right">
+          <a id="buy" target="_blank">Buy!</a>
+        </div>
       </div>
-      <div class="text">Share This Comic!</div>
+
+      <div id="text" style="display:none">Share This Comic!</div>
   </template>
 </dom-module>
 
@@ -6985,19 +6990,36 @@ this.fire('dom-change');
           reddit : 'http://www.reddit.com/submit?url='
         }
 
-        this.updateHash();
         $(window).on('hashchange', this.updateHash.bind(this));
+
+        FC.addDescriptionLoadHandler(function(){
+          this.updateHash();
+        }.bind(this));
+
+        $(this.$.hover)
+          .on('mouseenter', function(){
+            this.$.text.style.display = 'block';
+          }.bind(this))
+          .on('mouseleave', function(){
+            this.$.text.style.display = 'none';
+          }.bind(this))
       },
 
       updateHash : function() {
-          this.async(function(){
-              this.encoded = encodeURIComponent(window.location.href);
+        this.encoded = encodeURIComponent(window.location.href);
 
-              this.$.facebook.setAttribute('href', this.roots.facebook+this.encoded);
-              this.$.google.setAttribute('href', this.roots.google+this.encoded);
-              this.$.twitter.setAttribute('href', this.roots.twitter+this.encoded);
-              this.$.reddit.setAttribute('href', this.roots.redit+this.encoded+'&title='+window.document.title);
-          });
+        this.$.facebook.setAttribute('href', this.roots.facebook+this.encoded);
+        this.$.google.setAttribute('href', this.roots.google+this.encoded);
+        this.$.twitter.setAttribute('href', this.roots.twitter+this.encoded);
+        this.$.reddit.setAttribute('href', this.roots.redit+this.encoded+'&title='+window.document.title);
+
+        var parts = window.location.hash.split('/');
+        if( FC.descriptions && parts.length > 1 && (parts[0] == '#home' || parts[0] == '#fauna') && FC.descriptions[parts[1]] && FC.descriptions[parts[1]].buy ) {
+          this.$.buy.style.display = 'inline-block';
+          this.$.buy.setAttribute('href', FC.descriptions[parts[1]].buy);
+        } else {
+          this.$.buy.style.display = 'none';
+        }
       }
   });
 </script>
@@ -7073,8 +7095,6 @@ this.fire('dom-change');
       },
 
       ready : function() {
-        console.log('Cartoons ready start');
-
           this.gallaryArray = [];
           this.times = [];
 
@@ -7195,6 +7215,7 @@ this.fire('dom-change');
           box-shadow: 0px 5px 15px #3999fc;
           border-radius: 6px;
       }
+
       .full {
           position: absolute;
           left: 0;
@@ -7202,7 +7223,6 @@ this.fire('dom-change');
           width: 100%;
           height: 100%;
           text-align: center;
-
       }
 
       .text {
@@ -7229,15 +7249,26 @@ this.fire('dom-change');
   </style>
   <template>
       <fa-center-content>
-          <div class="layout vertical">
-              <img id="img" class="comic animated fadeInUp" on-load="onLoad">
+          <div class="layout vertical" itemscope="" itemtype="http://schema.org/CreativeWork">
+            <div style="display:none" itemprop="publisher" itemtype="http://schema.org/Organization" itemscope="">
+              <span itemprop="name">Fauna Cartoons</span>
+            </div>
 
-              <div id="loading" class="text animated rubberBand infinite">Loading...</div>
+            <div id="indexLabel" class="text animated fadeInLeftBig"></div>
 
-              <div>
-                  <div id="indexLabel" class="text animated fadeInLeftBig"></div>
-                  <fa-sharethis iheight="55" iwidth="180" style="margin-left: 40px; visibility:hidden"></fa-sharethis>
-              </div>
+            <img id="img" itemprop="image" class="comic animated fadeInUp" on-load="onLoad">
+
+            <div style="display:none">
+                By, <span itemprop="author">Greg Bishop</span>
+            </div>
+            <span style="display:none" itemprop="keywords" id="itemPropKeywords"></span>
+
+            <div id="loading" class="text animated rubberBand infinite">Loading...</div>
+
+            <div>
+
+                <fa-sharethis iheight="55" iwidth="180" style="visibility:hidden"></fa-sharethis>
+            </div>
           </div>
       </fa-center-content>
 
@@ -7280,9 +7311,9 @@ this.fire('dom-change');
             this.querySelector('fa-sharethis').style.visibility = 'visible';
         }.bind(this), 1000);
 
-        $.get('/description.json', function(resp){
-          FC.descriptions = resp;
-          this.descriptions = resp;
+        FC.addDescriptionLoadHandler(function(){
+          this.descriptions = FC.descriptions;
+          this.setTitle();
         }.bind(this));
 
         this.fire('page-ready');
@@ -7321,25 +7352,37 @@ this.fire('dom-change');
       if( index == this.index ) return;
 
       this.index = index;
-      this.$.indexLabel.innerHTML = '#'+this.index;
+
       this.setLoading(true);
       this.$.img.setAttribute('src', '/comics/'+this.loc+'/regular/'+this.type+'_'+this.index+'.jpg');
     },
 
     setTitle : function() {
-        if( this.type == 'Fauna' ) {
+      this.$.img.setAttribute('alt', '');
+      this.$.itemPropKeywords.innerHTML = '';
 
-            var title = 'Fauna #'+this.index;
-            if( this.descriptions[this.index+''] ) {
-                title += ' - '+this.descriptions[this.index+''].title;
-                this.$.img.setAttribute('altText', this.descriptions[this.index+''].title);
-            }
+      var index = '#'+this.index;
 
-            window.document.title = title;
+      if( this.type == 'Fauna' ) {
 
-        } else if( this.type == 'nuts' ) {
-            window.document.title = 'Nuts';
+        var title = 'Fauna #'+this.index;
+        if( this.descriptions[this.index+''] ) {
+          var item = this.descriptions[this.index+''];
+
+          this.$.img.setAttribute('alt', item.title);
+          this.$.itemPropKeywords.innerHTML = item.keywords;
+
+          title += ' - '+item.title;
+
+          index += ' - <span itemprop="name" id="itemPropName">'+item.title+'</span>';
         }
+        window.document.title = title;
+
+      } else if( this.type == 'nuts' ) {
+          window.document.title = 'Nuts';
+      }
+
+      this.$.indexLabel.innerHTML = index;
     },
 
     previous : function() {
@@ -7489,17 +7532,17 @@ this.fire('dom-change');
               <div class="layout horizontal">
                   <div class="flex">
                       <p style="margin-top: 30px">
-                          Help support Fauna Cartoon!  Order apparel from my shop on <a href="http://www.galloree.com/Shops/Fauna-Cartoon--1194/index.php" target="_blank" style="font-size: 28px">Galloree!</a>
+                          <a href="http://www.galloree.com/Shops/Fauna-Cartoon--1194/index.php" target="_blank" style="font-size: 28px">Check out The Fauna Store!</a>
                       </p>
                   </div>
                   <div>
-                      <img src="/images/hippo_shirt.png" class="bear animated bounceInDown">
+                      <img src="/images/new/hippo_shirt.png" class="bear animated bounceInDown">
                   </div>
               </div>
 
 
               <div>
-                  <span class="bold">Fauna Signed Prints</span><br>
+                  <span class="bold">Or Buy Fauna Signed Prints</span><br>
                   Prints are 5 x 7 inches and on environmentally friendly paper. They are signed by the artist in permanent ink.
               </div>
 
@@ -7785,7 +7828,7 @@ this.fire('dom-change');
       .content {
           opacity: 1;
           margin-left: 300px;
-          padding-bottom: 225px;
+          padding-bottom: 325px;
 
           transition: opacity 200ms linear;
           -moz-transition: opacity 200ms linear;
@@ -7798,7 +7841,7 @@ this.fire('dom-change');
       }
 
       .footer {
-          background: url("/images/grass.png") repeat-x top left;
+          background: url("/images/new/grass.png") repeat-x top left;
           height: 135px;
           width: 100%;
           position: fixed;
