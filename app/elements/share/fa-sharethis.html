@@ -71,7 +71,16 @@
         this.$.reddit.setAttribute('href', this.roots.redit+this.encoded+'&title='+window.document.title);
 
         var parts = window.location.hash.split('/');
-        if( FC.descriptions && parts.length > 1 && (parts[0] == '#home' || parts[0] == '#fauna') && FC.descriptions[parts[1]] && FC.descriptions[parts[1]].buy ) {
+        if( parts[0] != '#home' && parts[0] != '#fauna' ) {
+          this.$.buy.style.display = 'none';
+          return;
+        }
+
+        if( parts.length == 1 ) {
+          parts.push(MAX_FAUNA_IMG+'');
+        }
+
+        if( FC.descriptions && FC.descriptions[parts[1]] && FC.descriptions[parts[1]].buy ) {
           this.$.buy.style.display = 'inline-block';
           this.$.buy.setAttribute('href', FC.descriptions[parts[1]].buy);
         } else {
