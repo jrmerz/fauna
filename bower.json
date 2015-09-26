@@ -15,9 +15,10 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.4",
-    "bootstrap": "~3.3.5",
     "animate.css": "~3.4.0",
-    "polymer": "~1.1.0"
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4",
+    "polymer": "~1.1.0",
+    "upup": "~0.1.1"
   }
 }

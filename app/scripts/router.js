@@ -25,7 +25,6 @@ FC.router = (function(){
   var page = '';
 
   function update() {
-    console.log('Calling update()');
     var parts = window.location.hash.replace(/#/g, '').replace(/^!/,'').split('/');
 
     if( parts.length === 0 ) {
