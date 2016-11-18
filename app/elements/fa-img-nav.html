@@ -73,9 +73,17 @@
 
       @media(max-width: 768px) {
           :host {
+              margin-left: 0;
+          }
+      }
+
+      /*@media(min-width: 767px) and (max-width: 900px) {
+          :host {
               margin-left: 250px;
           }
+      }*/
 
+      @media(max-width: 900px) {
           .margin {
               max-width: 500px;
           }
@@ -101,12 +109,6 @@
           button[right] {
               bottom: 50px;
               right: 10px;
-          }
-      }
-
-      @media(min-width: 768px) {
-          img {
-              bottom: 40px;
           }
       }
   </style>

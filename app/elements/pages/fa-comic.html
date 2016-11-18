@@ -1,5 +1,11 @@
 <dom-module id="fa-comic">
   <style>
+      :host {
+          display: block;
+          height: 100%;
+          overflow-y: auto;
+      }
+
       .comic {
           box-shadow: 0px 5px 15px #3999fc;
           border-radius: 6px;
@@ -30,34 +36,50 @@
           height: auto;
       }
 
+      fa-center-content {
+        margin-bottom: 300px;
+      }
+      
+      @media(max-width: 768px) {
+        fa-center-content {
+          margin-bottom: 150px;
+        }
+      }
+
       @media(max-width: 1200px) {
           #img {
               margin: 10px;
           }
       }
+
+      iron-image {
+        --iron-image-width : 100%;
+      }
   </style>
   <template>
       <fa-center-content>
-          <div class="layout vertical" itemscope itemtype="http://schema.org/CreativeWork">
+          <div itemscope itemtype="http://schema.org/CreativeWork">
             <div style="display:none" itemprop="publisher" itemtype="http://schema.org/Organization" itemscope>
               <span itemprop="name">Fauna Cartoons</span>
             </div>
 
-            <div id="indexLabel" class="text animated fadeInLeftBig"></div>
+            <div>
+              <div id="indexLabel" class="text" style="font-size: 32px"></div>
+            </div>
 
-            <img id="img" itemprop="image" class="comic animated fadeInUp" on-load="onLoad" />
+            <iron-image 
+              id="img" 
+              itemprop="image" 
+              class="comic"
+               preload fade></iron-image>
 
             <div style="display:none">
                 By, <span itemprop="author">Greg Bishop</span>
             </div>
             <span style="display:none" itemprop="keywords" id="itemPropKeywords"></span>
 
-            <div id="loading" class="text animated rubberBand infinite">Loading...</div>
+            <fa-sharethis iheight="55" iwidth="180"></fa-sharethis>
 
-            <div>
-
-                <fa-sharethis iheight="55" iwidth="180" style="visibility:hidden"></fa-sharethis>
-            </div>
           </div>
       </fa-center-content>
 
@@ -90,33 +112,18 @@
         if( this.loc == 'fauna' ) {
           this.hash = 'home';
           this.max = MAX_FAUNA_IMG;
+          this.$.img.placeholder = GALLARY_PREVIEW;
         } else {
           this.max = MAX_NUTS_IMG;
+          this.$.img.placeholder = NUTS_GALLARY_PREVIEW;
         }
 
         this.index = '';
-
-        setTimeout(function(){
-            this.querySelector('fa-sharethis').style.visibility = 'visible';
-        }.bind(this), 1000);
 
         this.descriptions = FaunaCollection;
         this.setTitle();
 
         this.fire('page-ready');
-    },
-
-    setLoading : function(loading) {
-      this.loading = loading;
-      if( loading ) {
-        $(this.$.loading).show();
-        $(this.$.img).hide();
-        $(this.$.indexLabel).hide();
-      } else {
-        $(this.$.loading).hide();
-        $(this.$.img).show();
-        $(this.$.indexLabel).show();
-      }
     },
 
     onUpdate : function(params) {
@@ -139,8 +146,6 @@
       if( index == this.index ) return;
 
       this.index = index;
-
-      this.setLoading(true);
       this.$.img.setAttribute('src', '/comics/'+this.loc+'/regular/'+this.type+'_'+this.index+'.jpg');
     },
 
@@ -184,12 +189,6 @@
         if( index > this.max ) return;
 
         window.location.hash = this.hash+'/'+index;
-    },
-
-    onLoad : function() {
-      setTimeout(function(){
-        this.setLoading(false);
-      }.bind(this), 0);
     }
 });
 </script>

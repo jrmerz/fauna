@@ -3,6 +3,7 @@
       :host {
           display: block;
           height: 100%;
+          position: relative;
       }
 
       .comic {
@@ -24,8 +25,11 @@
       }
 
       iron-list {
-          height: 100%;
-          padding: 0 20px 0 20px;
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom:0;
       }
 
       @media(max-width: 900px) {

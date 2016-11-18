@@ -65,15 +65,15 @@
         bottom: 0;
       }
 
-      #content-container {
-        height: 100%;
+      /* Won't work in Safari */
+      /*#content-container {
         @apply(--layout-vertical);
       }
 
       #content-container .flex {
         @apply(--layout-flex);
         position: relative;
-      }
+      }*/
 
       #mobileHeader {
         border-bottom: 1px solid white;
@@ -98,8 +98,8 @@
         <div id="mobileHeader">
           <button drawer-toggle></button> <span class="title">Fauna Cartoons</span>
         </div>
-        <div class="flex">
-          <iron-pages selected="[[page]]" attr-for-selected="page" selected-attribute="active">
+        <div id="flex">
+          <iron-pages id="pages" selected="[[page]]" attr-for-selected="page" selected-attribute="active">
             <fa-gallery type="Fauna" page="cartoons"></fa-gallery>
             <fa-gallery type="nuts" page="nuts_cartoons"></fa-gallery>
             <fa-comic type="Fauna" page="home"></fa-comic>
@@ -134,10 +134,27 @@
 
       ready : function() {
         window.addEventListener('hashchange', this.setPage.bind(this));
+        window.addEventListener('resize', this.setHeight.bind(this));
       },
 
       attached : function() {
         this.setPage();
+        this.setHeight();
+      },
+
+      // HACK for POS safari.  The new IE.
+      setHeight : function() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        this.$['content-container'].style.height = h+'px';
+
+        var top = 0;
+        if( w <= 768 ){
+           h -= 77;
+           top = 77;
+        }
+        this.$.flex.style.height = h+'px';
+        this.$.pages.style.top = top+'px';
       },
 
       setPage : function() {

@@ -8,6 +8,7 @@ body {
   /*font-family: 'Reenie Beanie', cursive;*/
   font-family: 'Indie Flower', cursive;
   font-size: 20px;
+  overflow-y: hidden;
 
   background: -webkit-linear-gradient(#3999fc, #b8ceff);
   background: -o-linear-gradient(#3999fc, #b8ceff);
