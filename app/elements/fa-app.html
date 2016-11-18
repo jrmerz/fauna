@@ -1,0 +1,167 @@
+
+<dom-module id="fa-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 100%;
+      }
+
+      button[drawer-toggle] {
+        background-color: transparent;
+        background-image: url('/images/menu_icon.png');
+        background-size: 46px 46px;
+        border: none;
+        width: 46px;
+        height: 46px;
+        margin: 15px;
+      }
+
+      .footer {
+        background: url('/images/new/grass.png') repeat-x 0 20px;
+        height: 135px;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        text-align: center;
+      }
+
+      .footer img {
+        margin-top: 90px;
+      }
+
+      app-drawer {
+        --app-drawer-width: 310px;
+        margin-bottom: 40px;
+        --app-drawer-content-container	: {
+          background-color: transparent;
+        }
+      }
+
+      @media(max-width: 768px) {
+        app-drawer {
+          --app-drawer-width: 250px;
+          margin-bottom: 10px;
+        }
+        .footer {
+          background: url('/images/new/grass.png') repeat-x 0 0px;
+          height: 75px;
+        }
+        .footer img {
+          display: none;
+        }
+      }
+
+      app-drawer-layout {
+        height: 100%;
+      }
+      iron-pages {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      #content-container {
+        height: 100%;
+        @apply(--layout-vertical);
+      }
+
+      #content-container .flex {
+        @apply(--layout-flex);
+        position: relative;
+      }
+
+      #mobileHeader {
+        border-bottom: 1px solid white;
+        color: white;
+      }
+      #mobileHeader .title {
+        display: inline-block;
+        font-size: 36px;
+        vertical-align: super;
+      }
+    </style>
+
+    <!-- HACK for polymer css var shim -->
+    <!-- Declare a isMobileNav variable that will be dynamically filled by an iron query -->
+    <iron-media-query query="(max-width:768px)" query-matches="{{isMobileNav}}"></iron-media-query> 
+
+    <app-drawer-layout responsive-width="768px">
+      <app-drawer id="drawer" on-click="closeDrawer">
+        <fa-left-nav></fa-left-nav>
+      </app-drawer>
+      <div id="content-container">
+        <div id="mobileHeader">
+          <button drawer-toggle></button> <span class="title">Fauna Cartoons</span>
+        </div>
+        <div class="flex">
+          <iron-pages selected="[[page]]" attr-for-selected="page" selected-attribute="active">
+            <fa-gallery type="Fauna" page="cartoons"></fa-gallery>
+            <fa-gallery type="nuts" page="nuts_cartoons"></fa-gallery>
+            <fa-comic type="Fauna" page="home"></fa-comic>
+            <fa-comic type="nuts" page="nuts"></fa-comic>
+            <fa-about page="about"></fa-about>
+            <fa-buy page="buy"></fa-buy>
+            <fa-links page="links"></fa-links>
+          </iron-pages>
+        </div>
+      </div>
+    </app-drawer-layout>
+
+    <div class="footer">
+      <img src="/images/faunacartoon.png" />
+    </div>
+    
+  </template>
+  <script>
+    Polymer({
+      is: 'fa-app',
+
+      properties : {
+        page : {
+          type : String,
+          value : 'home'
+        }
+      },
+
+      observers: [
+        '_isMobileNavChanged(isMobileNav)'
+      ],
+
+      ready : function() {
+        window.addEventListener('hashchange', this.setPage.bind(this));
+      },
+
+      attached : function() {
+        this.setPage();
+      },
+
+      setPage : function() {
+        var hash = window.location.hash.replace(/#/g,'').split('/');
+        
+        this.page = (hash.length > 0 && hash[0]) ? hash[0] : 'home';
+        hash.splice(0,1);
+
+        var ele = this.querySelector('[page="'+this.page+'"]');
+        if( ele && ele.onUpdate ) {
+          ele.onUpdate(hash);
+        }
+      },
+
+      closeDrawer : function() {
+        if( this.$.drawer.opened && !this.$.drawer.persistent ) {
+          this.$.drawer.close();
+        }
+      },
+
+      _isMobileNavChanged : function() {
+        this.$.mobileHeader.style.display = this.isMobileNav ? 'block' : 'none';
+        this.updateStyles();
+      }
+    });
+  </script>
+</dom-module>

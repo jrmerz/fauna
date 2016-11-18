@@ -1,66 +1,63 @@
 <dom-module id="fa-share">
-  <style>
-      :host {
-          display: inline-block;
-      }
-      #openButton {
-          cursor: pointer;
-          font-weight: bold;
-          font-size: 25px;
-          text-shadow: 1px 1px #3999fc;
-          color: #333;
-      }
-      #buttons {
-        padding: 10px;
-        overflow: hidden;
-        position: absolute;
-        bottom: 40px;
-        left: 0px;
-        background-color: rgba(57, 153, 252, 0.95);
-        box-shadow: 0 0 10px #3999fc;
-        border-radius: 6px;
-      }
-      #buttons div{
-          padding: 5px 0;
-      }
-
-      @media(max-width: 768px) {
-          #openButton {
-              font-size: 18px;
-          }
-      }
-  </style>
-
   <template>
+    <style>
+        :host {
+            display: inline-block;
+        }
+        #openButton {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 25px;
+            text-shadow: 1px 1px #3999fc;
+            color: #333;
+        }
+        #buttons {
+          padding: 10px;
+          overflow: hidden;
+          position: absolute;
+          bottom: 40px;
+          left: 0px;
+          background-color: rgba(57, 153, 252, 0.95);
+          box-shadow: 0 0 10px #3999fc;
+          border-radius: 6px;
+        }
+        #buttons div{
+            padding: 5px 0;
+        }
 
-      <div id="buttons" style="display:none" class="animated zoomIn">
-        <a class="close" on-click="close" style="font-weight: bold">X</a>
-          <div id="innerButtons" class="horizontal center-justified layout" style="height:100%">
-              <div class="flex self-center">
-                <div>
-                    <div class="fb-like" data-href="http://faunacartoon.com" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-                </div>
+        @media(max-width: 768px) {
+            #openButton {
+                font-size: 18px;
+            }
+        }
+    </style>
 
-                <div id="plusRoot">
-                  <div class="g-plusone" data-size="medium" data-href="http://faunacartoon.com" id="plusOne"></div>
-                </div>
-
-                <div>
-                    <a href='http://topwebcomics.com/vote/18836/default.aspx' target="_blank" title='Vote for Fauna Cartoon on TopWebComics!'>
-                        <img style="border: 1px solid #333" src="/images/rankimage.png" />
-                    </a>
-                </div>
+    <div id="buttons" style="display:none" class="animated zoomIn">
+      <a class="close" on-click="close" style="font-weight: bold">X</a>
+        <div id="innerButtons" class="horizontal center-justified layout" style="height:100%">
+            <div class="flex self-center">
+              <div>
+                  <div class="fb-like" data-href="http://faunacartoon.com" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
               </div>
-          </div>
-      </div>
 
-      <div id="openButton" on-click="toggle" style="display:inline-block">
-          Share!
-      </div>
+              <div id="plusRoot">
+                <div class="g-plusone" data-size="medium" data-href="http://faunacartoon.com" id="plusOne"></div>
+              </div>
+
+              <div>
+                  <a href='http://topwebcomics.com/vote/18836/default.aspx' target="_blank" title='Vote for Fauna Cartoon on TopWebComics!'>
+                      <img style="border: 1px solid #333" src="/images/rankimage.png" />
+                  </a>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="openButton" on-click="toggle" style="display:inline-block">
+        Share!
+    </div>
   </template>
-</dom-module>
-
-<script>
+  <script>
     Polymer({
 
       is : 'fa-share',
@@ -105,3 +102,4 @@
 
     });
 </script>
+</dom-module>

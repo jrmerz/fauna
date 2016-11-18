@@ -100,10 +100,8 @@
             this.querySelector('fa-sharethis').style.visibility = 'visible';
         }.bind(this), 1000);
 
-        FC.addDescriptionLoadHandler(function(){
-          this.descriptions = FC.descriptions;
-          this.setTitle();
-        }.bind(this));
+        this.descriptions = FaunaCollection;
+        this.setTitle();
 
         this.fire('page-ready');
     },

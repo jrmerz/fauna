@@ -1,5 +1,11 @@
 <dom-module id="fa-buy">
-  <style>
+  <template>
+    <style>
+      :host {
+        height: 100%;
+        overflow: auto;
+        display: block;
+      }
       img.bear {
           width: 150px;
       }
@@ -20,12 +26,9 @@
           font-size: 26px;
           text-shadow: 3px 3px 0px #b8ceff;
       }
-  </style>
+    </style>
 
-  <template>
-
-
-      <fa-center-content>
+      <fa-center-content style="margin-bottom: 100px">
           <div style="max-width: 700px; min-width: 300px; padding: 5px">
               <h2>Buy</h2>
 
@@ -128,9 +131,7 @@
           </div>
       </fa-center-content>
   </template>
-</dom-module>
-
-<script>
+  <script>
     Polymer({
       is : 'fa-buy',
 
@@ -172,5 +173,6 @@
         this.$.comicExtra.innerHTML = '<img src="/comics/fauna/thumb/Fauna_'+this.comicExtra+'.jpg" style="margin-right: 5px" />';
       }
 
-  });
-</script>
+    });
+  </script>
+</dom-module>

@@ -49,9 +49,7 @@
 
         $(window).on('hashchange', this.updateHash.bind(this));
 
-        FC.addDescriptionLoadHandler(function(){
-          this.updateHash();
-        }.bind(this));
+        this.updateHash();
 
         $(this.$.hover)
           .on('mouseenter', function(){
@@ -80,9 +78,9 @@
           parts.push(MAX_FAUNA_IMG+'');
         }
 
-        if( FC.descriptions && FC.descriptions[parts[1]] && FC.descriptions[parts[1]].buy ) {
+        if( FaunaCollection[parts[1]] && FaunaCollection[parts[1]].buy ) {
           this.$.buy.style.display = 'inline-block';
-          this.$.buy.setAttribute('href', FC.descriptions[parts[1]].buy);
+          this.$.buy.setAttribute('href', FaunaCollection[parts[1]].buy);
         } else {
           this.$.buy.style.display = 'none';
         }

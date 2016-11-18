@@ -14,7 +14,3 @@ var FC = {
   }
 };
 
-$.get('/description.json', function(resp){
-  FC.descriptions = resp;
-  FC.onDescriptionsLoad();
-}.bind(this));

@@ -1,9 +1,12 @@
 <dom-module id="fa-center-content">
   <style>
-      :host{
+      :host {
           display: block;
       }
       .center-content {
+          @apply(--layout-horizontal);
+          @apply(--layout-center);
+          @apply(--layout-center-justified);
           padding-top: 50px;
       }
       @media(max-width: 1200px) {
@@ -12,8 +15,9 @@
           }
       }
   </style>
+
   <template>
-    <div class="center-content layout horizontal center center-justified">
+    <div class="center-content">
         <content></content>
     </div>
   </template>

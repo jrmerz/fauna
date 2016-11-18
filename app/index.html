@@ -32,50 +32,21 @@
   <meta name="keywords" content="animal cartoon, comic, fauna, wildlife drawings, funny, humor, Greg Bishop">
 
   <link href='fonts/IndieFlower.css' rel='stylesheet' type='text/css'>
-
-  <!-- build:css styles/app.css -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-  <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
-  <link rel="stylesheet" href="styles/app.css" />
-  <!-- endbuild -->
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 
   <!--[if lte IE 9]>
     <link rel="stylesheet" type="text/css" href="styles/ie.css">
   <![endif]-->
 
-  <!-- build:js scripts/app.js -->
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="bower_components/jquery/dist/jquery.js"></script>
-  <script src="bower_components/upup/dist/upup.min.js"></script>
-
-  <script src="scripts/index.js"></script>
-  <script src="scripts/router.js"></script>
-  <!-- endbuild -->
-
   <!-- don't want to have to rebuild every time we add comic -->
-  <script type="text/javascript" src="count.js"></script>
   <script src="https://apis.google.com/js/platform.js"></script>
 
   <link rel="import" href="elements.html" />
 </head>
 <body unresolved style="overflow-x: hidden">
 
+  <fa-app></fa-app>
 
-  <fa-layout class="ie-layout" >
-    <div nav>
-      <fa-left-nav></fa-left-nav>
-    </div>
-
-    <div content>
-      <fa-gallery type="Fauna"></fa-gallery>
-      <fa-gallery type="nuts"></fa-gallery>
-      <fa-comic type="Fauna"></fa-comic>
-      <fa-comic type="nuts"></fa-comic>
-      <fa-about></fa-about>
-      <fa-buy></fa-buy>
-      <fa-links></fa-links>
-    </div>
-  </fa-layout>
 
   <div class="ie-error" style="display:none">
     You need to upgrade your browser!  Either upgrade to the latest version of Internet Explorer or try a good brower such as <a href="http://www.google.com/chrome">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a>, or <a href="http://support.apple.com/downloads/#safari">Safari</a>.  Seriously, any modern browser will work.
@@ -106,7 +77,6 @@
         'fonts/IndieFlower.css','fonts/IndieFlower.ttf','fonts/IndieFlower.woff','fonts/IndieFlower.woff2']
       });
     } catch(e) {}
-
   </script>
 
 </body>

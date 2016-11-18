@@ -1,19 +1,24 @@
 <dom-module id="fa-img-nav">
   <style>
-      .fixed {
-          display: block;
-          position: fixed;
-          width: 100%;
-          bottom: 0;
-          left: 0px;
-      }
-      .margin {
-          margin-left: 300px;
+      :host {
+        margin-left: 310px;
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
       }
 
       img {
-          position: absolute;
           bottom: 0;
+      }
+
+      .layout {
+          @apply(--layout-horizontal);
+          @apply(--layout-end);
+      }
+      .flex {
+          @apply(--layout-flex);
       }
 
       button {
@@ -60,20 +65,18 @@
           -ms-transform: rotate(15deg);
       }
 
-      .layout {
+      .margin {
           position: relative;
           max-width: 1000px;
           margin: auto;
       }
 
-      @media(max-width: 1200px) {
-          .margin {
-              margin-left: 0px;
-          }
-      }
-
       @media(max-width: 768px) {
-          .layout {
+          :host {
+              margin-left: 250px;
+          }
+
+          .margin {
               max-width: 500px;
           }
 
@@ -109,21 +112,21 @@
   </style>
   <template>
 
-    <div style="position:relative">
 
-      <div class="fixed">
-          <div class="margin">
-              <div class="layout">
-                  <img class="animated" src="/images/new/prev.png" left id="leftImg"/>
-                  <button on-click="firePrev" left id="left"></button>
-
-                  <img class="animated" src="/images/new/next.png" right id="rightImg" />
-                  <button on-click="fireNext" right id="right"></button>
-              </div>
-          </div>
-      </div>
-
+    <div class="margin">
+        <div class="layout">
+            <div>
+                <img class="animated" src="/images/new/prev.png" left id="leftImg"/>
+                <button on-click="firePrev" left id="left"></button>
+            </div>
+            <div class="flex"></div>
+            <div>
+                <img class="animated" src="/images/new/next.png" right id="rightImg" />
+                <button on-click="fireNext" right id="right"></button>
+            </div>
+        </div>
     </div>
+
   </template>
 </dom-module>
 

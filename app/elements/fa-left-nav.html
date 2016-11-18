@@ -1,16 +1,25 @@
 <dom-module id="fa-left-nav">
-  <style>
+  <template>
+        <style>
       :host {
           display: block;
+          height: 100%;
+          position: relative;
       }
       .root {
           width: 310px;
+          overflow: auto;
           position: relative;
       }
       .img {
           background: url('/images/new/left_nav.png') no-repeat bottom left;
           min-height: 634px;
-          margin: 55px 0;
+      }
+
+      .layout {
+          height: 100%;
+          @apply(--layout-vertical);
+          @apply(--layout-end-justified);
       }
 
       a {
@@ -46,8 +55,6 @@
       @media(max-width: 768px) {
           .img {
               min-height: 528px;
-              margin: 20px 0;
-
               background-size: 250px 528px;
               -webkit-background-size: 250px 528px;
           }
@@ -75,21 +82,21 @@
           }
 
       }
-  </style>
-  <template>
-      <div class="root">
-          <div class="img"></div>
+    </style>
+    <div class="layout">
+        <div class="root">
+            <div class="img"></div>
 
-          <a href="#cartoons"></a>
-          <a href="#about"></a>
-          <a href="#buy"></a>
-          <a href="#links"></a>
-      </div>
+            <a href="#cartoons"></a>
+            <a href="#about"></a>
+            <a href="#buy"></a>
+            <a href="#links"></a>
+        </div>
+    </div>
   </template>
-</dom-module>
-
-<script>
+  <script>
     Polymer({
       is : 'fa-left-nav'
     });
-</script>
+  </script>
+</dom-module>

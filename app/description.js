@@ -1,4 +1,4 @@
-m{
+var FaunaCollection = {
   "1" : {
     "title" : "Koala Vending Machines",
     "keywords" : "koala, koalas, vending machine, eucalyptus, australia, marsupial",
