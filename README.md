@@ -6,7 +6,4 @@ All comics by Greg Bishop.
 
 Built using:
  - Polymer (Web Components)
- - animate.css
- - jquery
- - bootstrap
  - upup (Service Worker)

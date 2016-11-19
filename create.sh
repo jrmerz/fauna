@@ -3,26 +3,31 @@
 FAUNA_IMAGES=comics/fauna/*
 NUTS_IMAGES=comics/nuts/*
 
+mkdir -p comics_generated/fauna/regular
+mkdir -p comics_generated/fauna/thumb
+mkdir -p comics_generated/nuts/regular
+mkdir -p comics_generated/nuts/thumb
+
 fcount=0;
 ncount=0;
 for img in $FAUNA_IMAGES
 do
 	loc=${img/comics\/fauna\//}
 	
-	if [ ! -f app/comics/fauna/regular/$loc ];
+	if [ ! -f comics_generated/fauna/regular/$loc ];
 	then
 		echo "Generating regular $loc"
-		echo "convert comics/fauna/$loc -resize 600x600 app/comics/fauna/regular/$loc"
-		convert comics/fauna/$loc -resize 600x600 app/comics/fauna/regular/$loc
-		convert comics/fauna/$loc -resize 800x800 app/comics/fauna/regular/hi_$loc
+		echo "convert comics/fauna/$loc -resize 600x600 comics_generated/fauna/regular/$loc"
+		convert comics/fauna/$loc -resize 600x600 comics_generated/fauna/regular/$loc
+		convert comics/fauna/$loc -resize 800x800 comics_generated/fauna/regular/hi_$loc
 	fi
 
 
-	if [ ! -f app/comics/fauna/thumb/$loc ];
+	if [ ! -f comics_generated/fauna/thumb/$loc ];
 	then
 		echo "Generating thumb $loc"
-		convert comics/fauna/$loc -resize 128x128 app/comics/fauna/thumb/$loc
-		convert comics/fauna/$loc -resize 256x256 app/comics/fauna/thumb/hi_$loc
+		convert comics/fauna/$loc -resize 128x128 comics_generated/fauna/thumb/$loc
+		convert comics/fauna/$loc -resize 256x256 comics_generated/fauna/thumb/hi_$loc
 	fi
 
 	fcount=$((fcount+1))
@@ -32,19 +37,19 @@ for img in $NUTS_IMAGES
 do
 	loc=${img/comics\/nuts\//}
 	
-	if [ ! -f app/comics/nuts/regular/$loc ];
+	if [ ! -f comics_generated/nuts/regular/$loc ];
 	then
 		echo "Generating regular $loc"
-		convert comics/nuts/$loc -resize 750x750 app/comics/nuts/regular/$loc
-		convert comics/nuts/$loc -resize 950x950 app/comics/nuts/regular/hi_$loc
+		convert comics/nuts/$loc -resize 750x750 comics_generated/nuts/regular/$loc
+		convert comics/nuts/$loc -resize 950x950 comics_generated/nuts/regular/hi_$loc
 	fi
 
 
-	if [ ! -f app/comics/nuts/thumb/$loc ];
+	if [ ! -f comics_generated/nuts/thumb/$loc ];
 	then
 		echo "Generating thumb $loc"
-		convert comics/nuts/$loc -resize 164x164 app/comics/nuts/thumb/$loc
-		convert comics/nuts/$loc -resize 328x328 app/comics/nuts/thumb/hi_$loc
+		convert comics/nuts/$loc -resize 164x164 comics_generated/nuts/thumb/$loc
+		convert comics/nuts/$loc -resize 328x328 comics_generated/nuts/thumb/hi_$loc
 	fi
 
 	ncount=$((ncount+1))

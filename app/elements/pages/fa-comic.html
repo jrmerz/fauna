@@ -48,11 +48,12 @@
 
       @media(max-width: 1200px) {
           #img {
-              margin: 10px;
+              margin: 40px;
           }
       }
 
       iron-image {
+        background-color: lightgray;
         --iron-image-width : 100%;
       }
   </style>
@@ -67,11 +68,14 @@
               <div id="indexLabel" class="text" style="font-size: 32px"></div>
             </div>
 
-            <iron-image 
-              id="img" 
-              itemprop="image" 
-              class="comic"
-               preload fade></iron-image>
+            <div id="heightHolder">
+              <iron-image
+                on-loaded-changed="onImgLoad"
+                id="img" 
+                itemprop="image" 
+                class="comic"
+                preload fade></iron-image>
+            </div>
 
             <div style="display:none">
                 By, <span itemprop="author">Greg Bishop</span>
@@ -112,10 +116,8 @@
         if( this.loc == 'fauna' ) {
           this.hash = 'home';
           this.max = MAX_FAUNA_IMG;
-          this.$.img.placeholder = GALLARY_PREVIEW;
         } else {
           this.max = MAX_NUTS_IMG;
-          this.$.img.placeholder = NUTS_GALLARY_PREVIEW;
         }
 
         this.index = '';
@@ -146,7 +148,16 @@
       if( index == this.index ) return;
 
       this.index = index;
+
+      this.$.img.style.height = this.$.img.offsetHeight+'px';
+      this.$.img.style.width = this.$.img.offsetWidth+'px';
+
       this.$.img.setAttribute('src', '/comics/'+this.loc+'/regular/'+this.type+'_'+this.index+'.jpg');
+    },
+
+    onImgLoad : function() {
+      this.$.img.style.height = 'initial';
+      this.$.img.style.width = 'initial';
     },
 
     setTitle : function() {

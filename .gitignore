@@ -1,6 +1,7 @@
 keys
 .tmp
-comics
+/comics_generated
+/comics
 node_modules
 app/count.js
 app/comics

@@ -23,6 +23,7 @@
     "iron-pages": "PolymerElements/iron-pages#^1.0.8",
     "iron-media-query": "PolymerElements/iron-media-query#^1.0.8",
     "iron-image": "PolymerElements/iron-image#^1.2.5",
-    "iron-list": "PolymerElements/iron-list#^1.3.14"
+    "iron-list": "PolymerElements/iron-list#^1.3.14",
+    "iron-swipeable-container": "PolymerElements/iron-swipeable-container#^1.0.3"
   }
 }

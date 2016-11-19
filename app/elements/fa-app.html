@@ -10,44 +10,46 @@
       button[drawer-toggle] {
         background-color: transparent;
         background-image: url('/images/menu_icon.png');
-        background-size: 46px 46px;
+        background-size: 38px 38px;
         border: none;
-        width: 46px;
-        height: 46px;
-        margin: 15px;
+        width: 38px;
+        height: 38px;
+        margin: 10px;
       }
 
       .footer {
-        background: url('/images/new/grass.png') repeat-x 0 20px;
+        background: url('/images/new/grass.png') repeat-x 0 0;
         height: 135px;
         width: 100%;
-        position: fixed;
-        bottom: 0;
+        position: absolute;
+        bottom: -30px;
         left: 0;
         z-index: 1000;
         text-align: center;
       }
 
       .footer img {
-        margin-top: 90px;
+        margin-top: 60px;
       }
 
       app-drawer {
         --app-drawer-width: 310px;
         margin-bottom: 40px;
-        --app-drawer-content-container	: {
+        --app-drawer-scrim-background : rgba(255, 255, 255, 0.8);
+        --app-drawer-content-container : {
           background-color: transparent;
         }
       }
 
       @media(max-width: 768px) {
         app-drawer {
+          z-index: 50000;
           --app-drawer-width: 250px;
-          margin-bottom: 10px;
+          margin-bottom: 0;
         }
         .footer {
-          background: url('/images/new/grass.png') repeat-x 0 0px;
-          height: 75px;
+          background: url('/images/new/grass_sm.png') repeat-x 0 0px;
+          height: 80px;
         }
         .footer img {
           display: none;
@@ -75,14 +77,20 @@
         position: relative;
       }*/
 
+      #mobileHeader.hidden {
+        display: none;
+      }
       #mobileHeader {
         border-bottom: 1px solid white;
         color: white;
+        height: 58px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
       }
       #mobileHeader .title {
         display: inline-block;
-        font-size: 36px;
-        vertical-align: super;
+        font-size: 32px;
+        /*vertical-align: super;*/
       }
     </style>
 
@@ -150,8 +158,8 @@
 
         var top = 0;
         if( w <= 768 ){
-           h -= 77;
-           top = 77;
+           h -= 58;
+           top = 58;
         }
         this.$.flex.style.height = h+'px';
         this.$.pages.style.top = top+'px';
@@ -176,7 +184,12 @@
       },
 
       _isMobileNavChanged : function() {
-        this.$.mobileHeader.style.display = this.isMobileNav ? 'block' : 'none';
+        if( this.isMobileNav ) {
+          this.$.mobileHeader.classList.remove('hidden');
+        } else {
+          this.$.mobileHeader.classList.add('hidden');
+        }
+
         this.updateStyles();
       }
     });

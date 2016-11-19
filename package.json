@@ -10,21 +10,7 @@
   },
   "author": "jrmerz@gmail.com",
   "license": "ISC",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^4.0.0",
-    "grunt-config-dir": "^0.3.2",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-cssmin": "^0.13.0",
-    "grunt-contrib-uglify": "^0.9.1",
-    "grunt-copy-to": "0.0.12",
-    "grunt-filerev": "^2.3.1",
-    "grunt-shell": "^1.1.2",
-    "grunt-usemin": "^3.0.0",
-    "grunt-vulcanize": "^1.0.0"
-  },
   "dependencies": {
-    "grunt-copy-to": "0.0.10"
+    "vulcanize": "^1.14.12"
   }
 }
